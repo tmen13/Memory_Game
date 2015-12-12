@@ -5,7 +5,7 @@
     <string name="menu_singleplayer">Um jogador</string>
     <string name="menu_multiplayer">Dois jogadores</string>
     <string name="menu_multiplayer_on">Dois jogadores Rede</string>
-    <string name="menu_historico">Histório</string>
+    <string name="menu_historico">Histórico</string>
     <string name="numJogadas">Jogadas: </string>
     <string name="nivel">Nível: </string>
     <string name="theme_pick">Escolha um tema</string>

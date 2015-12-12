@@ -22,28 +22,29 @@
         android:text="@string/app_name"
         android:id="@+id/textView" />
 
-    <ImageButton
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/menu_singleplayer"
-        android:id="@+id/singlePlayerButton"
-        android:src="b" />
+        android:id="@+id/singlePlayerBtn"
+        />
 
-    <ImageButton
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/menu_multiplayer"
-        android:id="@+id/multiPlayerButton" />
+        android:id="@+id/multiPlayerBtn" />
 
-    <ImageButton
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/menu_multiplayer_on"
-        android:id="@+id/multiPlayerOnButton" />
+        android:id="@+id/multiPlayerOnBtn" />
 
-    <ImageButton
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/menu_historico"
-        android:id="@+id/historicoButton" />
+        android:id="@+id/historicoBtn" />
+
 </LinearLayout>

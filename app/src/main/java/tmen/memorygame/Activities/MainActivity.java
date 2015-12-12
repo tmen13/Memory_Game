@@ -6,10 +6,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
 
 import tmen.memorygame.R;
 
 public class MainActivity extends AppCompatActivity {
+
+    Button singlePlayerBtn, multiPlayerBtn, multiPlayerOnBtn, historicoBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,6 +22,61 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        singlePlayerBtn = (Button) findViewById(R.id.singlePlayerBtn);
+        multiPlayerBtn = (Button) findViewById(R.id.multiPlayerBtn);
+        multiPlayerOnBtn = (Button) findViewById(R.id.multiPlayerOnBtn);
+        historicoBtn = (Button) findViewById(R.id.historicoBtn);
+
+        singlePlayerBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(),"SinglePlayer",Toast.LENGTH_SHORT).show();
+
+                Intent intent = new Intent(getApplicationContext(), TesteActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        multiPlayerBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(),"MultiPlayer",Toast.LENGTH_SHORT).show();
+
+                Intent intent = new Intent(getApplicationContext(), TesteActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        multiPlayerBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(),"MultiPlayer",Toast.LENGTH_SHORT).show();
+
+                Intent intent = new Intent(getApplicationContext(), TesteActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        multiPlayerOnBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(),"MultiPlayerOn",Toast.LENGTH_SHORT).show();
+
+                Intent intent = new Intent(getApplicationContext(), TesteActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        historicoBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(),"Histórico",Toast.LENGTH_SHORT).show();
+
+                Intent intent = new Intent(getApplicationContext(), TesteActivity.class);
+                startActivity(intent);
+            }
+        });
 
 /*        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
