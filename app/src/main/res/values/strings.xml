@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Memory Game</string>
+    <string name="action_settings">Settings</string>
+    <string name="menu_singleplayer">Um jogador</string>
+    <string name="menu_multiplayer">Dois jogadores</string>
+    <string name="menu_multiplayer_on">Dois jogadores Rede</string>
+    <string name="menu_historico">Histório</string>
+    <string name="numJogadas">Jogadas: </string>
+    <string name="nivel">Nível: </string>
+    <string name="theme_pick">Escolha um tema</string>
+    <string name="level_pick">Escolha um nível</string>
+    <string name="menu_config">Configurações</string>
+</resources>
