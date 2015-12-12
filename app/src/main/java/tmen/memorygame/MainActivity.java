@@ -10,24 +10,32 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
     TextView tv;
+    Button bt;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-    tv = (TextView)findViewById(R.id.tv1);
+        tv = (TextView)findViewById(R.id.tv1);
+        bt = (Button)findViewById(R.id.imgBt);
+
+        Card carta = new Card(0);
+
+        bt.setBackgroundResource(carta.getCardCover());
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences.Editor editor = preferences.edit();
-        editor.putString("PlayerName","tmen13");
+        editor.putString("PlayerName", "tmen13");
         editor.apply();
 
         tv.setText(preferences.getString("PlayerName",""));
+
 
 /*        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
