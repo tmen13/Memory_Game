@@ -1,5 +1,6 @@
 package tmen.memorygame;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -15,27 +16,12 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
-    TextView tv;
-    Button bt;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        tv = (TextView)findViewById(R.id.tv1);
-        bt = (Button)findViewById(R.id.imgBt);
-
-        Card carta = new Card(0);
-
-        bt.setBackgroundResource(carta.getCardCover());
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putString("PlayerName", "tmen13");
-        editor.apply();
-
-        tv.setText(preferences.getString("PlayerName",""));
-
 
 /*        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -64,6 +50,16 @@ public class MainActivity extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
+        }
+
+        switch (id) {
+            case R.id.action_settings:
+
+                break;
+            default:
+                Intent intent = new Intent(this, TesteActivity.class);
+                startActivity(intent);
+                break;
         }
 
         return super.onOptionsItemSelected(item);
