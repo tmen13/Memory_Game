@@ -1,8 +1,10 @@
-package tmen.memorygame;
+package tmen.memorygame.Classes;
 
 import java.util.ArrayList;
 
-class Baralho {
+import tmen.memorygame.Classes.Card;
+
+public class Baralho {
     private String tema;
     private ArrayList<Card> cartas = new ArrayList<>();
 

@@ -1,9 +1,11 @@
-package tmen.memorygame;
+package tmen.memorygame.Classes;
 
 import android.graphics.Bitmap;
 import android.media.Image;
 
-class Card {
+import tmen.memorygame.R;
+
+public class Card {
     int cardCover = R.mipmap.ic_card_cover;
     int cardFront = -1;
     static int cardID = 0;
