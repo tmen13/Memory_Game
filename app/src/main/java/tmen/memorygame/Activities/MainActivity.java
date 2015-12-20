@@ -33,17 +33,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Toast.makeText(getApplicationContext(),"SinglePlayer",Toast.LENGTH_SHORT).show();
 
-                Intent intent = new Intent(getApplicationContext(), TesteActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        multiPlayerBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getApplicationContext(),"MultiPlayer",Toast.LENGTH_SHORT).show();
-
-                Intent intent = new Intent(getApplicationContext(), TesteActivity.class);
+                Intent intent = new Intent(getApplicationContext(), EscolheTemaActivity.class);
                 startActivity(intent);
             }
         });
@@ -63,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Toast.makeText(getApplicationContext(),"MultiPlayerOn",Toast.LENGTH_SHORT).show();
 
-                Intent intent = new Intent(getApplicationContext(), TesteActivity.class);
+                Intent intent = new Intent(getApplicationContext(), MenuMultiPlayerOnActivity.class);
                 startActivity(intent);
             }
         });
@@ -73,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Toast.makeText(getApplicationContext(),"Histórico",Toast.LENGTH_SHORT).show();
 
-                Intent intent = new Intent(getApplicationContext(), TesteActivity.class);
+                Intent intent = new Intent(getApplicationContext(), HistoricoActivity.class);
                 startActivity(intent);
             }
         });
@@ -103,14 +93,17 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
 
         switch (id) {
             case R.id.action_teste:
-                Intent intent = new Intent(this, TesteActivity.class);
-                startActivity(intent);
+                Intent intentTeste = new Intent(this, TesteActivity.class);
+                startActivity(intentTeste);
+                break;
+            case R.id.action_settings:
+                Intent intentSettings = new Intent(this, SettingsActivity.class);
+                startActivity(intentSettings);
+                break;
+            case R.id.action_creditos:
                 break;
             default:
                 break;

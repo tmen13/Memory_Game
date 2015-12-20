@@ -22,6 +22,60 @@
             android:name=".Activities.TesteActivity"
             android:label="@string/title_activity_teste"
             android:theme="@style/AppTheme.NoActionBar" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="tmen.memorygame.Activities.MainActivity" />
+        </activity>
+        <activity
+            android:name=".Activities.MenuMultiPlayerOnActivity"
+            android:label="@string/title_activity_menu_multi_player_on"
+            android:theme="@style/AppTheme.NoActionBar" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="tmen.memorygame.Activities.MainActivity" />
+        </activity>
+        <activity
+            android:name=".Activities.EscolheTemaActivity"
+            android:label="@string/title_activity_escolhe_tema"
+            android:parentActivityName=".Activities.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="tmen.memorygame.Activities.MainActivity" />
+        </activity>
+        <activity
+            android:name=".Activities.EscolheNivelActivity"
+            android:label="@string/title_activity_escolhe_nivel"
+            android:parentActivityName=".Activities.EscolheTemaActivity"
+            android:theme="@style/AppTheme.NoActionBar" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="tmen.memorygame.Activities.EscolheTemaActivity" />
+        </activity>
+        <activity
+            android:name=".Activities.HistoricoActivity"
+            android:label="@string/title_activity_historico"
+            android:parentActivityName=".Activities.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="tmen.memorygame.Activities.MainActivity" />
+        </activity>
+        <activity
+            android:name=".Activities.JogoActivity"
+            android:label="@string/title_activity_jogo"
+            android:theme="@style/AppTheme.NoActionBar" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="tmen.memorygame.Activities.EscolheNivelActivity" />
+        </activity>
+        <activity
+            android:name=".Activities.SettingsActivity"
+            android:label="@string/title_activity_settings"
+            android:parentActivityName=".Activities.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="tmen.memorygame.Activities.MainActivity" />
         </activity>
     </application>
 

@@ -8,11 +8,12 @@ import tmen.memorygame.R;
 public class Card {
     int cardCover = R.mipmap.ic_card_cover;
     int cardFront = -1;
-    static int cardID = 0;
+    /*static*/ int cardID = /*0*/-1;
 
-    public Card(int cardFront) {
+    public Card(int cardID, int cardFront) {
+        this.cardID = cardID;
         this.cardFront = cardFront;
-        cardID++;
+        //cardID++;
     }
 
     public int getCardCover() {
@@ -23,7 +24,7 @@ public class Card {
         return cardFront;
     }
 
-    public static int getCardID() {
+    public /*static*/ int getCardID() {
         return cardID;
     }
 }

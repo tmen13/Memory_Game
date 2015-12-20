@@ -29,22 +29,21 @@ public class TesteActivity extends AppCompatActivity {
         setContentView(R.layout.activity_teste);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
         editor = preferences.edit();
         tv = (TextView)findViewById(R.id.tv1);
         bt = (Button)findViewById(R.id.imgBt);
         addToSharedPref(PREF_PLAYERNAME, "tmen13");
-        Card carta = new Card(0);
+        //Card carta = new Card(0);
 
-        bt.setBackgroundResource(carta.getCardCover());
+        //bt.setBackgroundResource(carta.getCardCover());
         bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 tv.setText(preferences.getString(PREF_PLAYERNAME, ""));
             }
         });
-
-
     }
 
     public void addToSharedPref(String key, String obj){
