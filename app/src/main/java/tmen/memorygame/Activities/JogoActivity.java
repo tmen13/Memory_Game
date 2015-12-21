@@ -51,24 +51,36 @@ public class JogoActivity extends AppCompatActivity {
                         Toast.LENGTH_SHORT).show();
                 ImageView imageView = (ImageView) v;
 
-                if (jogoActual.getPrimeiraCarta() == null && jogoActual.getSegundaCarta() == null) {
+                if (jogoActual.getPrimeiraCarta() == null && jogoActual.getSegundaCarta() == null) { //1ªCarta
                     primeiraImageView = imageView;
                     imageView.setImageResource(cardAdapter.getItem(position).getCardFront());
                     jogoActual.setPrimeiraCarta(cardAdapter.getItem(position));
-                } else if (jogoActual.getPrimeiraCarta() != null && jogoActual.getSegundaCarta() == null) {
+                } else if (jogoActual.getPrimeiraCarta() != null && jogoActual.getSegundaCarta() == null) { //2ªCarta
                     segundaImageView = imageView;
                     imageView.setImageResource(cardAdapter.getItem(position).getCardFront());
                     jogoActual.setSegundaCarta(cardAdapter.getItem(position));
 
-                    //verifica sucesso da jogada
-
-                    //Aguarda 2seg antes de virar cartas, etc;
-                    primeiraImageView.setImageResource(jogoActual.getPrimeiraCarta().getCardCover());
-                    segundaImageView.setImageResource(jogoActual.getSegundaCarta().getCardCover());
-                    jogoActual.setPrimeiraCarta(null);
-                    jogoActual.setSegundaCarta(null);
-                    primeiraImageView = null;
-                    segundaImageView = null;
+                    if (jogoActual.verificaJogada()) {
+                        blockImageViews();
+                        jogoActual.resetJogada();
+                        resetImageViews();
+                        //incrementar contador de acertadas
+                    } else {
+                        //Aguarda 2seg antes de virar cartas, etc;
+                        /*
+                        try {
+                            Thread.sleep(3000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        */
+                        unlockImageViews();
+                        primeiraImageView.setImageResource(jogoActual.getPrimeiraCarta().getCardCover());
+                        segundaImageView.setImageResource(jogoActual.getSegundaCarta().getCardCover());
+                        jogoActual.resetJogada();
+                        resetImageViews();
+                    }
+                    //incrementar contador de jogadas
                 } else {
                     Log.e("MemoryGameJogoActivity","Erro");
                 }
@@ -85,7 +97,23 @@ public class JogoActivity extends AppCompatActivity {
             }
         });
 
-
     }
+
+    public void blockImageViews(){
+        //primeiraImageView.setClickable(false);
+        //segundaImageView.setClickable(false);
+    }
+
+    public void unlockImageViews(){
+        //primeiraImageView.setClickable(true);
+        //segundaImageView.setClickable(true);
+    }
+
+    public void resetImageViews() {
+        primeiraImageView = null;
+        segundaImageView = null;
+    }
+
+
 
 }

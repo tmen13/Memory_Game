@@ -51,7 +51,7 @@ public class CardAdapter extends BaseAdapter {
             imageView = (ImageView) convertView;
         }
 
-        imageView.setId(position);
+        //imageView.setId(position);
         imageView.setImageResource(getItem(position).getCardCover()); //(mThumbIds[position]);
         return imageView;
     }

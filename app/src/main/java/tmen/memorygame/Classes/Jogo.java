@@ -1,6 +1,7 @@
 package tmen.memorygame.Classes;
 
         import android.content.Context;
+        import android.util.Log;
 
         import java.util.ArrayList;
 
@@ -51,5 +52,15 @@ public class Jogo {
 
     public void setSegundaCarta(Card segundaCarta) {
         this.segundaCarta = segundaCarta;
+    }
+
+    public Boolean verificaJogada() {
+        Log.d("MemoryGame", String.valueOf(primeiraCarta.getCardID() == segundaCarta.getCardID()));
+        return (primeiraCarta.getCardID() == segundaCarta.getCardID());
+    }
+
+    public void resetJogada() {
+        primeiraCarta = null;
+        segundaCarta = null;
     }
 }
