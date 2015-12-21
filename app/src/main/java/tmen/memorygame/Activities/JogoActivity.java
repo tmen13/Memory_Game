@@ -3,18 +3,29 @@ package tmen.memorygame.Activities;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.res.TypedArrayUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.Toast;
+
+import java.lang.reflect.Array;
+import java.util.Arrays;
 
 import tmen.memorygame.Adapters.CardAdapter;
 import tmen.memorygame.Classes.Baralho;
+import tmen.memorygame.Classes.Card;
+import tmen.memorygame.Classes.Jogo;
 import tmen.memorygame.R;
 
 public class JogoActivity extends AppCompatActivity {
+
+    Jogo jogoActual;
+    ImageView primeiraImageView, segundaImageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,8 +36,12 @@ public class JogoActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        //Buscar tema e nivel do intent
+
+        jogoActual = new Jogo(getApplicationContext(),"Bandeiras",0);
+
         GridView gridview = (GridView) findViewById(R.id.tabuleiroGridView);
-        final CardAdapter cardAdapter = new CardAdapter(getApplicationContext(), new Baralho("Bandeiras"));
+        final CardAdapter cardAdapter = new CardAdapter(getApplicationContext(), jogoActual);
         gridview.setAdapter(cardAdapter);
 
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -34,6 +49,29 @@ public class JogoActivity extends AppCompatActivity {
                                     int position, long id) {
                 Toast.makeText(JogoActivity.this, "Pos:" + position + " " + "Id:" + cardAdapter.getItemId(position),
                         Toast.LENGTH_SHORT).show();
+                ImageView imageView = (ImageView) v;
+
+                if (jogoActual.getPrimeiraCarta() == null && jogoActual.getSegundaCarta() == null) {
+                    primeiraImageView = imageView;
+                    imageView.setImageResource(cardAdapter.getItem(position).getCardFront());
+                    jogoActual.setPrimeiraCarta(cardAdapter.getItem(position));
+                } else if (jogoActual.getPrimeiraCarta() != null && jogoActual.getSegundaCarta() == null) {
+                    segundaImageView = imageView;
+                    imageView.setImageResource(cardAdapter.getItem(position).getCardFront());
+                    jogoActual.setSegundaCarta(cardAdapter.getItem(position));
+
+                    //verifica sucesso da jogada
+
+                    //Aguarda 2seg antes de virar cartas, etc;
+                    primeiraImageView.setImageResource(jogoActual.getPrimeiraCarta().getCardCover());
+                    segundaImageView.setImageResource(jogoActual.getSegundaCarta().getCardCover());
+                    jogoActual.setPrimeiraCarta(null);
+                    jogoActual.setSegundaCarta(null);
+                    primeiraImageView = null;
+                    segundaImageView = null;
+                } else {
+                    Log.e("MemoryGameJogoActivity","Erro");
+                }
             }
         });
 
