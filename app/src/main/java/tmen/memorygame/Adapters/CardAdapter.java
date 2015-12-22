@@ -19,7 +19,9 @@ import tmen.memorygame.R;
  */
 public class CardAdapter extends BaseAdapter {
     private Context mContext;
+    ImageView primeiraImageView, segundaImageView;
     private Jogo jogoActual; //Se so necessario baralho, alterar!
+
 
     public CardAdapter(Context mContext, Jogo jogoActual) {
         this.mContext = mContext;
@@ -27,15 +29,15 @@ public class CardAdapter extends BaseAdapter {
     }
 
     public int getCount() {
-        return jogoActual.getBaralho().getCartas().size(); //mThumbIds.length;
+        return jogoActual.getBaralho().getCartas().size();
     }
 
     public Card getItem(int position) {
-        return jogoActual.getBaralho().getCartas().get(position); //null;
+        return jogoActual.getBaralho().getCartas().get(position);
     }
 
     public long getItemId(int position) {
-        return jogoActual.getBaralho().getCartas().get(position).getCardID(); // 0;
+        return jogoActual.getBaralho().getCartas().get(position).getCardID();
     }
 
     // create a new ImageView for each item referenced by the Adapter
@@ -51,11 +53,64 @@ public class CardAdapter extends BaseAdapter {
             imageView = (ImageView) convertView;
         }
 
-        //imageView.setId(position);
-        imageView.setImageResource(getItem(position).getCardCover()); //(mThumbIds[position]);
+        imageView.setTag(String.valueOf(position));
+        imageView.setImageResource(getItem(position).getCardCover());
         return imageView;
     }
 
+    public boolean isEnabled(int position) {
+        Boolean enabled = true;
+
+        if (primeiraImageView == null && segundaImageView == null) {
+            enabled = true;
+        }
+
+        if (primeiraImageView != null) {
+            if (String.valueOf(position) == primeiraImageView.getTag()) {
+                enabled = false;
+            }
+        }
+
+        if (segundaImageView != null) {
+            if (String.valueOf(position) == primeiraImageView.getTag()) {
+                enabled = false;
+            }
+        }
+
+        return enabled;
+    }
+
+    public void resetImageViews() {
+        primeiraImageView = null;
+        segundaImageView = null;
+    }
+
+    public void blockImageViews(){
+        //primeiraImageView.getTag();
+        //primeiraImageView.setClickable(false);
+        //segundaImageView.setClickable(false);
+    }
+
+    public void unlockImageViews(){
+        //primeiraImageView.setClickable(true);
+        //segundaImageView.setClickable(true);
+    }
+
+    public ImageView getPrimeiraImageView() {
+        return primeiraImageView;
+    }
+
+    public void setPrimeiraImageView(ImageView primeiraImageView) {
+        this.primeiraImageView = primeiraImageView;
+    }
+
+    public ImageView getSegundaImageView() {
+        return segundaImageView;
+    }
+
+    public void setSegundaImageView(ImageView segundaImageView) {
+        this.segundaImageView = segundaImageView;
+    }
 
     //private Integer[] mThumbIds = {R.drawable.flags_argentina, R.drawable.flags_australia, R.drawable.flags_belgium, R.drawable.flags_brazil, R.drawable.flags_england, R.drawable.flags_france, R.drawable.flags_germany, R.drawable.flags_italy, R.drawable.flags_mexico, R.drawable.flags_netherlands, R.drawable.flags_portugal, R.drawable.flags_russia, R.drawable.flags_spain, R.drawable.flags_switzerland, R.drawable.flags_usa};
 

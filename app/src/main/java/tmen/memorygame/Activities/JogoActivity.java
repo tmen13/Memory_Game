@@ -25,7 +25,6 @@ import tmen.memorygame.R;
 public class JogoActivity extends AppCompatActivity {
 
     Jogo jogoActual;
-    ImageView primeiraImageView, segundaImageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +35,7 @@ public class JogoActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        //Buscar tema e nivel do intent
+        //Buscar tema e nivel ao intent
 
         jogoActual = new Jogo(getApplicationContext(),"Bandeiras",0);
 
@@ -52,18 +51,18 @@ public class JogoActivity extends AppCompatActivity {
                 ImageView imageView = (ImageView) v;
 
                 if (jogoActual.getPrimeiraCarta() == null && jogoActual.getSegundaCarta() == null) { //1ªCarta
-                    primeiraImageView = imageView;
+                    cardAdapter.setPrimeiraImageView(imageView);
                     imageView.setImageResource(cardAdapter.getItem(position).getCardFront());
                     jogoActual.setPrimeiraCarta(cardAdapter.getItem(position));
                 } else if (jogoActual.getPrimeiraCarta() != null && jogoActual.getSegundaCarta() == null) { //2ªCarta
-                    segundaImageView = imageView;
+                    cardAdapter.setSegundaImageView(imageView);
                     imageView.setImageResource(cardAdapter.getItem(position).getCardFront());
                     jogoActual.setSegundaCarta(cardAdapter.getItem(position));
 
                     if (jogoActual.verificaJogada()) {
-                        blockImageViews();
+                        //cardAdapter.blockImageViews();
                         jogoActual.resetJogada();
-                        resetImageViews();
+                        cardAdapter.resetImageViews();
                         //incrementar contador de acertadas
                     } else {
                         //Aguarda 2seg antes de virar cartas, etc;
@@ -74,11 +73,11 @@ public class JogoActivity extends AppCompatActivity {
                             e.printStackTrace();
                         }
                         */
-                        unlockImageViews();
-                        primeiraImageView.setImageResource(jogoActual.getPrimeiraCarta().getCardCover());
-                        segundaImageView.setImageResource(jogoActual.getSegundaCarta().getCardCover());
+                        //cardAdapter.unlockImageViews();
+                        cardAdapter.getPrimeiraImageView().setImageResource(jogoActual.getPrimeiraCarta().getCardCover());
+                        cardAdapter.getSegundaImageView().setImageResource(jogoActual.getSegundaCarta().getCardCover());
                         jogoActual.resetJogada();
-                        resetImageViews();
+                        cardAdapter.resetImageViews();
                     }
                     //incrementar contador de jogadas
                 } else {
@@ -99,20 +98,7 @@ public class JogoActivity extends AppCompatActivity {
 
     }
 
-    public void blockImageViews(){
-        //primeiraImageView.setClickable(false);
-        //segundaImageView.setClickable(false);
-    }
 
-    public void unlockImageViews(){
-        //primeiraImageView.setClickable(true);
-        //segundaImageView.setClickable(true);
-    }
-
-    public void resetImageViews() {
-        primeiraImageView = null;
-        segundaImageView = null;
-    }
 
 
 
