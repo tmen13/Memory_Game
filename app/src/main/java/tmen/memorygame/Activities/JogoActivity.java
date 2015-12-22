@@ -52,17 +52,22 @@ public class JogoActivity extends AppCompatActivity {
 
                 if (jogoActual.getPrimeiraCarta() == null && jogoActual.getSegundaCarta() == null) { //1ªCarta
                     cardAdapter.setPrimeiraImageView(imageView);
+                    //cardAdapter.setPosPrimeiraImageView(position);
                     imageView.setImageResource(cardAdapter.getItem(position).getCardFront());
                     jogoActual.setPrimeiraCarta(cardAdapter.getItem(position));
                 } else if (jogoActual.getPrimeiraCarta() != null && jogoActual.getSegundaCarta() == null) { //2ªCarta
                     cardAdapter.setSegundaImageView(imageView);
+                    //cardAdapter.setPosSegundaImageView(position);
                     imageView.setImageResource(cardAdapter.getItem(position).getCardFront());
                     jogoActual.setSegundaCarta(cardAdapter.getItem(position));
 
                     if (jogoActual.verificaJogada()) {
                         //cardAdapter.blockImageViews();
+                        cardAdapter.getImageViewsBloqueadas().add(Integer.parseInt(cardAdapter.getPrimeiraImageView().getTag().toString()));
+                        cardAdapter.getImageViewsBloqueadas().add(Integer.parseInt(cardAdapter.getSegundaImageView().getTag().toString()));
                         jogoActual.resetJogada();
                         cardAdapter.resetImageViews();
+                        //cardAdapter.resetPosImageViews();
                         //incrementar contador de acertadas
                     } else {
                         //Aguarda 2seg antes de virar cartas, etc;
@@ -78,6 +83,7 @@ public class JogoActivity extends AppCompatActivity {
                         cardAdapter.getSegundaImageView().setImageResource(jogoActual.getSegundaCarta().getCardCover());
                         jogoActual.resetJogada();
                         cardAdapter.resetImageViews();
+                        //cardAdapter.resetPosImageViews();
                     }
                     //incrementar contador de jogadas
                 } else {

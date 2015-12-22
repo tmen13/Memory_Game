@@ -9,6 +9,9 @@ import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import tmen.memorygame.Classes.Baralho;
 import tmen.memorygame.Classes.Card;
 import tmen.memorygame.Classes.Jogo;
@@ -19,7 +22,9 @@ import tmen.memorygame.R;
  */
 public class CardAdapter extends BaseAdapter {
     private Context mContext;
+    List<Integer> posImageViewsBloqueadas = new ArrayList<>();
     ImageView primeiraImageView, segundaImageView;
+    //Integer posPrimeiraImageView, posSegundaImageView;
     private Jogo jogoActual; //Se so necessario baralho, alterar!
 
 
@@ -77,6 +82,10 @@ public class CardAdapter extends BaseAdapter {
             }
         }
 
+        if (posImageViewsBloqueadas.contains(position)) {
+            enabled = false;
+        }
+
         return enabled;
     }
 
@@ -84,6 +93,11 @@ public class CardAdapter extends BaseAdapter {
         primeiraImageView = null;
         segundaImageView = null;
     }
+
+    /*public void resetPosImageViews() {
+        posPrimeiraImageView = null;
+        posSegundaImageView = null;
+    }*/
 
     public void blockImageViews(){
         //primeiraImageView.getTag();
@@ -94,6 +108,10 @@ public class CardAdapter extends BaseAdapter {
     public void unlockImageViews(){
         //primeiraImageView.setClickable(true);
         //segundaImageView.setClickable(true);
+    }
+
+    public List<Integer> getImageViewsBloqueadas() {
+        return posImageViewsBloqueadas;
     }
 
     public ImageView getPrimeiraImageView() {
@@ -111,6 +129,22 @@ public class CardAdapter extends BaseAdapter {
     public void setSegundaImageView(ImageView segundaImageView) {
         this.segundaImageView = segundaImageView;
     }
+
+    /*public Integer getPosPrimeiraImageView() {
+        return posPrimeiraImageView;
+    }
+
+    public void setPosPrimeiraImageView(Integer posPrimeiraImageView) {
+        this.posPrimeiraImageView = posPrimeiraImageView;
+    }
+
+    public Integer getPosSegundaImageView() {
+        return posSegundaImageView;
+    }
+
+    public void setPosSegundaImageView(Integer posSegundaImageView) {
+        this.posSegundaImageView = posSegundaImageView;
+    }*/
 
     //private Integer[] mThumbIds = {R.drawable.flags_argentina, R.drawable.flags_australia, R.drawable.flags_belgium, R.drawable.flags_brazil, R.drawable.flags_england, R.drawable.flags_france, R.drawable.flags_germany, R.drawable.flags_italy, R.drawable.flags_mexico, R.drawable.flags_netherlands, R.drawable.flags_portugal, R.drawable.flags_russia, R.drawable.flags_spain, R.drawable.flags_switzerland, R.drawable.flags_usa};
 
