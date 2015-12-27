@@ -47,14 +47,3 @@ public final class geradorBaralhos {
         listaBaralhos.add(baralho);
     }
 }
-
-
-/*
-switch (tema) {
-        case "Bandeiras":
-        //Switch nivel
-
-        break;
-default:
-        break;
-        } */

@@ -1,9 +1,6 @@
 package tmen.memorygame.Activities;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -11,6 +8,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -31,6 +29,8 @@ public class JogoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_jogo);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        final TextView tvJogadas = (TextView)findViewById(R.id.numJogadasTV);
+        tvJogadas.setText("0");
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -70,14 +70,13 @@ public class JogoActivity extends AppCompatActivity {
                         //cardAdapter.resetPosImageViews();
                         //incrementar contador de acertadas
                     } else {
-                        //Aguarda 2seg antes de virar cartas, etc;
-                        /*
+                        //Aguarda 1seg antes de virar cartas, etc;
                         try {
-                            Thread.sleep(3000);
+                            Thread.sleep(1000);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
-                        */
+
                         //cardAdapter.unlockImageViews();
                         cardAdapter.getPrimeiraImageView().setImageResource(jogoActual.getPrimeiraCarta().getCardCover());
                         cardAdapter.getSegundaImageView().setImageResource(jogoActual.getSegundaCarta().getCardCover());
@@ -85,7 +84,8 @@ public class JogoActivity extends AppCompatActivity {
                         cardAdapter.resetImageViews();
                         //cardAdapter.resetPosImageViews();
                     }
-                    //incrementar contador de jogadas
+                    jogoActual.incJogadas();
+                    tvJogadas.setText(Integer.toString(jogoActual.getNumJogadas()));
                 } else {
                     Log.e("MemoryGameJogoActivity","Erro");
                 }

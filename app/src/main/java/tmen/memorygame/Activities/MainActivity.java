@@ -1,7 +1,9 @@
 package tmen.memorygame.Activities;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -68,14 +70,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-/*        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });*/
+    }
+
+    @Override
+    public void onBackPressed() {
+        doExit();
     }
 
     @Override
@@ -110,5 +109,24 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void doExit() {
+
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(
+                MainActivity.this);
+
+        alertDialog.setPositiveButton(R.string.sim, new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                finish();
+            }
+        });
+
+        alertDialog.setNegativeButton(R.string.nao, null);
+        alertDialog.setMessage(R.string.confima_sair);
+        alertDialog.setTitle(R.string.app_name);
+        alertDialog.show();
     }
 }

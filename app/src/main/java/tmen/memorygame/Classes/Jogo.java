@@ -9,10 +9,12 @@ public class Jogo {
     private String tema;
     private int nivel;
     private Baralho baralho;
+    private int contaJogadas;
     private Card primeiraCarta, segundaCarta;
 
     // Jogo jogo = new Jogo(getApplicationContext);
     public Jogo (Context mContext, String tema, int nivel) {
+        this.contaJogadas = 0;
         this.mContext = mContext;
         this.tema = tema;
         this.nivel = nivel;
@@ -33,6 +35,14 @@ public class Jogo {
 
     public Card getPrimeiraCarta() {
         return primeiraCarta;
+    }
+
+    public int getNumJogadas(){
+        return contaJogadas;
+    }
+
+    public void incJogadas(){
+        contaJogadas++;
     }
 
     public void setPrimeiraCarta(Card primeiraCarta) {
