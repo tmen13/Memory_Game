@@ -6,14 +6,13 @@ import android.media.Image;
 import tmen.memorygame.R;
 
 public class Card {
-    int cardCover = R.mipmap.ic_card_cover;
-    int cardFront = -1;
-    /*static*/ int cardID = /*0*/-1;
+    protected int cardCover = R.mipmap.ic_card_cover;
+    protected int cardFront = -1;
+    protected int cardID = 0;
 
     public Card(int cardID, int cardFront) {
         this.cardID = cardID;
         this.cardFront = cardFront;
-        //cardID++;
     }
 
     public int getCardCover() {

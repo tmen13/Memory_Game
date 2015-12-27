@@ -3,13 +3,6 @@ package tmen.memorygame.Classes;
         import android.content.Context;
         import android.util.Log;
 
-        import java.util.ArrayList;
-
-        import tmen.memorygame.R;
-
-/**
- * Created by Ricardo on 20/12/2015.
- */
 public class Jogo {
     private Context mContext;
 
@@ -23,7 +16,7 @@ public class Jogo {
         this.mContext = mContext;
         this.tema = tema;
         this.nivel = nivel;
-        this.baralho = new Baralho(tema, nivel);
+        this.baralho = geradorBaralhos.getBaralhoPorTema(tema);
     }
 
     public String getTema() {

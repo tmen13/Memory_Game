@@ -3,7 +3,7 @@ package tmen.memorygame.Activities;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v4.content.res.TypedArrayUtils;
+
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -13,18 +13,17 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import java.lang.reflect.Array;
-import java.util.Arrays;
+import java.util.ArrayList;
 
 import tmen.memorygame.Adapters.CardAdapter;
-import tmen.memorygame.Classes.Baralho;
-import tmen.memorygame.Classes.Card;
 import tmen.memorygame.Classes.Jogo;
+import tmen.memorygame.Classes.geradorBaralhos;
 import tmen.memorygame.R;
 
 public class JogoActivity extends AppCompatActivity {
 
     Jogo jogoActual;
+    ArrayList<String> listaTemas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +35,8 @@ public class JogoActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //Buscar tema e nivel ao intent
-
+        geradorBaralhos.criaBaralhos();
+        listaTemas = geradorBaralhos.getTemas();
         jogoActual = new Jogo(getApplicationContext(),"Bandeiras",0);
 
         GridView gridview = (GridView) findViewById(R.id.tabuleiroGridView);
@@ -91,21 +91,6 @@ public class JogoActivity extends AppCompatActivity {
                 }
             }
         });
-
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
     }
-
-
-
-
 
 }
