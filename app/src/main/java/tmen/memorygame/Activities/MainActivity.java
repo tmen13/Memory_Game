@@ -41,8 +41,6 @@ public class MainActivity extends AppCompatActivity {
         singlePlayerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(),"SinglePlayer",Toast.LENGTH_SHORT).show();
-
                 Intent intent = new Intent(getApplicationContext(), EscolheTemaActivity.class);
                 startActivity(intent);
             }
@@ -51,8 +49,6 @@ public class MainActivity extends AppCompatActivity {
         multiPlayerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(),"MultiPlayer",Toast.LENGTH_SHORT).show();
-
                 Intent intent = new Intent(getApplicationContext(), TesteActivity.class);
                 startActivity(intent);
             }
@@ -61,8 +57,6 @@ public class MainActivity extends AppCompatActivity {
         multiPlayerOnBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(),"MultiPlayerOn",Toast.LENGTH_SHORT).show();
-
                 Intent intent = new Intent(getApplicationContext(), MenuMultiPlayerOnActivity.class);
                 startActivity(intent);
             }
@@ -71,8 +65,6 @@ public class MainActivity extends AppCompatActivity {
         historicoBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(),"Histórico",Toast.LENGTH_SHORT).show();
-
                 Intent intent = new Intent(getApplicationContext(), HistoricoActivity.class);
                 startActivity(intent);
             }
