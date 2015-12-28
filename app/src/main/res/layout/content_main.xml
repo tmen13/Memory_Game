@@ -12,39 +12,76 @@
     tools:context="tmen.memorygame.Activities.MainActivity"
     tools:showIn="@layout/activity_main"
     android:orientation="vertical"
-    android:gravity="center_horizontal">
+    android:weightSum="5">
 
 
-    <TextView
-        android:layout_width="wrap_content"
+    <ImageView
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/app_name"
-        android:id="@+id/textView" />
+        android:id="@+id/imageView"
+        android:src="@drawable/ic_menu_logo"
+        android:layout_gravity="center"
+        android:contentDescription=""
+        android:scaleType="fitXY"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_weight="1" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/menu_singleplayer"
-        android:id="@+id/singlePlayerBtn"
-        />
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="278dp"
+        android:layout_height="297dp"
+        android:weightSum="4"
+        android:layout_gravity="center">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/menu_multiplayer"
-        android:id="@+id/multiPlayerBtn" />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:text="@string/menu_singleplayer"
+            android:id="@+id/singlePlayerBtn"
+            android:textStyle="bold"
+            android:background="@drawable/ic_button_bg"
+            android:width="220dp"
+            android:layout_weight="1"
+            android:textColor="#ffffff"
+            android:textSize="19dp" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/menu_multiplayer_on"
-        android:id="@+id/multiPlayerOnBtn" />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:text="@string/menu_multiplayer"
+            android:id="@+id/multiPlayerBtn"
+            android:textStyle="bold"
+            android:background="@drawable/ic_button_bg"
+            android:width="220dp"
+            android:layout_weight="1"
+            android:textColor="#ffffff"
+            android:textSize="19dp" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/menu_historico"
-        android:id="@+id/historicoBtn" />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:text="@string/menu_multiplayer_on"
+            android:id="@+id/multiPlayerOnBtn"
+            android:textStyle="bold"
+            android:background="@drawable/ic_button_bg"
+            android:width="220dp"
+            android:layout_weight="1"
+            android:textColor="#ffffff"
+            android:textSize="19dp" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:text="@string/menu_historico"
+            android:id="@+id/historicoBtn"
+            android:textStyle="bold"
+            android:background="@drawable/ic_button_bg"
+            android:width="220dp"
+            android:layout_weight="1"
+            android:textColor="#ffffff"
+            android:textSize="19dp" />
+    </LinearLayout>
 
 </LinearLayout>

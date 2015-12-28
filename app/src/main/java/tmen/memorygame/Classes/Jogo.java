@@ -1,24 +1,33 @@
 package tmen.memorygame.Classes;
 
-        import android.content.Context;
-        import android.util.Log;
+import android.content.Context;
+import android.util.Log;
 
 public class Jogo {
     private Context mContext;
-
     private String tema;
     private int nivel;
     private Baralho baralho;
     private int contaJogadas;
+    private int pontuacao;
     private Card primeiraCarta, segundaCarta;
 
     // Jogo jogo = new Jogo(getApplicationContext);
     public Jogo (Context mContext, String tema, int nivel) {
         this.contaJogadas = 0;
+        this.pontuacao = 0;
         this.mContext = mContext;
         this.tema = tema;
         this.nivel = nivel;
         this.baralho = geradorBaralhos.getBaralhoPorTema(tema);
+    }
+
+    public void incPontuacao(){
+        pontuacao++;
+    }
+
+    public int getPontuacao(){
+        return pontuacao;
     }
 
     public String getTema() {

@@ -2,6 +2,7 @@ package tmen.memorygame.Activities;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -25,10 +26,17 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        String fontPath = "fonts/CarterOne.ttf";
+        Typeface tf = Typeface.createFromAsset(getAssets(), fontPath);
         singlePlayerBtn = (Button) findViewById(R.id.singlePlayerBtn);
         multiPlayerBtn = (Button) findViewById(R.id.multiPlayerBtn);
         multiPlayerOnBtn = (Button) findViewById(R.id.multiPlayerOnBtn);
         historicoBtn = (Button) findViewById(R.id.historicoBtn);
+
+        singlePlayerBtn.setTypeface(tf);
+        multiPlayerBtn.setTypeface(tf);
+        multiPlayerOnBtn.setTypeface(tf);
+        historicoBtn.setTypeface(tf);
 
         singlePlayerBtn.setOnClickListener(new View.OnClickListener() {
             @Override

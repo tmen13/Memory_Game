@@ -62,14 +62,15 @@ public class JogoActivity extends AppCompatActivity {
                     jogoActual.setSegundaCarta(cardAdapter.getItem(position));
 
                     if (jogoActual.verificaJogada()) {
-                        //cardAdapter.blockImageViews();
+                        cardAdapter.blockImageViews();
                         cardAdapter.getImageViewsBloqueadas().add(Integer.parseInt(cardAdapter.getPrimeiraImageView().getTag().toString()));
                         cardAdapter.getImageViewsBloqueadas().add(Integer.parseInt(cardAdapter.getSegundaImageView().getTag().toString()));
                         jogoActual.resetJogada();
                         cardAdapter.resetImageViews();
-                        //cardAdapter.resetPosImageViews();
-                        //incrementar contador de acertadas
-                    } else {
+                        cardAdapter.resetPosImageViews();
+                        jogoActual.incPontuacao();
+
+                     } else {
                         //Aguarda 1seg antes de virar cartas, etc;
                         try {
                             Thread.sleep(1000);
