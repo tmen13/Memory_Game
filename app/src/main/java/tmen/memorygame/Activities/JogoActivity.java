@@ -1,5 +1,6 @@
 package tmen.memorygame.Activities;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +11,11 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import java.io.BufferedReader;
+import java.io.PrintWriter;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.util.List;
 
 
@@ -19,9 +25,32 @@ import tmen.memorygame.Classes.GeradorBaralhos;
 import tmen.memorygame.R;
 
 public class JogoActivity extends AppCompatActivity {
+    public static final int SINGLEPLAYER = 0;
+    public static final int MULTIPLAYER = 1;
+    public static final int MULTIPLAYERONLINE = 2;
+    public static final int SERVER = 0;
+    public static final int CLIENT = 1;
+    public static final int ME = 0;
+    public static final int OTHER = 1;
+    private static final int PORT = 8899;
+
+    int mode = SERVER;
+
+    ProgressDialog pd = null;
+
+    ServerSocket serverSocket=null;
+    Socket socketGame = null;
+    BufferedReader input;
+    PrintWriter output;
+    Handler procMsg = null;
+
+    int tentativas[] = { 0, 0 };
+    int acertadas[] = { 0, 0 };
 
     Jogo jogoActual;
-    List<String> listaTemas;
+    //List<String> listaTemas;
+
+    TextView jogadasTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,9 +59,8 @@ public class JogoActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
-        final TextView tvJogadas = (TextView)findViewById(R.id.numJogadasTV);
-        tvJogadas.setText("0");
+        jogadasTextView = (TextView)findViewById(R.id.numJogadasTV);
+        jogadasTextView.setText("0");
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -78,10 +106,9 @@ public class JogoActivity extends AppCompatActivity {
                                 cardAdapter.resetImageViews();
                             }
                         }, 1500);
-
                     }
                     jogoActual.incJogadas();
-                    tvJogadas.setText(Integer.toString(jogoActual.getNumJogadas()));
+                    jogadasTextView.setText(Integer.toString(jogoActual.getNumJogadas()));
                 } else {
                     Log.e("MemoryGameJogoActivity", "Erro");
                 }

@@ -77,6 +77,10 @@ public class CardAdapter extends BaseAdapter {
             }
         }
 
+        if (primeiraImageView != null && segundaImageView != null) {
+            enabled = false;
+        }
+
         if (posImageViewsBloqueadas.contains(position)) {
             enabled = false;
         }
