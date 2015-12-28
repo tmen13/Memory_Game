@@ -19,7 +19,7 @@ public class Jogo {
         this.mContext = mContext;
         this.tema = tema;
         this.nivel = nivel;
-        this.baralho = geradorBaralhos.getBaralhoPorTema(tema);
+        this.baralho = GeradorBaralhos.getBaralhoPorTema(tema);
     }
 
     public void incPontuacao(){

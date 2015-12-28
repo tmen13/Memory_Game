@@ -9,10 +9,12 @@ public class Card {
     protected int cardCover = R.mipmap.ic_card_cover;
     protected int cardFront = -1;
     protected int cardID = 0;
+    protected String tema;
 
-    public Card(int cardID, int cardFront) {
+    public Card(int cardID, int cardFront, String tema) {
         this.cardID = cardID;
         this.cardFront = cardFront;
+        this.tema = tema;
     }
 
     public int getCardCover() {
@@ -25,5 +27,9 @@ public class Card {
 
     public /*static*/ int getCardID() {
         return cardID;
+    }
+
+    public String getTema() {
+        return tema;
     }
 }
