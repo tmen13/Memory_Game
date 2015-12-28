@@ -1,6 +1,7 @@
 package tmen.memorygame.Activities;
 
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +11,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import tmen.memorygame.Classes.Card;
+import tmen.memorygame.Classes.MySharedPreferences;
 import tmen.memorygame.R;
 
 public class TesteActivity extends AppCompatActivity {
@@ -20,9 +22,6 @@ public class TesteActivity extends AppCompatActivity {
     TextView tv;
     Button bt;
 
-    SharedPreferences preferences;
-    SharedPreferences.Editor editor;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,29 +29,22 @@ public class TesteActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        editor = preferences.edit();
+
         tv = (TextView)findViewById(R.id.tv1);
+
         bt = (Button)findViewById(R.id.imgBt);
-        addToSharedPref(PREF_PLAYERNAME, "tmen13");
+        MySharedPreferences.addToSharedPref(getApplicationContext(), PREF_PLAYERNAME, Build.MODEL);
         //Card carta = new Card(0);
 
         //bt.setBackgroundResource(carta.getCardCover());
         bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tv.setText(preferences.getString(PREF_PLAYERNAME, ""));
+                tv.setText(MySharedPreferences.getSharedPref(getApplicationContext(),PREF_PLAYERNAME));
             }
         });
     }
 
-    public void addToSharedPref(String key, String obj){
-        editor.putString(key, obj);
-        editor.apply();
-    }
 
-    public String getSharedPref(String key){
-        return preferences.getString(key, "");
-    }
 
 }

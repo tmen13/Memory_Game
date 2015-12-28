@@ -1,6 +1,7 @@
 package tmen.memorygame.Activities;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -11,7 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import tmen.memorygame.Adapters.CardAdapter;
 import tmen.memorygame.Classes.Jogo;
@@ -21,7 +22,7 @@ import tmen.memorygame.R;
 public class JogoActivity extends AppCompatActivity {
 
     Jogo jogoActual;
-    ArrayList<String> listaTemas;
+    List<String> listaTemas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,17 +73,23 @@ public class JogoActivity extends AppCompatActivity {
 
                      } else {
                         //Aguarda 1seg antes de virar cartas, etc;
-                        try {
+                       /* try {
                             Thread.sleep(1000);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
-                        }
-
+                        } */
+                        final Handler handler = new Handler();
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                cardAdapter.getPrimeiraImageView().setImageResource(jogoActual.getPrimeiraCarta().getCardCover());
+                                cardAdapter.getSegundaImageView().setImageResource(jogoActual.getSegundaCarta().getCardCover());
+                                jogoActual.resetJogada();
+                                cardAdapter.resetImageViews();
+                            }
+                        }, 1500);
                         //cardAdapter.unlockImageViews();
-                        cardAdapter.getPrimeiraImageView().setImageResource(jogoActual.getPrimeiraCarta().getCardCover());
-                        cardAdapter.getSegundaImageView().setImageResource(jogoActual.getSegundaCarta().getCardCover());
-                        jogoActual.resetJogada();
-                        cardAdapter.resetImageViews();
+
                         //cardAdapter.resetPosImageViews();
                     }
                     jogoActual.incJogadas();
