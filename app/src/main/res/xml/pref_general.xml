@@ -3,7 +3,7 @@
     <!-- NOTE: EditTextPreference accepts EditText attributes. -->
     <!-- NOTE: EditTextPreference's summary should be set to its value by the activity code. -->
     <EditTextPreference
-        android:key="example_text"
+        android:key="pref_nome_jogador"
         android:title="@string/pref_title_display_name"
         android:defaultValue="@string/pref_default_display_name"
         android:selectAllOnFocus="true"
@@ -16,11 +16,11 @@
          dismiss it. -->
     <!-- NOTE: ListPreference's summary should be set to its value by the activity code. -->
     <ListPreference
-        android:key="example_list"
+        android:key="pref_idioma"
         android:title="@string/pref_escolhe_idioma"
-        android:defaultValue="-1"
+        android:defaultValue="pt"
         android:entries="@array/pref_lista_idiomas"
-        android:entryValues="@array/pref_lista_idiomas"
+        android:entryValues="@array/pref_lista_idiomas_val"
         android:negativeButtonText="@null"
         android:positiveButtonText="@null" />
 
