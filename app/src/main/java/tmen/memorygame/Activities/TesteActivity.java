@@ -16,8 +16,8 @@ import tmen.memorygame.R;
 
 public class TesteActivity extends AppCompatActivity {
 
-    public static final String PREF_PLAYERNAME = "playername";
-    public static final String PREF_LANG = "lang";
+    public static final String PREF_PLAYERNAME = "pref_nome_jogador";
+    public static final String PREF_LANG = "pref_idioma";
 
     TextView tv;
     Button bt;
@@ -33,10 +33,7 @@ public class TesteActivity extends AppCompatActivity {
         tv = (TextView)findViewById(R.id.tv1);
 
         bt = (Button)findViewById(R.id.imgBt);
-        MySharedPreferences.addToSharedPref(getApplicationContext(), PREF_PLAYERNAME, Build.MODEL);
-        //Card carta = new Card(0);
 
-        //bt.setBackgroundResource(carta.getCardCover());
         bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
