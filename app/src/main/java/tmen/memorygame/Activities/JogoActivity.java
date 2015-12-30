@@ -1,6 +1,8 @@
 package tmen.memorygame.Activities;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -9,14 +11,23 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.net.Inet4Address;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketException;
+import java.util.Enumeration;
 import java.util.List;
 
 
@@ -60,6 +71,7 @@ public class JogoActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.i("MemoryGame","onCreate");
         setContentView(R.layout.activity_jogo);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -86,9 +98,9 @@ public class JogoActivity extends AppCompatActivity {
                 tema = "Bandeiras";
                 nivel = 0; //Alterar para ultimo nivel
             }
-
-
         }
+
+        procMsg = new Handler();
 
         String str = "Type " + type + " " + "Mode " + mode + " " + "Tema " + tema + " " + "Nivel " + nivel;
         Log.d("MemoryGame",str);
@@ -143,10 +155,192 @@ public class JogoActivity extends AppCompatActivity {
             }
         });
 
-        if (type == MULTIPLAYERONLINE) {
 
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.i("MemoryGame","onResume");
+        switch (type) {
+            case SINGLEPLAYER:
+
+                break;
+            case MULTIPLAYER:
+                break;
+            case MULTIPLAYERONLINE:
+                if (mode == SERVER)
+                    server();
+                else  // CLIENT
+                    clientDlg();
+                break;
+            default:
+                break;
         }
     }
 
+    protected void onPause() {
+        super.onPause();
+        try {
+            commThread.interrupt();
+            if (socketGame != null)
+                socketGame.close();
+            if (output != null)
+                output.close();
+            if (input != null)
+                input.close();
+        } catch (Exception e) {
+        }
+        input = null;
+        output = null;
+        socketGame = null;
+    };
+
+    void server() {
+        // WifiManager wm = (WifiManager) getSystemService(WIFI_SERVICE);
+        // String ip = Formatter.formatIpAddress(wm.getConnectionInfo()
+        // .getIpAddress());
+        String ip = getLocalIpAddress();
+        pd = new ProgressDialog(this);
+        pd.setMessage(getString(R.string.serverdlg_msg) + "\n(IP: " + ip
+                + ")");
+        pd.setTitle(R.string.serverdlg_title);
+        pd.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                finish();
+                if (serverSocket != null) {
+                    try {
+                        serverSocket.close();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                    serverSocket = null;
+                }
+            }
+        });
+        pd.show();
+
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    serverSocket = new ServerSocket(PORT);
+                    socketGame = serverSocket.accept();
+                    serverSocket.close();
+                    serverSocket=null;
+                    commThread.start();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    socketGame = null;
+                }
+                procMsg.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        pd.dismiss();
+                        if (socketGame == null)
+                            finish();
+                    }
+                });
+            }
+        });
+        t.start();
+    }
+
+    void clientDlg() {
+        final EditText edtIP = new EditText(this);
+        edtIP.setText("10.0.2.2");
+        AlertDialog ad = new AlertDialog.Builder(this).setTitle(R.string.clientdlg_title)
+                .setMessage("Server IP").setView(edtIP)
+                .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        client(edtIP.getText().toString(), PORT); // to test with emulators: PORTaux);
+                    }
+                }).setOnCancelListener(new DialogInterface.OnCancelListener() {
+                    @Override
+                    public void onCancel(DialogInterface dialog) {
+                        finish();
+                    }
+                }).create();
+        ad.show();
+    }
+
+    void client(final String strIP, final int Port) {
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Log.d("MemoryGame", "Connecting to the server  " + strIP);
+                    socketGame = new Socket(strIP, Port);
+                } catch (Exception e) {
+                    socketGame = null;
+                }
+                if (socketGame == null) {
+                    procMsg.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            finish();
+                        }
+                    });
+                    return;
+                }
+                commThread.start();
+            }
+        });
+        t.start();
+    }
+
+    Thread commThread = new Thread(new Runnable() {
+        @Override
+        public void run() {
+            try {
+                input = new BufferedReader(new InputStreamReader(
+                        socketGame.getInputStream()));
+                output = new PrintWriter(socketGame.getOutputStream());
+                while (!Thread.currentThread().isInterrupted()) {
+                    String read = input.readLine();
+                    final int move = Integer.parseInt(read);
+                    Log.d("MemoryGame", "Received: " + move);
+                    procMsg.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            //moveOtherPlayer(move);
+                        }
+                    });
+                }
+            } catch (Exception e) {
+                procMsg.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        finish();
+                        Toast.makeText(getApplicationContext(),
+                                "The game was finished", Toast.LENGTH_LONG)
+                                .show();
+                    }
+                });
+            }
+        }
+    });
+
+    public static String getLocalIpAddress() {
+        try {
+            for (Enumeration<NetworkInterface> en = NetworkInterface
+                    .getNetworkInterfaces(); en.hasMoreElements();) {
+                NetworkInterface intf = en.nextElement();
+                for (Enumeration<InetAddress> enumIpAddr = intf
+                        .getInetAddresses(); enumIpAddr.hasMoreElements();) {
+                    InetAddress inetAddress = enumIpAddr.nextElement();
+                    if (!inetAddress.isLoopbackAddress()
+                            && inetAddress instanceof Inet4Address) {
+                        return inetAddress.getHostAddress();
+                    }
+                }
+            }
+        } catch (SocketException ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
 }

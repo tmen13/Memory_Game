@@ -18,6 +18,9 @@
     <string name="title_activity_escolhe_nivel">Pick a level:</string>
     <string name="title_activity_historico">History</string>
     <string name="title_activity_jogo">Play</string>
+    <string name="serverdlg_title">MemoryGame Server</string>
+    <string name="serverdlg_msg">Waiting for a client...</string>
+    <string name="clientdlg_title">MemoryGame Client</string>
     <string name="title_activity_settings">Settings</string>
     <string name="sim">Yes</string>
     <string name="nao">No</string>

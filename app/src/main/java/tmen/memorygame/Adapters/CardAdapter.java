@@ -54,7 +54,12 @@ public class CardAdapter extends BaseAdapter {
         }
 
         imageView.setTag(String.valueOf(position));
-        imageView.setImageResource(getItem(position).getCardCover());
+        if (posImageViewsBloqueadas.contains(position)) {
+            imageView.setImageResource(getItem(position).getCardFront());
+        } else {
+            imageView.setImageResource(getItem(position).getCardCover());
+        }
+
         return imageView;
     }
 
