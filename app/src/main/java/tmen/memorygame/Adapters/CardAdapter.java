@@ -63,12 +63,16 @@ public class CardAdapter extends BaseAdapter {
         if (primeiraImageView != null) {
             if (Integer.parseInt(primeiraImageView.getTag().toString()) == position) {
                 imageView.setImageResource(getItem(position).getCardFront());
+            } else {
+                imageView.setImageResource(getItem(position).getCardCover());
             }
         }
 
         if (segundaImageView != null) {
             if (Integer.parseInt(segundaImageView.getTag().toString()) == position) {
                 imageView.setImageResource(getItem(position).getCardFront());
+            } else {
+                imageView.setImageResource(getItem(position).getCardCover());
             }
         }
 
