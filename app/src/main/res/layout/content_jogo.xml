@@ -97,6 +97,11 @@
 
             <LinearLayout
                 android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"></LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
@@ -165,6 +170,7 @@
                         android:text="New Text"
                         android:id="@+id/textView14" />
                 </LinearLayout>
+
             </LinearLayout>
         </LinearLayout>
 
