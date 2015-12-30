@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), EscolheTemaActivity.class);
+                intent.putExtra("type",JogoActivity.SINGLEPLAYER);
                 startActivity(intent);
             }
         });
@@ -50,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), TesteActivity.class);
+                intent.putExtra("type",JogoActivity.MULTIPLAYER);
                 startActivity(intent);
             }
         });
@@ -58,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), MenuMultiPlayerOnActivity.class);
+                intent.putExtra("type",JogoActivity.MULTIPLAYERONLINE);
                 startActivity(intent);
             }
         });

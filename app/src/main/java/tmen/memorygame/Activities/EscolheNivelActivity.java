@@ -14,6 +14,9 @@ import tmen.memorygame.R;
 
 public class EscolheNivelActivity extends AppCompatActivity {
 
+    private int type = JogoActivity.SINGLEPLAYER;
+    private String tema = "";
+
     Button button;
 
     @Override
@@ -25,14 +28,23 @@ public class EscolheNivelActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        Intent intent = getIntent();
+        if (intent != null) {
+            type = intent.getIntExtra("type", JogoActivity.SINGLEPLAYER);
+            tema = intent.getStringExtra("tema");
+        }
+
         button = (Button) findViewById(R.id.escolheNivelButton);
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "Jogo", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), "Jogo", Toast.LENGTH_SHORT).show();
 
                 Intent intent = new Intent(getApplicationContext(), JogoActivity.class);
+                intent.putExtra("type",type);
+                intent.putExtra("tema",tema);
+                intent.putExtra("nivel",0);
                 startActivity(intent);
             }
         });

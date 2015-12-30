@@ -1,6 +1,7 @@
 package tmen.memorygame.Activities;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -34,6 +35,9 @@ public class JogoActivity extends AppCompatActivity {
     public static final int OTHER = 1;
     private static final int PORT = 8899;
 
+    String tema = "";
+    int nivel = 0;
+    int type = SINGLEPLAYER;
     int mode = SERVER;
 
     ProgressDialog pd = null;
@@ -46,6 +50,7 @@ public class JogoActivity extends AppCompatActivity {
 
     int tentativas[] = { 0, 0 };
     int acertadas[] = { 0, 0 };
+    int intrusosAcertados[] = { 0, 0 };
 
     Jogo jogoActual;
     //List<String> listaTemas;
@@ -59,12 +64,35 @@ public class JogoActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         jogadasTextView = (TextView)findViewById(R.id.numJogadasTV);
         jogadasTextView.setText("0");
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Intent intent = getIntent();
+        if (intent != null) {
+            type = intent.getIntExtra("type", SINGLEPLAYER);
+            if (type == SINGLEPLAYER) {
+                tema = intent.getStringExtra("tema");
+                nivel = intent.getIntExtra("nivel",0);
+            }
+            if (type == MULTIPLAYER) {
+                tema = "Bandeiras";
+                nivel = 0; //Alterar para ultimo nivel
+            }
 
-        //Buscar tema e nivel ao intent
+            if (type == MULTIPLAYERONLINE) {
+                mode = intent.getIntExtra("mode", SERVER);
+                tema = "Bandeiras";
+                nivel = 0; //Alterar para ultimo nivel
+            }
+
+
+        }
+
+        String str = "Type " + type + " " + "Mode " + mode + " " + "Tema " + tema + " " + "Nivel " + nivel;
+        Log.d("MemoryGame",str);
+
         GeradorBaralhos.criaBaralhos();
         //listaTemas = GeradorBaralhos.getTemas();
         jogoActual = new Jogo(getApplicationContext(),"Bandeiras",0);
@@ -114,6 +142,11 @@ public class JogoActivity extends AppCompatActivity {
                 }
             }
         });
+
+        if (type == MULTIPLAYERONLINE) {
+
+
+        }
     }
 
 }

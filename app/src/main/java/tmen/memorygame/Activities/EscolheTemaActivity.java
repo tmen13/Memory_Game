@@ -14,6 +14,8 @@ import tmen.memorygame.R;
 
 public class EscolheTemaActivity extends AppCompatActivity {
 
+    private int type = JogoActivity.SINGLEPLAYER;
+
     Button btn;
 
     @Override
@@ -25,14 +27,20 @@ public class EscolheTemaActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        Intent intentMain = getIntent();
+        if (intentMain != null) {
+            type = intentMain.getIntExtra("type",JogoActivity.SINGLEPLAYER);
+        }
+
         btn = (Button) findViewById(R.id.escolheTemaButton);
 
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "EscolheNivel", Toast.LENGTH_SHORT).show();
-
+                //Toast.makeText(getApplicationContext(), "EscolheNivel", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getApplicationContext(), EscolheNivelActivity.class);
+                intent.putExtra("type", type);
+                intent.putExtra("tema","Bandeiras");
                 startActivity(intent);
             }
         });
