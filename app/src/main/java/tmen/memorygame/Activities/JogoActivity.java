@@ -9,6 +9,7 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
@@ -34,6 +35,7 @@ import java.util.List;
 import tmen.memorygame.Adapters.CardAdapter;
 import tmen.memorygame.Classes.Jogo;
 import tmen.memorygame.Classes.GeradorBaralhos;
+import tmen.memorygame.Classes.MySharedPreferences;
 import tmen.memorygame.R;
 
 public class JogoActivity extends AppCompatActivity {
@@ -62,20 +64,34 @@ public class JogoActivity extends AppCompatActivity {
     Jogo jogoActual;
     //List<String> listaTemas;
 
-    TextView jogadasTextView;
+    //TextView jogadasTextView;
+    TextView nomeJogador1TextView, tentativasJogador1TextView, acertadasJogador1TextView, intrusosJogador1TextView;
+    TextView nomeJogador2TextView, tentativasJogador2TextView, acertadasJogador2TextView, intrusosJogador2TextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.i("MemoryGame","onCreate");
+        Log.i("MemoryGame", "onCreate");
         setContentView(R.layout.activity_jogo);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        jogadasTextView = (TextView)findViewById(R.id.numJogadasTV);
-        jogadasTextView.setText("0");
+        //jogadasTextView = (TextView)findViewById(R.id.numJogadasTV);
+        //jogadasTextView.setText("0");
+
+        nomeJogador1TextView = (TextView)findViewById(R.id.nomeJogador1TextView);
+        tentativasJogador1TextView = (TextView)findViewById(R.id.tentativasJogador1TextView);
+        acertadasJogador1TextView = (TextView)findViewById(R.id.acertadasJogador1TextView);
+        intrusosJogador1TextView = (TextView)findViewById(R.id.intrusosJogador1TextView);
+
+        nomeJogador2TextView = (TextView)findViewById(R.id.nomeJogador2TextView);
+        tentativasJogador2TextView = (TextView)findViewById(R.id.tentativasJogador2TextView);
+        acertadasJogador2TextView = (TextView)findViewById(R.id.acertadasJogador2TextView);
+        intrusosJogador2TextView = (TextView)findViewById(R.id.intrusosJogador2TextView);
+
+        nomeJogador1TextView.setText(MySharedPreferences.getSharedPref(getApplicationContext(), SettingsActivity.PREF_PLAYERNAME));
 
         Intent intent = getIntent();
         if (intent != null) {
@@ -85,13 +101,13 @@ public class JogoActivity extends AppCompatActivity {
                 nivel = intent.getIntExtra("nivel",0);
             }
             if (type == MULTIPLAYER) {
-                tema = "Bandeiras";
+                tema = "Bandeiras"; //Alterar para aleatorio
                 nivel = 0; //Alterar para ultimo nivel
             }
 
             if (type == MULTIPLAYERONLINE) {
                 mode = intent.getIntExtra("mode", SERVER);
-                tema = "Bandeiras";
+                tema = "Bandeiras"; //Alterar para aleatorio
                 nivel = 0; //Alterar para ultimo nivel
             }
         }
@@ -131,13 +147,34 @@ public class JogoActivity extends AppCompatActivity {
                         if (type == SINGLEPLAYER) {
                             jogoActual.incrementaAcertadas(ME);
                             jogoActual.incrementaTentativas(ME);
+                            tentativasJogador1TextView.setText(String.valueOf(jogoActual.getTentativas(ME)));
+                            acertadasJogador1TextView.setText(String.valueOf(jogoActual.getAcertadas(ME)));
                         }
-                        jogoActual.incPontuacao();
+                        if (type == MULTIPLAYER) {
+                            jogoActual.incrementaAcertadas(jogoActual.getJogadorActual());
+                            jogoActual.incrementaTentativas(jogoActual.getJogadorActual());
+
+                            tentativasJogador1TextView.setText(String.valueOf(jogoActual.getTentativas(ME)));
+                            acertadasJogador1TextView.setText(String.valueOf(jogoActual.getAcertadas(ME)));
+                            tentativasJogador2TextView.setText(String.valueOf(jogoActual.getTentativas(OTHER)));
+                            acertadasJogador2TextView.setText(String.valueOf(jogoActual.getAcertadas(OTHER)));
+
+                        }
+                        //jogoActual.incPontuacao();
 
                     } else {
                         if (type == SINGLEPLAYER) {
                             jogoActual.incrementaTentativas(ME);
+                            tentativasJogador1TextView.setText(String.valueOf(jogoActual.getTentativas(ME)));
                         }
+
+                        if (type == MULTIPLAYER) {
+                            jogoActual.incrementaTentativas(jogoActual.getJogadorActual());
+                            jogoActual.setJogadorActual(jogoActual.getProximoJogador());
+                            tentativasJogador1TextView.setText(String.valueOf(jogoActual.getTentativas(ME)));
+                            tentativasJogador2TextView.setText(String.valueOf(jogoActual.getTentativas(OTHER)));
+                        }
+                        
                         handler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
@@ -151,12 +188,12 @@ public class JogoActivity extends AppCompatActivity {
                             }
                         }, 1500);
                     }
-                    jogoActual.incJogadas();
-                    jogadasTextView.setText(Integer.toString(jogoActual.getNumJogadas()));
+                    //jogoActual.incJogadas();
+                    //jogadasTextView.setText(Integer.toString(jogoActual.getNumJogadas()));
 
                     if (jogoActual.verificaFinal()) {
                         finish();
-                        Toast.makeText(getApplicationContext(),"Fim do Jogo", Toast.LENGTH_SHORT);
+                        Toast.makeText(getApplicationContext(),"Fim do Jogo. Vencedor:" + jogoActual.getVencedor(), Toast.LENGTH_SHORT).show();
                     }
                 } else {
                     Log.e("MemoryGameJogoActivity", "Erro");
@@ -176,6 +213,7 @@ public class JogoActivity extends AppCompatActivity {
 
                 break;
             case MULTIPLAYER:
+                nomeJogador2Dialog();
                 break;
             case MULTIPLAYERONLINE:
                 if (mode == SERVER)
@@ -204,6 +242,88 @@ public class JogoActivity extends AppCompatActivity {
         output = null;
         socketGame = null;
     };
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                doExit();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        doExit();
+    }
+
+    private void doExit() {
+        android.support.v7.app.AlertDialog.Builder alertDialog = new android.support.v7.app.AlertDialog.Builder(
+                JogoActivity.this);
+
+        alertDialog.setPositiveButton(R.string.sim, new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                finish();
+            }
+        });
+
+        alertDialog.setNegativeButton(R.string.nao, null);
+        alertDialog.setMessage(R.string.confima_sair);
+        alertDialog.setTitle(R.string.app_name);
+        alertDialog.show();
+    }
+
+    void nomeJogador2Dialog() {
+        final EditText nomeJogador2EditText = new EditText(this);
+        nomeJogador2EditText.setText("Jogador2");
+
+        android.support.v7.app.AlertDialog.Builder alertDialog = new android.support.v7.app.AlertDialog.Builder(
+                JogoActivity.this);
+
+        alertDialog.setPositiveButton(R.string.sim, new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                nomeJogador2TextView.setText(nomeJogador2EditText.getText().toString());
+            }
+        });
+
+        alertDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                finish();
+            }
+        });
+
+        alertDialog.setMessage("Nome Jogador 2");
+        alertDialog.setTitle(R.string.app_name);
+        alertDialog.setView(nomeJogador2EditText);
+        alertDialog.show();
+
+
+
+
+
+
+        /*AlertDialog ad = new AlertDialog.Builder(this).setTitle(R.string.app_name)
+                .setMessage("Nome Jogador 2").setView(nomeJogador2EditText)
+                .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        nomeJogador2TextView.setText(nomeJogador2EditText.getText().toString());
+                    }
+                }).setOnCancelListener(new DialogInterface.OnCancelListener() {
+                    @Override
+                    public void onCancel(DialogInterface dialog) {
+                        finish();
+                    }
+                }).create();
+        ad.show();*/
+    }
 
     void server() {
         // WifiManager wm = (WifiManager) getSystemService(WIFI_SERVICE);
@@ -325,7 +445,7 @@ public class JogoActivity extends AppCompatActivity {
                     public void run() {
                         finish();
                         Toast.makeText(getApplicationContext(),
-                                "The game was finished", Toast.LENGTH_LONG)
+                                "The game was finished", Toast.LENGTH_SHORT)
                                 .show();
                     }
                 });

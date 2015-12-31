@@ -11,8 +11,8 @@ public class Jogo {
     private String tema;
     private int nivel;
     private Baralho baralho;
-    private int contaJogadas;
-    private int pontuacao;
+    //private int contaJogadas;
+    //private int pontuacao;
     private Card primeiraCarta, segundaCarta;
 
     private int jogadorActual = JogoActivity.ME;
@@ -21,8 +21,8 @@ public class Jogo {
     private int intrusosAcertados[] = { 0, 0 };
 
     public Jogo (Context mContext, int tipo, String tema, int nivel) {
-        this.contaJogadas = 0;
-        this.pontuacao = 0;
+        //this.contaJogadas = 0;
+        //this.pontuacao = 0;
         this.mContext = mContext;
         this.tipo = tipo;
         this.tema = tema;
@@ -30,13 +30,13 @@ public class Jogo {
         this.baralho = GeradorBaralhos.getBaralhoPorTema(tema);
     }
 
-    public void incPontuacao(){
+    /*public void incPontuacao(){
         pontuacao++;
     }
 
     public int getPontuacao(){
         return pontuacao;
-    }
+    }*/
 
     public String getTema() {
         return tema;
@@ -54,13 +54,13 @@ public class Jogo {
         return primeiraCarta;
     }
 
-    public int getNumJogadas(){
+    /*public int getNumJogadas(){
         return contaJogadas;
     }
 
     public void incJogadas(){
         contaJogadas++;
-    }
+    }*/
 
     public void setPrimeiraCarta(Card primeiraCarta) {
         this.primeiraCarta = primeiraCarta;
@@ -126,6 +126,10 @@ public class Jogo {
 
     public Boolean verificaFinal() {
         return (((acertadas[JogoActivity.ME] + intrusosAcertados[JogoActivity.ME]) + (acertadas[JogoActivity.OTHER] + intrusosAcertados[JogoActivity.OTHER])) == (baralho.getCartas().size() / 2));
+    }
+
+    public int getVencedor() {
+        return ((acertadas[JogoActivity.ME] > acertadas[JogoActivity.OTHER]) ? JogoActivity.ME : JogoActivity.OTHER);
     }
 
 }

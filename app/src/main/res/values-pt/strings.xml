@@ -21,6 +21,9 @@
     <string name="serverdlg_title">MemoryGame Servidor</string>
     <string name="serverdlg_msg">Á espera de um cliente...</string>
     <string name="clientdlg_title">MemoryGame Cliente</string>
+    <string name="numTentativas">Tentativas:</string>
+    <string name="numAcertadas">Acertadas:</string>
+    <string name="numIntrusos">Intrusos:</string>
     <string name="title_activity_settings">Definições</string>
     <string name="sim">Sim</string>
     <string name="nao">Não</string>

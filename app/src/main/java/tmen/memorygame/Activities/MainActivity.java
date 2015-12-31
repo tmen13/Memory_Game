@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
         multiPlayerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), TesteActivity.class);
+                Intent intent = new Intent(getApplicationContext(), JogoActivity.class);
                 intent.putExtra("type",JogoActivity.MULTIPLAYER);
                 startActivity(intent);
             }
@@ -115,7 +115,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void doExit() {
-
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(
                 MainActivity.this);
 
