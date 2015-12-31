@@ -44,7 +44,7 @@ public class EscolheNivelActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), JogoActivity.class);
                 intent.putExtra("type",type);
                 intent.putExtra("tema",tema);
-                intent.putExtra("nivel",0);
+                intent.putExtra("nivel",5);
                 startActivity(intent);
             }
         });

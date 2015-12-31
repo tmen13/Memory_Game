@@ -15,6 +15,7 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -68,6 +69,8 @@ public class JogoActivity extends AppCompatActivity {
     TextView nomeJogador1TextView, tentativasJogador1TextView, acertadasJogador1TextView, intrusosJogador1TextView;
     TextView nomeJogador2TextView, tentativasJogador2TextView, acertadasJogador2TextView, intrusosJogador2TextView;
 
+    LinearLayout infoJogadorActual, infoJogador2;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,6 +83,9 @@ public class JogoActivity extends AppCompatActivity {
 
         //jogadasTextView = (TextView)findViewById(R.id.numJogadasTV);
         //jogadasTextView.setText("0");
+
+        infoJogadorActual = (LinearLayout)findViewById(R.id.infoJogadorActual);
+        infoJogador2 = (LinearLayout)findViewById(R.id.infoJogador2);
 
         nomeJogador1TextView = (TextView)findViewById(R.id.nomeJogador1TextView);
         tentativasJogador1TextView = (TextView)findViewById(R.id.tentativasJogador1TextView);
@@ -174,7 +180,7 @@ public class JogoActivity extends AppCompatActivity {
                             tentativasJogador1TextView.setText(String.valueOf(jogoActual.getTentativas(ME)));
                             tentativasJogador2TextView.setText(String.valueOf(jogoActual.getTentativas(OTHER)));
                         }
-                        
+
                         handler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
@@ -201,7 +207,32 @@ public class JogoActivity extends AppCompatActivity {
             }
         });
 
-
+        if (type == SINGLEPLAYER) {
+            switch (nivel) {
+                case 1:
+                    gridview.setNumColumns(2); //2x2
+                    break;
+                case 2:
+                    gridview.setNumColumns(2); //3x2
+                    break;
+                case 3:
+                    gridview.setNumColumns(3); //4x3
+                    break;
+                case 4:
+                    gridview.setNumColumns(4); //5x4
+                    break;
+                case 5:
+                    gridview.setNumColumns(5); //6x5
+                    break;
+                case 6:
+                    gridview.setNumColumns(5); //6x5 c/ intruso
+                    break;
+                default:
+                    break;
+            }
+        } else {
+            gridview.setNumColumns(5); //6x5
+        }
     }
 
     @Override
@@ -210,7 +241,8 @@ public class JogoActivity extends AppCompatActivity {
         Log.i("MemoryGame","onResume");
         switch (type) {
             case SINGLEPLAYER:
-
+                infoJogadorActual.setVisibility(LinearLayout.GONE);
+                infoJogador2.setVisibility(LinearLayout.GONE);
                 break;
             case MULTIPLAYER:
                 nomeJogador2Dialog();

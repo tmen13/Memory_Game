@@ -18,12 +18,14 @@
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical|center_horizontal">
 
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:id="@+id/infoJogador1">
 
                 <LinearLayout
                     android:orientation="horizontal"
@@ -98,12 +100,14 @@
                 android:orientation="vertical"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"></LinearLayout>
+                android:layout_weight="1"
+                android:id="@+id/infoJogadorActual"></LinearLayout>
 
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:id="@+id/infoJogador2">
 
                 <LinearLayout
                     android:orientation="horizontal"
@@ -178,7 +182,6 @@
             android:layout_height="wrap_content"
             android:id="@+id/tabuleiroGridView"
             android:columnWidth="75dp"
-            android:numColumns="auto_fit"
             android:verticalSpacing="5dp"
             android:horizontalSpacing="5dp"
             android:stretchMode="columnWidth"
