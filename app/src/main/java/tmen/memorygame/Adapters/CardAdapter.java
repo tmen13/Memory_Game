@@ -1,6 +1,7 @@
 package tmen.memorygame.Adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -19,7 +20,7 @@ import tmen.memorygame.Classes.Jogo;
 public class CardAdapter extends BaseAdapter {
     private Context mContext;
     List<Integer> posImageViewsBloqueadas = new ArrayList<>();
-    ImageView primeiraImageView, segundaImageView;
+    Integer posPrimeiraImageView, posSegundaImageView;
     private Jogo jogoActual; //Se so necessario baralho, alterar!
 
 
@@ -53,26 +54,21 @@ public class CardAdapter extends BaseAdapter {
             imageView = (ImageView) convertView;
         }
 
-        imageView.setTag(String.valueOf(position));
         if (posImageViewsBloqueadas.contains(position)) {
             imageView.setImageResource(getItem(position).getCardFront());
         } else {
             imageView.setImageResource(getItem(position).getCardCover());
         }
 
-        if (primeiraImageView != null) {
-            if (Integer.parseInt(primeiraImageView.getTag().toString()) == position) {
+        if (posPrimeiraImageView != null) {
+            if (posPrimeiraImageView == position) {
                 imageView.setImageResource(getItem(position).getCardFront());
-            } else {
-                imageView.setImageResource(getItem(position).getCardCover());
             }
         }
 
-        if (segundaImageView != null) {
-            if (Integer.parseInt(segundaImageView.getTag().toString()) == position) {
+        if (posSegundaImageView != null) {
+            if (posSegundaImageView == position) {
                 imageView.setImageResource(getItem(position).getCardFront());
-            } else {
-                imageView.setImageResource(getItem(position).getCardCover());
             }
         }
 
@@ -82,23 +78,23 @@ public class CardAdapter extends BaseAdapter {
     public boolean isEnabled(int position) {
         Boolean enabled = true;
 
-        if (primeiraImageView == null && segundaImageView == null) {
+        if (posPrimeiraImageView == null && posSegundaImageView == null) {
             enabled = true;
         }
 
-        if (primeiraImageView != null) {
-            if (String.valueOf(position) == primeiraImageView.getTag()) {
+        if (posPrimeiraImageView != null) {
+            if (position == posPrimeiraImageView) {
                 enabled = false;
             }
         }
 
-        if (segundaImageView != null) {
-            if (String.valueOf(position) == primeiraImageView.getTag()) {
+        if (posSegundaImageView != null) {
+            if (position == posSegundaImageView) {
                 enabled = false;
             }
         }
 
-        if (primeiraImageView != null && segundaImageView != null) {
+        if (posPrimeiraImageView != null && posSegundaImageView != null) {
             enabled = false;
         }
 
@@ -109,29 +105,28 @@ public class CardAdapter extends BaseAdapter {
         return enabled;
     }
 
-    public void resetImageViews() {
-        primeiraImageView = null;
-        segundaImageView = null;
+    public void resetPosImageViews() {
+        posPrimeiraImageView = null;
+        posSegundaImageView = null;
     }
 
     public List<Integer> getImageViewsBloqueadas() {
         return posImageViewsBloqueadas;
     }
 
-    public ImageView getPrimeiraImageView() {
-        return primeiraImageView;
+    public Integer getPosPrimeiraImageView() {
+        return posPrimeiraImageView;
     }
 
-    public void setPrimeiraImageView(ImageView primeiraImageView) {
-        this.primeiraImageView = primeiraImageView;
+    public void setPosPrimeiraImageView(Integer posPrimeiraImageView) {
+        this.posPrimeiraImageView = posPrimeiraImageView;
     }
 
-    public ImageView getSegundaImageView() {
-        return segundaImageView;
+    public Integer getPosSegundaImageView() {
+        return posSegundaImageView;
     }
 
-    public void setSegundaImageView(ImageView segundaImageView) {
-        this.segundaImageView = segundaImageView;
+    public void setPosSegundaImageView(Integer posSegundaImageView) {
+        this.posSegundaImageView = posSegundaImageView;
     }
-
 }

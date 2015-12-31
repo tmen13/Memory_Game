@@ -57,11 +57,7 @@ public class JogoActivity extends AppCompatActivity {
     Socket socketGame = null;
     BufferedReader input;
     PrintWriter output;
-    Handler procMsg = null;
-
-    int tentativas[] = { 0, 0 };
-    int acertadas[] = { 0, 0 };
-    int intrusosAcertados[] = { 0, 0 };
+    Handler handler = null;
 
     Jogo jogoActual;
     //List<String> listaTemas;
@@ -100,55 +96,68 @@ public class JogoActivity extends AppCompatActivity {
             }
         }
 
-        procMsg = new Handler();
+        handler = new Handler();
 
         String str = "Type " + type + " " + "Mode " + mode + " " + "Tema " + tema + " " + "Nivel " + nivel;
         Log.d("MemoryGame",str);
 
         GeradorBaralhos.criaBaralhos();
         //listaTemas = GeradorBaralhos.getTemas();
-        jogoActual = new Jogo(getApplicationContext(),"Bandeiras",0);
+        jogoActual = new Jogo(getApplicationContext(), type, tema, nivel);
 
-        GridView gridview = (GridView) findViewById(R.id.tabuleiroGridView);
+        final GridView gridview = (GridView) findViewById(R.id.tabuleiroGridView);
         final CardAdapter cardAdapter = new CardAdapter(getApplicationContext(), jogoActual);
         gridview.setAdapter(cardAdapter);
 
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v,
-                                    int position, long id) {
+                                    final int position, long id) {
                 ImageView imageView = (ImageView) v;
 
                 if (jogoActual.getPrimeiraCarta() == null && jogoActual.getSegundaCarta() == null) { //1ªCarta
-                    cardAdapter.setPrimeiraImageView(imageView);
+                    cardAdapter.setPosPrimeiraImageView(position);
                     imageView.setImageResource(cardAdapter.getItem(position).getCardFront());
                     jogoActual.setPrimeiraCarta(cardAdapter.getItem(position));
                 } else if (jogoActual.getPrimeiraCarta() != null && jogoActual.getSegundaCarta() == null) { //2ªCarta
-                    cardAdapter.setSegundaImageView(imageView);
+                    cardAdapter.setPosSegundaImageView(position);
                     imageView.setImageResource(cardAdapter.getItem(position).getCardFront());
                     jogoActual.setSegundaCarta(cardAdapter.getItem(position));
 
                     if (jogoActual.verificaJogada()) {
-                        cardAdapter.getImageViewsBloqueadas().add(Integer.parseInt(cardAdapter.getPrimeiraImageView().getTag().toString()));
-                        cardAdapter.getImageViewsBloqueadas().add(Integer.parseInt(cardAdapter.getSegundaImageView().getTag().toString()));
+                        cardAdapter.getImageViewsBloqueadas().add(cardAdapter.getPosPrimeiraImageView());
+                        cardAdapter.getImageViewsBloqueadas().add(cardAdapter.getPosSegundaImageView());
                         jogoActual.resetJogada();
-                        cardAdapter.resetImageViews();
+                        cardAdapter.resetPosImageViews();
+                        if (type == SINGLEPLAYER) {
+                            jogoActual.incrementaAcertadas(ME);
+                            jogoActual.incrementaTentativas(ME);
+                        }
                         jogoActual.incPontuacao();
 
                     } else {
-
-                        final Handler handler = new Handler();
+                        if (type == SINGLEPLAYER) {
+                            jogoActual.incrementaTentativas(ME);
+                        }
                         handler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                cardAdapter.getPrimeiraImageView().setImageResource(jogoActual.getPrimeiraCarta().getCardCover());
-                                cardAdapter.getSegundaImageView().setImageResource(jogoActual.getSegundaCarta().getCardCover());
+                                //ImageView primeiraImageView = (ImageView) gridview.getChildAt(cardAdapter.getPosPrimeiraImageView());
+                                //primeiraImageView.setImageResource(jogoActual.getPrimeiraCarta().getCardCover());
+                                //ImageView segundaImageView = (ImageView) gridview.getChildAt(cardAdapter.getPosSegundaImageView());
+                                //segundaImageView.setImageResource(jogoActual.getPrimeiraCarta().getCardCover());
                                 jogoActual.resetJogada();
-                                cardAdapter.resetImageViews();
+                                cardAdapter.resetPosImageViews();
+                                gridview.invalidateViews();
                             }
                         }, 1500);
                     }
                     jogoActual.incJogadas();
                     jogadasTextView.setText(Integer.toString(jogoActual.getNumJogadas()));
+
+                    if (jogoActual.verificaFinal()) {
+                        finish();
+                        Toast.makeText(getApplicationContext(),"Fim do Jogo", Toast.LENGTH_SHORT);
+                    }
                 } else {
                     Log.e("MemoryGameJogoActivity", "Erro");
                 }
@@ -235,7 +244,7 @@ public class JogoActivity extends AppCompatActivity {
                     e.printStackTrace();
                     socketGame = null;
                 }
-                procMsg.post(new Runnable() {
+                handler.post(new Runnable() {
                     @Override
                     public void run() {
                         pd.dismiss();
@@ -278,7 +287,7 @@ public class JogoActivity extends AppCompatActivity {
                     socketGame = null;
                 }
                 if (socketGame == null) {
-                    procMsg.post(new Runnable() {
+                    handler.post(new Runnable() {
                         @Override
                         public void run() {
                             finish();
@@ -303,7 +312,7 @@ public class JogoActivity extends AppCompatActivity {
                     String read = input.readLine();
                     final int move = Integer.parseInt(read);
                     Log.d("MemoryGame", "Received: " + move);
-                    procMsg.post(new Runnable() {
+                    handler.post(new Runnable() {
                         @Override
                         public void run() {
                             //moveOtherPlayer(move);
@@ -311,7 +320,7 @@ public class JogoActivity extends AppCompatActivity {
                     });
                 }
             } catch (Exception e) {
-                procMsg.post(new Runnable() {
+                handler.post(new Runnable() {
                     @Override
                     public void run() {
                         finish();
