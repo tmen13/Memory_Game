@@ -10,12 +10,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import tmen.memorygame.Classes.Tema;
 import tmen.memorygame.R;
 
 public class EscolheNivelActivity extends AppCompatActivity {
 
     private int type = JogoActivity.SINGLEPLAYER;
-    private String tema = "";
+    private Tema tema;
+    private int nivelEscolhido;
 
     Button button;
 
@@ -31,7 +33,7 @@ public class EscolheNivelActivity extends AppCompatActivity {
         Intent intent = getIntent();
         if (intent != null) {
             type = intent.getIntExtra("type", JogoActivity.SINGLEPLAYER);
-            tema = intent.getStringExtra("tema");
+            tema = (Tema) intent.getSerializableExtra("tema");
         }
 
         button = (Button) findViewById(R.id.escolheNivelButton);
@@ -41,10 +43,12 @@ public class EscolheNivelActivity extends AppCompatActivity {
             public void onClick(View v) {
                 //Toast.makeText(getApplicationContext(), "Jogo", Toast.LENGTH_SHORT).show();
 
+                nivelEscolhido = 4;
+
                 Intent intent = new Intent(getApplicationContext(), JogoActivity.class);
                 intent.putExtra("type",type);
                 intent.putExtra("tema",tema);
-                intent.putExtra("nivel",5);
+                intent.putExtra("nivelEscolhido",nivelEscolhido);
                 startActivity(intent);
             }
         });

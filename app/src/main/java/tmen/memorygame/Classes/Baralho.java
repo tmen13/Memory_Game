@@ -4,28 +4,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Baralho {
-    private String tema;
-    private int nivelActual;
+    private Tema tema;
     private List<Card> cartas = new ArrayList<>();
 
-    public Baralho(String tema) {
+    public Baralho(Tema tema) {
         this.tema = tema;
     }
 
-    public String getTema(){
+    public Tema getTema(){
         return tema;
-    }
-
-    public int getNivelActual() {
-        return nivelActual;
     }
 
     public List<Card> getCartas(){
         return cartas;
-    }
-
-    public void setNivelActual(int nivelActual) {
-        this.nivelActual = nivelActual;
     }
 
     public void addCarta(Card carta){

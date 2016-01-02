@@ -8,8 +8,8 @@ import tmen.memorygame.Activities.JogoActivity;
 public class Jogo {
     private Context mContext;
     private int tipo;
-    private String tema;
-    private int nivel;
+    private Tema tema;
+    private int nivelEscolhido;
     private Baralho baralho;
     //private int contaJogadas;
     //private int pontuacao;
@@ -20,14 +20,14 @@ public class Jogo {
     private int acertadas[] = { 0, 0 };
     private int intrusosAcertados[] = { 0, 0 };
 
-    public Jogo (Context mContext, int tipo, String tema, int nivel) {
+    public Jogo (Context mContext, int tipo, Tema tema, int nivelEscolhido) {
         //this.contaJogadas = 0;
         //this.pontuacao = 0;
         this.mContext = mContext;
         this.tipo = tipo;
         this.tema = tema;
-        this.nivel = nivel;
-        this.baralho = GeradorBaralhos.getBaralhoPorTema(tema);
+        this.nivelEscolhido = nivelEscolhido;
+        this.baralho = GeradorBaralhos.getBaralho(tema, nivelEscolhido);
     }
 
     /*public void incPontuacao(){
@@ -38,12 +38,12 @@ public class Jogo {
         return pontuacao;
     }*/
 
-    public String getTema() {
+    public Tema getTema() {
         return tema;
     }
 
-    public int getNivel() {
-        return nivel;
+    public int getNivelEscolhido() {
+        return nivelEscolhido;
     }
 
     public Baralho getBaralho() {

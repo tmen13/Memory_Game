@@ -37,6 +37,7 @@ import tmen.memorygame.Adapters.CardAdapter;
 import tmen.memorygame.Classes.Jogo;
 import tmen.memorygame.Classes.GeradorBaralhos;
 import tmen.memorygame.Classes.MySharedPreferences;
+import tmen.memorygame.Classes.Tema;
 import tmen.memorygame.R;
 
 public class JogoActivity extends AppCompatActivity {
@@ -49,8 +50,8 @@ public class JogoActivity extends AppCompatActivity {
     public static final int OTHER = 1;
     private static final int PORT = 8899;
 
-    String tema = "";
-    int nivel = 0;
+    Tema tema;
+    int nivelEscolhido;
     int type = SINGLEPLAYER;
     int mode = SERVER;
 
@@ -103,29 +104,27 @@ public class JogoActivity extends AppCompatActivity {
         if (intent != null) {
             type = intent.getIntExtra("type", SINGLEPLAYER);
             if (type == SINGLEPLAYER) {
-                tema = intent.getStringExtra("tema");
-                nivel = intent.getIntExtra("nivel",0);
+                tema = (Tema) intent.getSerializableExtra("tema");
+                nivelEscolhido = intent.getIntExtra("nivelEscolhido",1);
             }
             if (type == MULTIPLAYER) {
-                tema = "Bandeiras"; //Alterar para aleatorio
-                nivel = 0; //Alterar para ultimo nivel
+                tema = (Tema) intent.getSerializableExtra("tema");
             }
 
             if (type == MULTIPLAYERONLINE) {
                 mode = intent.getIntExtra("mode", SERVER);
-                tema = "Bandeiras"; //Alterar para aleatorio
-                nivel = 0; //Alterar para ultimo nivel
+                tema = (Tema) intent.getSerializableExtra("tema");
             }
         }
 
         handler = new Handler();
 
-        String str = "Type " + type + " " + "Mode " + mode + " " + "Tema " + tema + " " + "Nivel " + nivel;
+        String str = "Type " + type + " " + "Mode " + mode + " " + "Tema " + tema.getNome() + " " + "Nivel " + tema.getNivelActual();
         Log.d("MemoryGame",str);
 
-        GeradorBaralhos.criaBaralhos();
+        //GeradorBaralhos.criaBaralhos();
         //listaTemas = GeradorBaralhos.getTemas();
-        jogoActual = new Jogo(getApplicationContext(), type, tema, nivel);
+        jogoActual = new Jogo(getApplicationContext(), type, tema, nivelEscolhido);
 
         final GridView gridview = (GridView) findViewById(R.id.tabuleiroGridView);
         final CardAdapter cardAdapter = new CardAdapter(getApplicationContext(), jogoActual);
@@ -192,7 +191,7 @@ public class JogoActivity extends AppCompatActivity {
                                 cardAdapter.resetPosImageViews();
                                 gridview.invalidateViews();
                             }
-                        }, 1500);
+                        }, 750);
                     }
                     //jogoActual.incJogadas();
                     //jogadasTextView.setText(Integer.toString(jogoActual.getNumJogadas()));
@@ -208,7 +207,7 @@ public class JogoActivity extends AppCompatActivity {
         });
 
         if (type == SINGLEPLAYER) {
-            switch (nivel) {
+            switch (nivelEscolhido) {
                 case 1:
                     gridview.setNumColumns(2); //2x2
                     break;

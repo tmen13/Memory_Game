@@ -8,43 +8,48 @@ package tmen.memorygame.Classes;
 
 public final class GeradorBaralhos {
 
-    protected static List<String> listaTemas = new ArrayList<>();
-    protected static List<Baralho> listaBaralhos = new ArrayList<>();
-
     static Integer[] flagIdsArray = {R.drawable.flags_argentina, R.drawable.flags_australia, R.drawable.flags_belgium,
             R.drawable.flags_brazil, R.drawable.flags_england, R.drawable.flags_france, R.drawable.flags_germany,
             R.drawable.flags_italy, R.drawable.flags_mexico, R.drawable.flags_netherlands, R.drawable.flags_portugal,
             R.drawable.flags_russia, R.drawable.flags_spain, R.drawable.flags_switzerland, R.drawable.flags_usa};
 
-    public static void criaBaralhos(){
-        //baralho bandeiras
-        Baralho bandeiras =  new Baralho("Bandeiras");
-        for (int i = 0; i < flagIdsArray.length; i++) {
-            bandeiras.addCarta(new Card(i, flagIdsArray[i], bandeiras.getTema()));
-            bandeiras.addCarta(new Card(i, flagIdsArray[i], bandeiras.getTema()));
+    public static Baralho getBaralho(Tema tema, int nivelEscolhido){ //baralhosdefault
+        Baralho baralho =  new Baralho(tema);
+        int numPares = 2;
+
+        switch (nivelEscolhido) {
+            case 1:
+                numPares = 2;
+                break;
+            case 2:
+                numPares = 3;
+                break;
+            case 3:
+                numPares = 6;
+                break;
+            case 4:
+                numPares = 10;
+                break;
+            case 5:
+                numPares = 15;
+                break;
+            case 6:
+                numPares = 15;
+                break;
         }
-        Collections.shuffle(bandeiras.getCartas());
-        listaTemas.add("Bandeiras");
-        listaBaralhos.add(bandeiras);
-    }
 
-    public static List<String> getTemas(){
-        return listaTemas;
-    }
-
-    public static Baralho getBaralhoPorTema(String tema){
-        for(int i = 0; i< listaBaralhos.size();i++){
-            if (listaBaralhos.get(i).getTema().equals(tema))
-                return listaBaralhos.get(i);
+        switch (tema.getNome()) {
+            case "Bandeiras":
+                if (numPares <= flagIdsArray.length) {
+                    for (int i = 0; i < numPares; i++) {
+                        baralho.addCarta(new Card(i, flagIdsArray[i], baralho.getTema().getNome()));
+                        baralho.addCarta(new Card(i, flagIdsArray[i], baralho.getTema().getNome()));
+                    }
+                }
+                break;
         }
-        return null;
-    }
 
-    public static void addTema(String tema){
-        listaTemas.add(tema);
-    }
-
-    public static void addBaralho(Baralho baralho){
-        listaBaralhos.add(baralho);
+        Collections.shuffle(baralho.getCartas());
+        return baralho;
     }
 }
