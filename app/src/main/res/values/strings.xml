@@ -1,4 +1,4 @@
-﻿<resources>
+﻿﻿<resources>
     <string name="app_name">Memory Game</string>
     <string name="action_teste">Teste</string>
     <string name="action_settings">Settings</string>
@@ -44,4 +44,5 @@
         <item value = "pt">pt</item>
         <item value = "en">en</item>
     </string-array>
+    <string name="title_activity_escolhe_nivel_multiplayer">EscolheNivelMultiplayerActivity</string>
 </resources>

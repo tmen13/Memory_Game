@@ -16,11 +16,15 @@ import java.util.List;
 import tmen.memorygame.Classes.Card;
 import tmen.memorygame.Classes.Jogo;
 import tmen.memorygame.Classes.Tema;
+import tmen.memorygame.R;
 
 /**
  * Created by Ricardo on 02/01/2016.
  */
 public class LevelAdapter extends BaseAdapter{
+
+    static Integer[] levelUnLockedImgsIds = {R.drawable.lvl1_unlocked, R.drawable.lvl2_unlocked, R.drawable.lvl3_unlocked, R.drawable.lvl4_unlocked, R.drawable.lvl5_unlocked, R.drawable.lvl6_unlocked};
+    //static Integer[] levelLockedImgsIds = {R.drawable.lvl1_Locked, R.drawable.lvl2_locked, R.drawable.lvl3_locked, R.drawable.lvl4_locked, R.drawable.lvl5_locked, R.drawable.lvl6_locked};
 
     private Context mContext;
     private Tema tema;
@@ -32,17 +36,16 @@ public class LevelAdapter extends BaseAdapter{
     }
 
     public int getCount() {
-        Log.d("MemoryGame","" + tema.getNumNiveis());
         return tema.getNumNiveis();
     }
 
 
     public Object getItem(int position) {
-        return position;
+        return null;
     }
 
     public long getItemId(int position) {
-        return position;
+        return 0;
     }
 
     // create a new ImageView for each item referenced by the Adapter
@@ -58,7 +61,12 @@ public class LevelAdapter extends BaseAdapter{
             imageView = (ImageView) convertView;
         }
 
-        imageView.setBackgroundColor(Color.RED);
+        if (position < tema.getNivelActual()) {
+            imageView.setImageResource(levelUnLockedImgsIds[position]);
+        } else {
+            //imageView.setImageResource(levelLockedImgsIds[position]);
+        }
+
 
         return imageView;
     }

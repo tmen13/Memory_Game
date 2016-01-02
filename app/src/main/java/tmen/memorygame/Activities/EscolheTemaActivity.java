@@ -21,6 +21,7 @@ import tmen.memorygame.R;
 public class EscolheTemaActivity extends AppCompatActivity {
 
     private int type = JogoActivity.SINGLEPLAYER;
+    private int mode = JogoActivity.SERVER;
     private List<Tema> temas = new ArrayList<>();
 
     Button btn;
@@ -37,13 +38,16 @@ public class EscolheTemaActivity extends AppCompatActivity {
         Intent intentMain = getIntent();
         if (intentMain != null) {
             type = intentMain.getIntExtra("type",JogoActivity.SINGLEPLAYER);
+            if (type == JogoActivity.MULTIPLAYERONLINE) {
+                mode = intentMain.getIntExtra("mode",JogoActivity.SERVER);
+            }
         }
 
         //load temas e niveis
-        if (type == JogoActivity.SINGLEPLAYER) {
-            temas.clear();
-            temas.addAll(GeradorTemas.getTemas());
-        }
+        //if (type == JogoActivity.SINGLEPLAYER) {
+        temas.clear();
+        temas.addAll(GeradorTemas.getTemas());
+        //}
 
         btn = (Button) findViewById(R.id.escolheTemaButton);
 
@@ -51,10 +55,23 @@ public class EscolheTemaActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //Toast.makeText(getApplicationContext(), "EscolheNivel", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(getApplicationContext(), EscolheNivelActivity.class);
-                intent.putExtra("type", type);
-                intent.putExtra("tema",temas.get(0));
-                startActivity(intent);
+                if (type == JogoActivity.SINGLEPLAYER) {
+                    Intent intent = new Intent(getApplicationContext(), EscolheNivelActivity.class);
+                    intent.putExtra("type", type);
+                    intent.putExtra("tema", temas.get(0));
+                    startActivity(intent);
+                } else if (type == JogoActivity.MULTIPLAYER) {
+                    Intent intent = new Intent(getApplicationContext(), EscolheNivelMultiplayerActivity.class);
+                    intent.putExtra("type", type);
+                    intent.putExtra("tema", temas.get(0));
+                    startActivity(intent);
+                } else if (type == JogoActivity.MULTIPLAYERONLINE) {
+                    Intent intent = new Intent(getApplicationContext(), EscolheNivelMultiplayerActivity.class);
+                    intent.putExtra("type", type);
+                    intent.putExtra("mode", mode);
+                    intent.putExtra("tema", temas.get(0));
+                    startActivity(intent);
+                }
             }
         });
     }

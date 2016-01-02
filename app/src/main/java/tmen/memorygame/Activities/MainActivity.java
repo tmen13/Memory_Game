@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
         multiPlayerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), JogoActivity.class);
+                Intent intent = new Intent(getApplicationContext(), EscolheTemaActivity.class);
                 intent.putExtra("type",JogoActivity.MULTIPLAYER);
                 startActivity(intent);
             }

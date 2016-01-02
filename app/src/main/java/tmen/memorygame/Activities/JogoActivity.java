@@ -109,11 +109,13 @@ public class JogoActivity extends AppCompatActivity {
             }
             if (type == MULTIPLAYER) {
                 tema = (Tema) intent.getSerializableExtra("tema");
+                nivelEscolhido = intent.getIntExtra("nivelEscolhido",5);
             }
 
             if (type == MULTIPLAYERONLINE) {
                 mode = intent.getIntExtra("mode", SERVER);
                 tema = (Tema) intent.getSerializableExtra("tema");
+                nivelEscolhido = intent.getIntExtra("nivelEscolhido",5);
             }
         }
 
@@ -206,7 +208,7 @@ public class JogoActivity extends AppCompatActivity {
             }
         });
 
-        if (type == SINGLEPLAYER) {
+        //if (type == SINGLEPLAYER || type == MULTIPLAYER) {
             switch (nivelEscolhido) {
                 case 1:
                     gridview.setNumColumns(2); //2x2
@@ -229,9 +231,9 @@ public class JogoActivity extends AppCompatActivity {
                 default:
                     break;
             }
-        } else {
-            gridview.setNumColumns(5); //6x5
-        }
+        //} else {
+        //    gridview.setNumColumns(5); //6x5
+        //}
     }
 
     @Override

@@ -14,20 +14,21 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name=".Activities.MainActivity"
+            android:configChanges="locale|layoutDirection"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
-            android:configChanges="locale|layoutDirection"
             android:theme="@style/AppTheme.NoActionBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".Activities.TesteActivity"
+            android:configChanges="locale|layoutDirection"
             android:label="@string/title_activity_teste"
             android:screenOrientation="portrait"
-            android:configChanges="locale|layoutDirection"
             android:theme="@style/AppTheme.NoActionBar" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -35,9 +36,9 @@
         </activity>
         <activity
             android:name=".Activities.MenuMultiPlayerOnActivity"
+            android:configChanges="locale|layoutDirection"
             android:label="@string/title_activity_menu_multi_player_on"
             android:screenOrientation="portrait"
-            android:configChanges="locale|layoutDirection"
             android:theme="@style/AppTheme.NoActionBar" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -45,10 +46,10 @@
         </activity>
         <activity
             android:name=".Activities.EscolheTemaActivity"
+            android:configChanges="locale|layoutDirection"
             android:label="@string/title_activity_escolhe_tema"
             android:parentActivityName=".Activities.MainActivity"
             android:screenOrientation="portrait"
-            android:configChanges="locale|layoutDirection"
             android:theme="@style/AppTheme.NoActionBar" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -56,10 +57,10 @@
         </activity>
         <activity
             android:name=".Activities.EscolheNivelActivity"
+            android:configChanges="locale|layoutDirection"
             android:label="@string/title_activity_escolhe_nivel"
             android:parentActivityName=".Activities.EscolheTemaActivity"
             android:screenOrientation="portrait"
-            android:configChanges="locale|layoutDirection"
             android:theme="@style/AppTheme.NoActionBar" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -67,10 +68,10 @@
         </activity>
         <activity
             android:name=".Activities.HistoricoActivity"
+            android:configChanges="locale|layoutDirection"
             android:label="@string/title_activity_historico"
             android:parentActivityName=".Activities.MainActivity"
             android:screenOrientation="portrait"
-            android:configChanges="locale|layoutDirection"
             android:theme="@style/AppTheme.NoActionBar" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -78,9 +79,9 @@
         </activity>
         <activity
             android:name=".Activities.JogoActivity"
+            android:configChanges="locale|layoutDirection"
             android:label="@string/title_activity_jogo"
             android:screenOrientation="portrait"
-            android:configChanges="locale|layoutDirection"
             android:theme="@style/AppTheme.NoActionBar" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -88,13 +89,22 @@
         </activity>
         <activity
             android:name=".Activities.SettingsActivity"
-            android:label="@string/title_activity_settings"
-            android:screenOrientation="portrait"
             android:configChanges="locale|layoutDirection"
-            android:parentActivityName=".Activities.MainActivity" >
+            android:label="@string/title_activity_settings"
+            android:parentActivityName=".Activities.MainActivity"
+            android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="tmen.memorygame.Activities.MainActivity" />
+        </activity>
+        <activity
+            android:name=".Activities.EscolheNivelMultiplayerActivity"
+            android:label="@string/title_activity_escolhe_nivel_multiplayer"
+            android:parentActivityName=".Activities.EscolheTemaActivity"
+            android:theme="@style/AppTheme.NoActionBar" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="tmen.memorygame.Activities.EscolheTemaActivity" />
         </activity>
     </application>
 
