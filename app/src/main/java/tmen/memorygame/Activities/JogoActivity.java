@@ -98,7 +98,7 @@ public class JogoActivity extends AppCompatActivity {
         acertadasJogador2TextView = (TextView)findViewById(R.id.acertadasJogador2TextView);
         intrusosJogador2TextView = (TextView)findViewById(R.id.intrusosJogador2TextView);
 
-        nomeJogador1TextView.setText(MySharedPreferences.getSharedPref(getApplicationContext(), SettingsActivity.PREF_PLAYERNAME));
+        nomeJogador1TextView.setText(MySharedPreferences.getSharedPref(getApplicationContext(), MySharedPreferences.PREF_PLAYERNAME));
 
         Intent intent = getIntent();
         if (intent != null) {

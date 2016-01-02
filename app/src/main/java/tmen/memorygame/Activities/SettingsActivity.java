@@ -4,7 +4,6 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.ListPreference;
@@ -13,7 +12,6 @@ import android.preference.PreferenceActivity;
 import android.support.v7.app.ActionBar;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MenuItem;
 import android.support.v4.app.NavUtils;
@@ -36,8 +34,7 @@ import java.util.Locale;
  */
 public class SettingsActivity extends AppCompatPreferenceActivity {
 
-    public static final String PREF_PLAYERNAME = "pref_nome_jogador";
-    public static final String PREF_LANG = "pref_idioma";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +55,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
 
     @Override
     public boolean onMenuItemSelected(int featureId, MenuItem item) {
-        setLocale(MySharedPreferences.getSharedPref(getApplicationContext(),PREF_LANG));
+        setLocale(MySharedPreferences.getSharedPref(getApplicationContext(), MySharedPreferences.PREF_LANG));
         int id = item.getItemId();
         if (id == android.R.id.home) {
             if (!super.onMenuItemSelected(featureId, item)) {
@@ -67,6 +64,13 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             return true;
         }
         return super.onMenuItemSelected(featureId, item);
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        // refresh your views here
+        Log.i("aqui", newConfig.locale.getCountry().toString());
+        super.onConfigurationChanged(newConfig);
     }
 
 
@@ -150,10 +154,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 || GeneralPreferenceFragment.class.getName().equals(fragmentName);
     }
 
-    /**
-     * This fragment shows general preferences only. It is used when the
-     * activity is showing a two-pane settings UI.
-     */
+
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public static class GeneralPreferenceFragment extends PreferenceFragment {
         @Override
@@ -166,8 +167,8 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             // to their values. When their values change, their summaries are
             // updated to reflect the new value, per the Android Design
             // guidelines.
-            bindPreferenceSummaryToValue(findPreference(PREF_PLAYERNAME));
-            bindPreferenceSummaryToValue(findPreference(PREF_LANG));
+            bindPreferenceSummaryToValue(findPreference(MySharedPreferences.PREF_PLAYERNAME));
+            bindPreferenceSummaryToValue(findPreference(MySharedPreferences.PREF_LANG));
         }
 
         @Override
@@ -181,16 +182,15 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         }
     }
 
-    private void setLocale(String lang) {
-        Locale myLocale = new Locale(lang);
-        Resources res = getResources();
-        DisplayMetrics dm = res.getDisplayMetrics();
-        Configuration conf = res.getConfiguration();
-        conf.locale = myLocale;
-        res.updateConfiguration(conf, dm);
-        Intent refresh = new Intent(this, MainActivity.class);
-        startActivity(refresh);
-        finish();
+    protected void setLocale(String lang) {
+        Locale locale = new Locale(lang);
+        Locale.setDefault(locale);
+        Configuration config = getResources().getConfiguration();
+        config.locale = locale;
+        getBaseContext().getResources().updateConfiguration(config,
+                getApplicationContext().getResources().getDisplayMetrics());
+        recreate();
+        onConfigurationChanged(config);
     }
 
 }

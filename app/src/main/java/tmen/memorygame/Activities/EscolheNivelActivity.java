@@ -43,7 +43,7 @@ public class EscolheNivelActivity extends AppCompatActivity {
             public void onClick(View v) {
                 //Toast.makeText(getApplicationContext(), "Jogo", Toast.LENGTH_SHORT).show();
 
-                nivelEscolhido = 4;
+                nivelEscolhido = 5;
 
                 Intent intent = new Intent(getApplicationContext(), JogoActivity.class);
                 intent.putExtra("type",type);

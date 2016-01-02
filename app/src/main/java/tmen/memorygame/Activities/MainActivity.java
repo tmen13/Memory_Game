@@ -2,17 +2,22 @@ package tmen.memorygame.Activities;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import java.util.Locale;
+
+import tmen.memorygame.Classes.MySharedPreferences;
 import tmen.memorygame.R;
 
 public class MainActivity extends AppCompatActivity {
@@ -23,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        setLocale(MySharedPreferences.getSharedPref(getApplicationContext(), MySharedPreferences.PREF_LANG));
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -130,5 +136,25 @@ public class MainActivity extends AppCompatActivity {
         alertDialog.setMessage(R.string.confima_sair);
         alertDialog.setTitle(R.string.app_name);
         alertDialog.show();
+    }
+
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        // refresh your views here
+        Log.i("aqui", newConfig.locale.getCountry().toString());
+        super.onConfigurationChanged(newConfig);
+    }
+
+    private void setLocale(String lang) {
+        Locale locale = new Locale(lang);
+        Locale.setDefault(locale);
+        Configuration config = getResources().getConfiguration();
+        config.locale = locale;
+        getBaseContext().getResources().updateConfiguration(config,
+                getApplicationContext().getResources().getDisplayMetrics());
+        Log.i("aqui", config.locale.getCountry().toString());
+        onConfigurationChanged(config);
+
     }
 }
