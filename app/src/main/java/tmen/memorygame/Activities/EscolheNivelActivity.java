@@ -6,10 +6,16 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import tmen.memorygame.Adapters.CardAdapter;
+import tmen.memorygame.Adapters.LevelAdapter;
 import tmen.memorygame.Classes.Tema;
 import tmen.memorygame.R;
 
@@ -18,8 +24,6 @@ public class EscolheNivelActivity extends AppCompatActivity {
     private int type = JogoActivity.SINGLEPLAYER;
     private Tema tema;
     private int nivelEscolhido;
-
-    Button button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,22 +40,24 @@ public class EscolheNivelActivity extends AppCompatActivity {
             tema = (Tema) intent.getSerializableExtra("tema");
         }
 
-        button = (Button) findViewById(R.id.escolheNivelButton);
+        final GridView gridview = (GridView) findViewById(R.id.levelGridView);
+        final LevelAdapter levelAdapter = new LevelAdapter(getApplicationContext(), tema);
+        gridview.setAdapter(levelAdapter);
 
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Toast.makeText(getApplicationContext(), "Jogo", Toast.LENGTH_SHORT).show();
-
-                nivelEscolhido = 4;
+        gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View v,
+                                    final int position, long id) {
+                ImageView imageView = (ImageView) v;
 
                 Intent intent = new Intent(getApplicationContext(), JogoActivity.class);
-                intent.putExtra("type",type);
-                intent.putExtra("tema",tema);
-                intent.putExtra("nivelEscolhido",nivelEscolhido);
+                intent.putExtra("type", type);
+                intent.putExtra("tema", tema);
+                intent.putExtra("nivelEscolhido", position + 1);
                 startActivity(intent);
+
             }
         });
+
     }
 
 }
