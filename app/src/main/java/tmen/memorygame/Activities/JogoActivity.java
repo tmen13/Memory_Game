@@ -153,10 +153,11 @@ public class JogoActivity extends AppCompatActivity {
             jogoActual = jogoActualRecebido;
             jogoActualRecebido = null;
             jogoActual.setmContext(getApplicationContext());
+            jogoActual.setJogadorActual(OTHER);
         }
 
         gridview = (GridView) findViewById(R.id.tabuleiroGridView);
-        cardAdapter = new CardAdapter(getApplicationContext(), jogoActual);
+        cardAdapter = new CardAdapter(getApplicationContext(), jogoActual, type);
         gridview.setAdapter(cardAdapter);
 
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -207,7 +208,7 @@ public class JogoActivity extends AppCompatActivity {
                             tentativasJogador1TextView.setText(String.valueOf(jogoActual.getTentativas(ME)));
                         }
 
-                        if (type == MULTIPLAYER) {
+                        if (type == MULTIPLAYER || type == MULTIPLAYERONLINE) {
                             jogoActual.incrementaTentativas(jogoActual.getJogadorActual());
                             jogoActual.setJogadorActual(jogoActual.getProximoJogador());
                             tentativasJogador1TextView.setText(String.valueOf(jogoActual.getTentativas(ME)));
@@ -221,7 +222,7 @@ public class JogoActivity extends AppCompatActivity {
                                 cardAdapter.resetPosImageViews();
                                 gridview.invalidateViews();
 
-                                if (type == MULTIPLAYER) {
+                                if (type == MULTIPLAYER || type == MULTIPLAYERONLINE) {
                                     if (jogoActual.getJogadorActual() == ME) {
                                         jogadorActualTextView.setText(nomeJogador1TextView.getText());
                                     } else {

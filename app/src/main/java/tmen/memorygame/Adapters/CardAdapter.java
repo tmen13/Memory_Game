@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import java.util.ArrayList;
 import java.util.List;
 
+import tmen.memorygame.Activities.JogoActivity;
 import tmen.memorygame.Classes.Card;
 import tmen.memorygame.Classes.Jogo;
 import tmen.memorygame.R;
@@ -27,11 +28,13 @@ public class CardAdapter extends BaseAdapter {
     List<Integer> posImageViewsBloqueadas = new ArrayList<>();
     Integer posPrimeiraImageView, posSegundaImageView;
     private Jogo jogoActual; //Se so necessario baralho, alterar!
+    int type;
 
 
-    public CardAdapter(Context mContext, Jogo jogoActual) {
+    public CardAdapter(Context mContext, Jogo jogoActual, int type) {
         this.mContext = mContext;
         this.jogoActual = jogoActual;
+        this.type = type;
     }
 
     public int getCount() {
@@ -109,6 +112,12 @@ public class CardAdapter extends BaseAdapter {
 
         if (posImageViewsBloqueadas.contains(position)) {
             enabled = false;
+        }
+
+        if (type == JogoActivity.MULTIPLAYERONLINE) {
+            if (jogoActual.getJogadorActual() != JogoActivity.ME) {
+                enabled = false;
+            }
         }
 
         return enabled;
