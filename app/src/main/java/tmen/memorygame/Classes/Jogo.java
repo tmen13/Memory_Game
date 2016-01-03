@@ -3,16 +3,16 @@ package tmen.memorygame.Classes;
 import android.content.Context;
 import android.util.Log;
 
+import java.io.Serializable;
+
 import tmen.memorygame.Activities.JogoActivity;
 
-public class Jogo {
-    private Context mContext;
+public class Jogo implements Serializable{
+    private transient Context mContext;
     private int tipo;
     private Tema tema;
     private int nivelEscolhido;
     private Baralho baralho;
-    //private int contaJogadas;
-    //private int pontuacao;
     private Card primeiraCarta, segundaCarta;
 
     private int jogadorActual = JogoActivity.ME;
@@ -21,8 +21,6 @@ public class Jogo {
     private int intrusosAcertados[] = { 0, 0 };
 
     public Jogo (Context mContext, int tipo, Tema tema, int nivelEscolhido) {
-        //this.contaJogadas = 0;
-        //this.pontuacao = 0;
         this.mContext = mContext;
         this.tipo = tipo;
         this.tema = tema;
@@ -30,13 +28,13 @@ public class Jogo {
         this.baralho = GeradorBaralhos.getBaralho(tema, nivelEscolhido);
     }
 
-    /*public void incPontuacao(){
-        pontuacao++;
+    public Context getmContext() {
+        return mContext;
     }
 
-    public int getPontuacao(){
-        return pontuacao;
-    }*/
+    public void setmContext(Context mContext) {
+        this.mContext = mContext;
+    }
 
     public Tema getTema() {
         return tema;
@@ -53,14 +51,6 @@ public class Jogo {
     public Card getPrimeiraCarta() {
         return primeiraCarta;
     }
-
-    /*public int getNumJogadas(){
-        return contaJogadas;
-    }
-
-    public void incJogadas(){
-        contaJogadas++;
-    }*/
 
     public void setPrimeiraCarta(Card primeiraCarta) {
         this.primeiraCarta = primeiraCarta;

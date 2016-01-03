@@ -1,9 +1,10 @@
 package tmen.memorygame.Classes;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Baralho {
+public class Baralho implements Serializable {
     private Tema tema;
     private List<Card> cartas = new ArrayList<>();
 
