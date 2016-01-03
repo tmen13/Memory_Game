@@ -3,14 +3,15 @@ package tmen.memorygame.Classes;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Ricardo on 02/01/2016.
- */
 public final class GeradorTemas {
 
     public static List<Tema> getTemasDefault() {
         List<Tema> temasDefault = new ArrayList<>();
         temasDefault.add(new Tema(true,"Bandeiras",6,1));
+        temasDefault.add(new Tema(true,"Carros",6,1));
+        temasDefault.add(new Tema(true,"Animais",6,1));
+        temasDefault.add(new Tema(true,"Cores",6,1));
+        temasDefault.add(new Tema(true,"Clubes",6,1));
         return temasDefault;
     }
 
