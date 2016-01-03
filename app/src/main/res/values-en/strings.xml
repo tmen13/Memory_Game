@@ -29,6 +29,9 @@
     <string name="nao">No</string>
     <string name="confima_sair">Do you really want to exit?</string>
 
+    <string name="creditos_titulo">Mobile Architectures 15/16</string>
+    <string name="creditos_texto">Developed by: \n Tony Mendes nº21190876 \n Ricardo Coimbra nº21200319</string>
+    <string name="creditos_ok">Close</string>
     <!-- Example General settings -->
     <string name="pref_header_general">General</string>
 

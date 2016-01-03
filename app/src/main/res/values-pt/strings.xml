@@ -29,6 +29,10 @@
     <string name="nao">Não</string>
     <string name="confima_sair">Deseja mesmo sair da aplicação?</string>
 
+    <string name="creditos_titulo">Aquiteturas Móveis 15/16</string>
+    <string name="creditos_texto">Desenvolvido por: \n Tony Mendes nº21190876 \n Ricardo Coimbra nº21200319</string>
+    <string name="creditos_ok">Fechar</string>
+
     <!-- Example General settings -->
     <string name="pref_header_general">Geral</string>
 

@@ -112,6 +112,19 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intentSettings);
                 break;
             case R.id.action_creditos:
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(
+                        MainActivity.this);
+                alertDialog.setPositiveButton(
+                        R.string.creditos_ok,
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+                alertDialog.setMessage(R.string.creditos_texto);
+                alertDialog.setTitle(R.string.creditos_titulo);
+                alertDialog.setIcon(R.drawable.ic_logo_isec);
+                alertDialog.show();
                 break;
             default:
                 break;
@@ -142,7 +155,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         // refresh your views here
-        Log.i("aqui", newConfig.locale.getCountry().toString());
         super.onConfigurationChanged(newConfig);
     }
 
@@ -153,7 +165,6 @@ public class MainActivity extends AppCompatActivity {
         config.locale = locale;
         getBaseContext().getResources().updateConfiguration(config,
                 getApplicationContext().getResources().getDisplayMetrics());
-        Log.i("aqui", config.locale.getCountry().toString());
         onConfigurationChanged(config);
 
     }
