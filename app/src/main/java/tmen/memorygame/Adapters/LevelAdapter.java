@@ -24,7 +24,7 @@ import tmen.memorygame.R;
 public class LevelAdapter extends BaseAdapter{
 
     static Integer[] levelUnLockedImgsIds = {R.drawable.lvl1_unlocked, R.drawable.lvl2_unlocked, R.drawable.lvl3_unlocked, R.drawable.lvl4_unlocked, R.drawable.lvl5_unlocked, R.drawable.lvl6_unlocked};
-    //static Integer[] levelLockedImgsIds = {R.drawable.lvl1_Locked, R.drawable.lvl2_locked, R.drawable.lvl3_locked, R.drawable.lvl4_locked, R.drawable.lvl5_locked, R.drawable.lvl6_locked};
+    static Integer[] levelLockedImgsIds = {R.drawable.lvl1_unlocked, R.drawable.lvl2_locked, R.drawable.lvl3_locked, R.drawable.lvl4_locked, R.drawable.lvl5_locked, R.drawable.lvl6_locked};
 
     private Context mContext;
     private Tema tema;
@@ -64,9 +64,8 @@ public class LevelAdapter extends BaseAdapter{
         if (position < tema.getNivelActual()) {
             imageView.setImageResource(levelUnLockedImgsIds[position]);
         } else {
-            //imageView.setImageResource(levelLockedImgsIds[position]);
+            imageView.setImageResource(levelLockedImgsIds[position]);
         }
-
 
         return imageView;
     }

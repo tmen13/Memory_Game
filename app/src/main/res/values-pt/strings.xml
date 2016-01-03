@@ -11,6 +11,7 @@
     <string name="menu_client">Cliente</string>
     <string name="numJogadas">Jogadas: </string>
     <string name="nivel">Nível: </string>
+    <string name="jogador">Jogador: </string>
     <string name="menu_config">Configurações</string>
     <string name="title_activity_teste">TesteActivity</string>
     <string name="title_activity_menu_multi_player_on">Dois Jogadores</string>
