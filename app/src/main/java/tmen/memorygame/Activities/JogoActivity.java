@@ -68,9 +68,10 @@ public class JogoActivity extends AppCompatActivity {
 
     //TextView jogadasTextView;
     TextView nomeJogador1TextView, tentativasJogador1TextView, acertadasJogador1TextView, intrusosJogador1TextView;
+    TextView jogadorActualTextView;
     TextView nomeJogador2TextView, tentativasJogador2TextView, acertadasJogador2TextView, intrusosJogador2TextView;
 
-    LinearLayout infoJogadorActual, infoJogador2;
+    LinearLayout infoJogador1, infoJogadorActual, infoJogador2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,6 +86,7 @@ public class JogoActivity extends AppCompatActivity {
         //jogadasTextView = (TextView)findViewById(R.id.numJogadasTV);
         //jogadasTextView.setText("0");
 
+        infoJogador1 = (LinearLayout)findViewById(R.id.infoJogador1);
         infoJogadorActual = (LinearLayout)findViewById(R.id.infoJogadorActual);
         infoJogador2 = (LinearLayout)findViewById(R.id.infoJogador2);
 
@@ -93,12 +95,18 @@ public class JogoActivity extends AppCompatActivity {
         acertadasJogador1TextView = (TextView)findViewById(R.id.acertadasJogador1TextView);
         intrusosJogador1TextView = (TextView)findViewById(R.id.intrusosJogador1TextView);
 
+        jogadorActualTextView = (TextView)findViewById(R.id.jogadorActualTextView);
+
         nomeJogador2TextView = (TextView)findViewById(R.id.nomeJogador2TextView);
         tentativasJogador2TextView = (TextView)findViewById(R.id.tentativasJogador2TextView);
         acertadasJogador2TextView = (TextView)findViewById(R.id.acertadasJogador2TextView);
         intrusosJogador2TextView = (TextView)findViewById(R.id.intrusosJogador2TextView);
 
         nomeJogador1TextView.setText(MySharedPreferences.getSharedPref(getApplicationContext(), MySharedPreferences.PREF_PLAYERNAME));
+        jogadorActualTextView.setText(nomeJogador1TextView.getText());
+
+        //infoJogador1.setBackgroundResource(R.drawable.ic_jogo_bg);
+        //infoJogador2.setBackgroundResource(R.drawable.ic_jogo_bg);
 
         Intent intent = getIntent();
         if (intent != null) {
@@ -165,7 +173,6 @@ public class JogoActivity extends AppCompatActivity {
                             acertadasJogador1TextView.setText(String.valueOf(jogoActual.getAcertadas(ME)));
                             tentativasJogador2TextView.setText(String.valueOf(jogoActual.getTentativas(OTHER)));
                             acertadasJogador2TextView.setText(String.valueOf(jogoActual.getAcertadas(OTHER)));
-
                         }
                         //jogoActual.incPontuacao();
 
@@ -192,9 +199,18 @@ public class JogoActivity extends AppCompatActivity {
                                 jogoActual.resetJogada();
                                 cardAdapter.resetPosImageViews();
                                 gridview.invalidateViews();
+
+                                if (type == MULTIPLAYER) {
+                                    if (jogoActual.getJogadorActual() == ME) {
+                                        jogadorActualTextView.setText(nomeJogador1TextView.getText());
+                                    } else {
+                                        jogadorActualTextView.setText(nomeJogador2TextView.getText());
+                                    }
+                                }
                             }
                         }, 750);
                     }
+
                     //jogoActual.incJogadas();
                     //jogadasTextView.setText(Integer.toString(jogoActual.getNumJogadas()));
 
@@ -312,7 +328,7 @@ public class JogoActivity extends AppCompatActivity {
 
     void nomeJogador2Dialog() {
         final EditText nomeJogador2EditText = new EditText(this);
-        nomeJogador2EditText.setText("Jogador2");
+        nomeJogador2EditText.setText("Jogador 2");
 
         android.support.v7.app.AlertDialog.Builder alertDialog = new android.support.v7.app.AlertDialog.Builder(
                 JogoActivity.this);

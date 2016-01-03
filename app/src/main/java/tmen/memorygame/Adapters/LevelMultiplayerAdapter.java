@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import tmen.memorygame.Classes.Tema;
 
@@ -41,7 +42,8 @@ public class LevelMultiplayerAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        /*View view;
+        View view;
+
         if (convertView == null) {
             // if it's not recycled, initialize some attributes
             view = new View(mContext);
@@ -54,9 +56,9 @@ public class LevelMultiplayerAdapter extends BaseAdapter {
 
         view.setBackgroundColor(Color.RED);
 
-        return view;*/
+        return view;
 
-        ImageView imageView;
+        /*ImageView imageView;
         if (convertView == null) {
             // if it's not recycled, initialize some attributes
             imageView = new ImageView(mContext);
@@ -69,6 +71,6 @@ public class LevelMultiplayerAdapter extends BaseAdapter {
 
         imageView.setBackgroundColor(Color.RED);
 
-        return imageView;
+        return imageView;*/
     }
 }
