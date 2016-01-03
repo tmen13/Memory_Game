@@ -1,6 +1,11 @@
 package tmen.memorygame.Activities;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -9,6 +14,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import java.io.FileNotFoundException;
 
 import tmen.memorygame.Classes.Card;
 import tmen.memorygame.Classes.MySharedPreferences;
@@ -37,11 +44,37 @@ public class TesteActivity extends AppCompatActivity {
         bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tv.setText(MySharedPreferences.getSharedPref(getApplicationContext(),PREF_PLAYERNAME));
+                Intent intent = new Intent(Intent.ACTION_PICK,
+                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(intent, 0);
+                tv.setText(MySharedPreferences.getSharedPref(getApplicationContext(), PREF_PLAYERNAME));
             }
         });
     }
 
+    //escolhe imagem da galeria e mete como fundo do butao. so para teste, usar image view
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // TODO Auto-generated method stub
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == RESULT_OK){
+            Uri targetUri = data.getData();
+            tv.setText(targetUri.toString());
+            Bitmap bitmap;
+            try {
+                bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(targetUri));
+                BitmapDrawable bdrawable = new BitmapDrawable(getResources(),bitmap);
+                if(android.os.Build.VERSION.SDK_INT < 16) {
+                    bt.setBackgroundDrawable(bdrawable);
+                } else
+                    bt.setBackground(bdrawable);
+            } catch (FileNotFoundException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+    }
 
 
 }
