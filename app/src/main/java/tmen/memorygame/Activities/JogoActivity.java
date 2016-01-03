@@ -4,6 +4,9 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -68,7 +71,9 @@ public class JogoActivity extends AppCompatActivity {
 
     Handler handler = null;
 
-    Jogo jogoActual;
+    Jogo jogoActual, jogoActualRecebido;
+    private GridView gridview;
+    private CardAdapter cardAdapter;
 
     TextView nomeJogador1TextView, tentativasJogador1TextView, acertadasJogador1TextView, intrusosJogador1TextView;
     TextView jogadorActualTextView;
@@ -137,123 +142,21 @@ public class JogoActivity extends AppCompatActivity {
         }
 
         if (mode != CLIENT) {
-            initializeGameAndGridView();
-        }
-    }
-
-    private void initializeGameAndGridView() {
-        jogoActual = new Jogo(getApplicationContext(), type, tema, nivelEscolhido);
-
-        final GridView gridview = (GridView) findViewById(R.id.tabuleiroGridView);
-        final CardAdapter cardAdapter = new CardAdapter(getApplicationContext(), jogoActual);
-        gridview.setAdapter(cardAdapter);
-
-        gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View v,
-                                    final int position, long id) {
-                ImageView imageView = (ImageView) v;
-
-                if (jogoActual.getPrimeiraCarta() == null && jogoActual.getSegundaCarta() == null) { //1ªCarta
-                    cardAdapter.setPosPrimeiraImageView(position);
-                    imageView.setImageResource(cardAdapter.getItem(position).getCardFront());
-                    jogoActual.setPrimeiraCarta(cardAdapter.getItem(position));
-                } else if (jogoActual.getPrimeiraCarta() != null && jogoActual.getSegundaCarta() == null) { //2ªCarta
-                    cardAdapter.setPosSegundaImageView(position);
-                    imageView.setImageResource(cardAdapter.getItem(position).getCardFront());
-                    jogoActual.setSegundaCarta(cardAdapter.getItem(position));
-
-                    if (jogoActual.verificaJogada()) {
-                        cardAdapter.getImageViewsBloqueadas().add(cardAdapter.getPosPrimeiraImageView());
-                        cardAdapter.getImageViewsBloqueadas().add(cardAdapter.getPosSegundaImageView());
-                        jogoActual.resetJogada();
-                        cardAdapter.resetPosImageViews();
-                        if (type == SINGLEPLAYER) {
-                            jogoActual.incrementaAcertadas(ME);
-                            jogoActual.incrementaTentativas(ME);
-                            tentativasJogador1TextView.setText(String.valueOf(jogoActual.getTentativas(ME)));
-                            acertadasJogador1TextView.setText(String.valueOf(jogoActual.getAcertadas(ME)));
-                        }
-                        if (type == MULTIPLAYER) {
-                            jogoActual.incrementaAcertadas(jogoActual.getJogadorActual());
-                            jogoActual.incrementaTentativas(jogoActual.getJogadorActual());
-
-                            tentativasJogador1TextView.setText(String.valueOf(jogoActual.getTentativas(ME)));
-                            acertadasJogador1TextView.setText(String.valueOf(jogoActual.getAcertadas(ME)));
-                            tentativasJogador2TextView.setText(String.valueOf(jogoActual.getTentativas(OTHER)));
-                            acertadasJogador2TextView.setText(String.valueOf(jogoActual.getAcertadas(OTHER)));
-                        }
-
-                    } else {
-                        if (type == SINGLEPLAYER) {
-                            jogoActual.incrementaTentativas(ME);
-                            tentativasJogador1TextView.setText(String.valueOf(jogoActual.getTentativas(ME)));
-                        }
-
-                        if (type == MULTIPLAYER) {
-                            jogoActual.incrementaTentativas(jogoActual.getJogadorActual());
-                            jogoActual.setJogadorActual(jogoActual.getProximoJogador());
-                            tentativasJogador1TextView.setText(String.valueOf(jogoActual.getTentativas(ME)));
-                            tentativasJogador2TextView.setText(String.valueOf(jogoActual.getTentativas(OTHER)));
-                        }
-
-                        handler.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                jogoActual.resetJogada();
-                                cardAdapter.resetPosImageViews();
-                                gridview.invalidateViews();
-
-                                if (type == MULTIPLAYER) {
-                                    if (jogoActual.getJogadorActual() == ME) {
-                                        jogadorActualTextView.setText(nomeJogador1TextView.getText());
-                                    } else {
-                                        jogadorActualTextView.setText(nomeJogador2TextView.getText());
-                                    }
-                                }
-                            }
-                        }, 750);
-                    }
-
-                    if (jogoActual.verificaFinal()) {
-                        finish();
-                        Toast.makeText(getApplicationContext(), "Fim do Jogo. Vencedor:" + jogoActual.getVencedor(), Toast.LENGTH_SHORT).show();
-                    }
-                } else {
-                    Log.e("MemoryGameJogoActivity", "Erro");
-                }
-            }
-        });
-
-        switch (nivelEscolhido) {
-            case 1:
-                gridview.setNumColumns(2); //2x2
-                break;
-            case 2:
-                gridview.setNumColumns(2); //3x2
-                break;
-            case 3:
-                gridview.setNumColumns(3); //4x3
-                break;
-            case 4:
-                gridview.setNumColumns(4); //5x4
-                break;
-            case 5:
-                gridview.setNumColumns(5); //6x5
-                break;
-            case 6:
-                gridview.setNumColumns(5); //6x5 c/ intruso
-                break;
-            default:
-                break;
+            initializeGameAndGridView(null);
         }
     }
 
     private void initializeGameAndGridView(Jogo jogoActualRecebido) {
-        jogoActual = jogoActualRecebido;
-        jogoActual.setmContext(getApplicationContext());
+        if (jogoActualRecebido == null) {
+            jogoActual = new Jogo(getApplicationContext(), type, tema, nivelEscolhido);
+        } else {
+            jogoActual = jogoActualRecebido;
+            jogoActualRecebido = null;
+            jogoActual.setmContext(getApplicationContext());
+        }
 
-        final GridView gridview = (GridView) findViewById(R.id.tabuleiroGridView);
-        final CardAdapter cardAdapter = new CardAdapter(getApplicationContext(), jogoActual);
+        gridview = (GridView) findViewById(R.id.tabuleiroGridView);
+        cardAdapter = new CardAdapter(getApplicationContext(), jogoActual);
         gridview.setAdapter(cardAdapter);
 
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -263,12 +166,21 @@ public class JogoActivity extends AppCompatActivity {
 
                 if (jogoActual.getPrimeiraCarta() == null && jogoActual.getSegundaCarta() == null) { //1ªCarta
                     cardAdapter.setPosPrimeiraImageView(position);
-                    imageView.setImageResource(cardAdapter.getItem(position).getCardFront());
+                    //imageView.setImageResource(cardAdapter.getItem(position).getCardFront());
+                    imageView.setImageBitmap(decodeSampledBitmapFromResource(getApplicationContext().getResources(), cardAdapter.getItem(position).getCardFront(), 50, 50));
                     jogoActual.setPrimeiraCarta(cardAdapter.getItem(position));
+                    if (type == MULTIPLAYERONLINE) {
+                        moveMyPlayer(position);
+                    }
                 } else if (jogoActual.getPrimeiraCarta() != null && jogoActual.getSegundaCarta() == null) { //2ªCarta
                     cardAdapter.setPosSegundaImageView(position);
-                    imageView.setImageResource(cardAdapter.getItem(position).getCardFront());
+                    //imageView.setImageResource(cardAdapter.getItem(position).getCardFront());
+                    imageView.setImageBitmap(decodeSampledBitmapFromResource(getApplicationContext().getResources(), cardAdapter.getItem(position).getCardFront(), 50, 50));
                     jogoActual.setSegundaCarta(cardAdapter.getItem(position));
+
+                    if (type == MULTIPLAYERONLINE) {
+                        moveMyPlayer(position);
+                    }
 
                     if (jogoActual.verificaJogada()) {
                         cardAdapter.getImageViewsBloqueadas().add(cardAdapter.getPosPrimeiraImageView());
@@ -281,16 +193,14 @@ public class JogoActivity extends AppCompatActivity {
                             tentativasJogador1TextView.setText(String.valueOf(jogoActual.getTentativas(ME)));
                             acertadasJogador1TextView.setText(String.valueOf(jogoActual.getAcertadas(ME)));
                         }
-                        if (type == MULTIPLAYER) {
+                        if (type == MULTIPLAYER || type == MULTIPLAYERONLINE) {
                             jogoActual.incrementaAcertadas(jogoActual.getJogadorActual());
                             jogoActual.incrementaTentativas(jogoActual.getJogadorActual());
-
                             tentativasJogador1TextView.setText(String.valueOf(jogoActual.getTentativas(ME)));
                             acertadasJogador1TextView.setText(String.valueOf(jogoActual.getAcertadas(ME)));
                             tentativasJogador2TextView.setText(String.valueOf(jogoActual.getTentativas(OTHER)));
                             acertadasJogador2TextView.setText(String.valueOf(jogoActual.getAcertadas(OTHER)));
                         }
-
                     } else {
                         if (type == SINGLEPLAYER) {
                             jogoActual.incrementaTentativas(ME);
@@ -544,7 +454,7 @@ public class JogoActivity extends AppCompatActivity {
                 try {
                     Log.d("MemoryGame", "Connecting to the server  " + strIP);
                     socketGame = new Socket(strIP, Port);
-                    Log.d("MemoryGame","SocketGame: " + socketGame);
+                    Log.d("MemoryGame", "SocketGame: " + socketGame);
                 } catch (Exception e) {
                     Log.d("MemoryGame", "Catch");
                     socketGame = null;
@@ -567,23 +477,16 @@ public class JogoActivity extends AppCompatActivity {
     }
 
     void sendGameInfo(final Jogo jogoActual) {
+        try {
+            outputObjects = new ObjectOutputStream(socketGame.getOutputStream());
+            Log.d("MemoryGame", "Sending game info: " + jogoActual);
+            outputObjects.writeObject(jogoActual);
+            outputObjects.flush();
 
-        //Thread t = new Thread(new Runnable() {
-        //    @Override
-        //    public void run() {
-                try {
-                    outputObjects = new ObjectOutputStream(socketGame.getOutputStream());
-                    Log.d("MemoryGame", "Sending game info: " + jogoActual);
-                    outputObjects.writeObject(jogoActual);
-                    outputObjects.flush();
-
-                } catch (Exception e) {
-                    Log.d("MemoryGame", "Error sending game info");
-                    Log.d("MemoryGame", "Exception:" + e);
-                }
-         //   }
-        //});
-        //t.start();
+        } catch (Exception e) {
+            Log.d("MemoryGame", "Error sending game info");
+            Log.d("MemoryGame", "Exception:" + e);
+        }
     }
 
     void receiveGameInfo() {
@@ -602,7 +505,7 @@ public class JogoActivity extends AppCompatActivity {
                         initializeGameAndGridView(jogoActualX);
                     }
                 });
-            
+
         } catch (Exception e) {
             Log.d("MemoryGame", "Exception:" + e);
             handler.post(new Runnable() {
@@ -631,7 +534,7 @@ public class JogoActivity extends AppCompatActivity {
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
-                            //moveOtherPlayer(move);
+                            moveOtherPlayer(move);
                         }
                     });
                 }
@@ -667,5 +570,121 @@ public class JogoActivity extends AppCompatActivity {
             ex.printStackTrace();
         }
         return null;
+    }
+
+    void moveOtherPlayer(int move) {
+        if (cardAdapter.getPosPrimeiraImageView() == null && cardAdapter.getPosSegundaImageView() == null) {
+            cardAdapter.setPosPrimeiraImageView(move);
+            jogoActual.setPrimeiraCarta(cardAdapter.getItem(move));
+            gridview.invalidateViews();
+        } else if (cardAdapter.getPosPrimeiraImageView() != null && cardAdapter.getPosSegundaImageView() == null) {
+            cardAdapter.setPosSegundaImageView(move);
+            jogoActual.setSegundaCarta(cardAdapter.getItem(move));
+            gridview.invalidateViews();
+
+            if (jogoActual.verificaJogada()) {
+                cardAdapter.getImageViewsBloqueadas().add(cardAdapter.getPosPrimeiraImageView());
+                cardAdapter.getImageViewsBloqueadas().add(cardAdapter.getPosSegundaImageView());
+                jogoActual.resetJogada();
+                cardAdapter.resetPosImageViews();
+
+                jogoActual.incrementaAcertadas(jogoActual.getJogadorActual());
+                jogoActual.incrementaTentativas(jogoActual.getJogadorActual());
+
+                tentativasJogador1TextView.setText(String.valueOf(jogoActual.getTentativas(ME)));
+                acertadasJogador1TextView.setText(String.valueOf(jogoActual.getAcertadas(ME)));
+                tentativasJogador2TextView.setText(String.valueOf(jogoActual.getTentativas(OTHER)));
+                acertadasJogador2TextView.setText(String.valueOf(jogoActual.getAcertadas(OTHER)));
+
+            } else {
+                jogoActual.incrementaTentativas(jogoActual.getJogadorActual());
+                jogoActual.setJogadorActual(jogoActual.getProximoJogador());
+                tentativasJogador1TextView.setText(String.valueOf(jogoActual.getTentativas(ME)));
+                tentativasJogador2TextView.setText(String.valueOf(jogoActual.getTentativas(OTHER)));
+
+
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        jogoActual.resetJogada();
+                        cardAdapter.resetPosImageViews();
+                        gridview.invalidateViews();
+
+
+                        if (jogoActual.getJogadorActual() == ME) {
+                            jogadorActualTextView.setText(nomeJogador1TextView.getText());
+                        } else {
+                            jogadorActualTextView.setText(nomeJogador2TextView.getText());
+                        }
+
+                    }
+                }, 750);
+            }
+
+
+            if (jogoActual.verificaFinal()) {
+                finish();
+                Toast.makeText(getApplicationContext(), "Fim do Jogo. Vencedor:" + jogoActual.getVencedor(), Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    void moveMyPlayer(final int move) {
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Log.d("MemoryGame", "Sending a move: " + move);
+                    output.println(move);
+                    output.flush();
+                } catch (Exception e) {
+                    Log.d("MemoryGame", "Error sending a move");
+                }
+            }
+        });
+        t.start();
+    }
+
+
+    public static int calculateInSampleSize(BitmapFactory.Options options,
+                                            int reqWidth, int reqHeight) {
+        // Raw height and width of image
+        final int height = options.outHeight;
+        final int width = options.outWidth;
+        int inSampleSize = 1;
+
+        if (height > reqHeight || width > reqWidth) {
+
+            // Calculate ratios of height and width to requested height and
+            // width
+            final int heightRatio = Math.round((float) height
+                    / (float) reqHeight);
+            final int widthRatio = Math.round((float) width / (float) reqWidth);
+
+            // Choose the smallest ratio as inSampleSize value, this will
+            // guarantee
+            // a final image with both dimensions larger than or equal to the
+            // requested height and width.
+            inSampleSize = heightRatio < widthRatio ? heightRatio : widthRatio;
+        }
+
+        return inSampleSize;
+    }
+
+    public static Bitmap decodeSampledBitmapFromResource(Resources res,
+                                                         int resId, int reqWidth, int reqHeight) {
+
+        // First decode with inJustDecodeBounds=true to check dimensions
+        final BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeResource(res, resId, options);
+
+        // Calculate inSampleSize
+        options.inSampleSize = calculateInSampleSize(options, reqWidth,
+                reqHeight);
+
+        // Decode bitmap with inSampleSize set
+        options.inJustDecodeBounds = false;
+        return BitmapFactory.decodeResource(res, resId, options);
     }
 }
