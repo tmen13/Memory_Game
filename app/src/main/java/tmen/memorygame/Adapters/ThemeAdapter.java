@@ -4,42 +4,40 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.TextView;
+
+import java.util.List;
 
 import tmen.memorygame.Classes.Tema;
 import tmen.memorygame.R;
 
 /**
- * Created by Ricardo on 02/01/2016.
+ * Created by Ricardo on 04/01/2016.
  */
-public class LevelMultiplayerAdapter extends BaseAdapter {
+public class ThemeAdapter extends BaseAdapter {
 
-    static Integer[] levelImgsIds = {R.drawable.lvl_sem_intruso, R.drawable.lvl_intruso};
-
+    static Integer[] defaultThemesImgsIds = {R.drawable.ic_tema_bandeiras, R.drawable.ic_tema_carros, R.drawable.ic_tema_animais, R.drawable.ic_tema_cores, R.drawable.ic_tema_clubes};
 
     private Context mContext;
-    private Tema tema;
+    private List<Tema> temas;
 
-
-    public LevelMultiplayerAdapter(Context mContext, Tema tema) {
+    public ThemeAdapter(Context mContext, List<Tema> temas) {
         this.mContext = mContext;
-        this.tema = tema;
+        this.temas = temas;
     }
 
     @Override
     public int getCount() {
-        return 2;
+        return temas.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return null;
+        return temas.get(position);
     }
 
     @Override
@@ -60,16 +58,13 @@ public class LevelMultiplayerAdapter extends BaseAdapter {
             imageView = (ImageView) convertView;
         }
 
-
-        imageView.setImageBitmap(decodeSampledBitmapFromResource(mContext.getResources(), levelImgsIds[position], 50, 50));
-
+        imageView.setImageBitmap(decodeSampledBitmapFromResource(mContext.getResources(), defaultThemesImgsIds[position], 50, 50));
 
         return imageView;
     }
 
 
-    public static int calculateInSampleSize(BitmapFactory.Options options,
-                                            int reqWidth, int reqHeight) {
+    public static int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {
         // Raw height and width of image
         final int height = options.outHeight;
         final int width = options.outWidth;
@@ -107,4 +102,5 @@ public class LevelMultiplayerAdapter extends BaseAdapter {
         options.inJustDecodeBounds = false;
         return BitmapFactory.decodeResource(res, resId, options);
     }
+
 }

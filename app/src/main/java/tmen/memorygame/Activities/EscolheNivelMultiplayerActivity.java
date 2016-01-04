@@ -49,8 +49,7 @@ public class EscolheNivelMultiplayerActivity extends AppCompatActivity {
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v,
                                     final int position, long id) {
-                //ImageView imageView = (ImageView) v;
-                View imageView = (View) v;
+                ImageView imageView = (ImageView) v;
 
                 if (type == JogoActivity.MULTIPLAYER) {
                     Intent intent = new Intent(getApplicationContext(), JogoActivity.class);

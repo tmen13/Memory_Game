@@ -11,9 +11,15 @@
     tools:context="tmen.memorygame.Activities.EscolheTemaActivity"
     android:orientation="vertical">
 
-    <Button
+    <GridView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="EscolheNivel"
-        android:id="@+id/escolheTemaButton" />
+        android:id="@+id/escolheTemaGridView"
+        android:columnWidth="75dp"
+        android:verticalSpacing="5dp"
+        android:horizontalSpacing="5dp"
+        android:numColumns="auto_fit"
+        android:gravity="center"
+        android:stretchMode="columnWidth" />
+
 </LinearLayout>

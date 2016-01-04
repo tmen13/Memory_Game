@@ -7,12 +7,17 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import tmen.memorygame.Adapters.LevelMultiplayerAdapter;
+import tmen.memorygame.Adapters.ThemeAdapter;
 import tmen.memorygame.Classes.GeradorBaralhos;
 import tmen.memorygame.Classes.GeradorTemas;
 import tmen.memorygame.Classes.Tema;
@@ -23,8 +28,6 @@ public class EscolheTemaActivity extends AppCompatActivity {
     private int type = JogoActivity.SINGLEPLAYER;
     private int mode = JogoActivity.SERVER;
     private List<Tema> temas = new ArrayList<>();
-
-    Button btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,32 +47,34 @@ public class EscolheTemaActivity extends AppCompatActivity {
         }
 
         //load temas e niveis
-        //if (type == JogoActivity.SINGLEPLAYER) {
+
         temas.clear();
         temas.addAll(GeradorTemas.getTemas());
-        //}
 
-        btn = (Button) findViewById(R.id.escolheTemaButton);
+        final GridView gridview = (GridView) findViewById(R.id.escolheTemaGridView);
+        final ThemeAdapter themeAdapter = new ThemeAdapter(getApplicationContext(), temas);
+        gridview.setAdapter(themeAdapter);
 
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Toast.makeText(getApplicationContext(), "EscolheNivel", Toast.LENGTH_SHORT).show();
+        gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View v,
+                                    final int position, long id) {
+                ImageView imageView = (ImageView) v;
+
                 if (type == JogoActivity.SINGLEPLAYER) {
                     Intent intent = new Intent(getApplicationContext(), EscolheNivelActivity.class);
                     intent.putExtra("type", type);
-                    intent.putExtra("tema", temas.get(2));
+                    intent.putExtra("tema", temas.get(position));
                     startActivity(intent);
                 } else if (type == JogoActivity.MULTIPLAYER) {
                     Intent intent = new Intent(getApplicationContext(), EscolheNivelMultiplayerActivity.class);
                     intent.putExtra("type", type);
-                    intent.putExtra("tema", temas.get(0));
+                    intent.putExtra("tema", temas.get(position));
                     startActivity(intent);
                 } else if (type == JogoActivity.MULTIPLAYERONLINE) {
                     Intent intent = new Intent(getApplicationContext(), EscolheNivelMultiplayerActivity.class);
                     intent.putExtra("type", type);
                     intent.putExtra("mode", mode);
-                    intent.putExtra("tema", temas.get(0));
+                    intent.putExtra("tema", temas.get(position));
                     startActivity(intent);
                 }
             }
