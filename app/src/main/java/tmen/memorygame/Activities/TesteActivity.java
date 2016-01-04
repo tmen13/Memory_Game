@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -55,7 +56,6 @@ public class TesteActivity extends AppCompatActivity {
     //escolhe imagem da galeria e mete como fundo do butao. so para teste, usar image view
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        // TODO Auto-generated method stub
         super.onActivityResult(requestCode, resultCode, data);
 
         if (resultCode == RESULT_OK){
@@ -63,14 +63,14 @@ public class TesteActivity extends AppCompatActivity {
             tv.setText(targetUri.toString());
             Bitmap bitmap;
             try {
-                bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(targetUri));
+                bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), targetUri);
+                //bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(targetUri));
                 BitmapDrawable bdrawable = new BitmapDrawable(getResources(),bitmap);
                 if(android.os.Build.VERSION.SDK_INT < 16) {
                     bt.setBackgroundDrawable(bdrawable);
                 } else
                     bt.setBackground(bdrawable);
-            } catch (FileNotFoundException e) {
-                // TODO Auto-generated catch block
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }

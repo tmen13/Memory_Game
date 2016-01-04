@@ -70,7 +70,7 @@ public class LevelAdapter extends BaseAdapter{
         return imageView;
     }
 
-    public boolean isEnabled(int position) {
+    /*public boolean isEnabled(int position) {
         Boolean enabled = false;
 
         if (position < tema.getNivelActual()) {
@@ -78,5 +78,5 @@ public class LevelAdapter extends BaseAdapter{
         }
 
         return enabled;
-    }
+    }*/
 }

@@ -58,7 +58,7 @@ public class EscolheTemaActivity extends AppCompatActivity {
                 if (type == JogoActivity.SINGLEPLAYER) {
                     Intent intent = new Intent(getApplicationContext(), EscolheNivelActivity.class);
                     intent.putExtra("type", type);
-                    intent.putExtra("tema", temas.get(0));
+                    intent.putExtra("tema", temas.get(2));
                     startActivity(intent);
                 } else if (type == JogoActivity.MULTIPLAYER) {
                     Intent intent = new Intent(getApplicationContext(), EscolheNivelMultiplayerActivity.class);

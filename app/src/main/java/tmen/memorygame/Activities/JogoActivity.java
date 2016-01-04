@@ -431,7 +431,7 @@ public class JogoActivity extends AppCompatActivity {
 
     void clientDlg() {
         final EditText edtIP = new EditText(this);
-        edtIP.setText("10.0.2.2");
+        edtIP.setText("192.168.1.0");
         AlertDialog ad = new AlertDialog.Builder(this).setTitle(R.string.clientdlg_title)
                 .setMessage("Server IP").setView(edtIP)
                 .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
