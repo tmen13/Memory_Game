@@ -19,7 +19,6 @@ import android.support.v4.app.NavUtils;
 import tmen.memorygame.Classes.MySharedPreferences;
 import tmen.memorygame.R;
 import java.util.List;
-import java.util.Locale;
 
 /**
  * A {@link PreferenceActivity} that presents a set of application settings. On
@@ -55,7 +54,6 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
 
     @Override
     public boolean onMenuItemSelected(int featureId, MenuItem item) {
-        setLocale(MySharedPreferences.getSharedPref(getApplicationContext(), MySharedPreferences.PREF_LANG));
         int id = item.getItemId();
         if (id == android.R.id.home) {
             if (!super.onMenuItemSelected(featureId, item)) {
@@ -69,7 +67,6 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         // refresh your views here
-        Log.i("aqui", newConfig.locale.getCountry().toString());
         super.onConfigurationChanged(newConfig);
     }
 
@@ -168,7 +165,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             // updated to reflect the new value, per the Android Design
             // guidelines.
             bindPreferenceSummaryToValue(findPreference(MySharedPreferences.PREF_PLAYERNAME));
-            bindPreferenceSummaryToValue(findPreference(MySharedPreferences.PREF_LANG));
+            //bindPreferenceSummaryToValue(findPreference(MySharedPreferences.PREF_LANG));
         }
 
         @Override
@@ -182,7 +179,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         }
     }
 
-    protected void setLocale(String lang) {
+   /* protected void setLocale(String lang) {
         Locale locale = new Locale(lang);
         Locale.setDefault(locale);
         Configuration config = getResources().getConfiguration();
@@ -191,6 +188,6 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 getApplicationContext().getResources().getDisplayMetrics());
         recreate();
         onConfigurationChanged(config);
-    }
+    } */
 
 }
