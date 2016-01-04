@@ -547,7 +547,6 @@ public class JogoActivity extends AppCompatActivity {
                         nomeJogador2TextView.setText(jogoActualX.getNomeJogador1());
                     }
                 });
-
             
         } catch (Exception e) {
             Log.d("MemoryGame", "Exception:" + e);
