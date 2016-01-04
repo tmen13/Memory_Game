@@ -45,5 +45,19 @@
         <item value = "pt">pt</item>
         <item value = "en">en</item>
     </string-array>
-    <string name="title_activity_escolhe_nivel_multiplayer">EscolheNivelMultiplayerActivity</string>
+    <string name="title_activity_escolhe_nivel_multiplayer">Pick a level:</string>
+    <string name="creditos_ok">Close</string>
+    <string name="creditos_titulo">Mobile Architectures 15/16</string>
+    <string name="creditos_texto">Developed by: \n Tony Mendes nº21190876 \n Ricardo Coimbra
+        nº21200319
+    </string>
+    <string name="server_ip">Server IP</string>
+    <string name="confirm">confirm</string>
+    <string name="error_receive_game">Error occurred during receiving game info</string>
+    <string name="game_ended">The game was finished</string>
+    <string name="quit_game">Do you really wanto to quit the game?</string>
+    <string name="end_game">Game Over</string>
+    <string name="winner">Winner</string>
+    <string name="player_2">Player 2</string>
+    <string name="player_2_name">Player 2 Name</string>
 </resources>

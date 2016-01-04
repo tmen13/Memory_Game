@@ -28,7 +28,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        setLocale(MySharedPreferences.getSharedPref(getApplicationContext(), MySharedPreferences.PREF_LANG));
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -151,21 +150,4 @@ public class MainActivity extends AppCompatActivity {
         alertDialog.show();
     }
 
-
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        // refresh your views here
-        super.onConfigurationChanged(newConfig);
-    }
-
-    private void setLocale(String lang) {
-        Locale locale = new Locale(lang);
-        Locale.setDefault(locale);
-        Configuration config = getResources().getConfiguration();
-        config.locale = locale;
-        getBaseContext().getResources().updateConfiguration(config,
-                getApplicationContext().getResources().getDisplayMetrics());
-        onConfigurationChanged(config);
-
-    }
 }

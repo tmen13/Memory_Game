@@ -64,13 +64,6 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         return super.onMenuItemSelected(featureId, item);
     }
 
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        // refresh your views here
-        super.onConfigurationChanged(newConfig);
-    }
-
-
     /**
      * {@inheritDoc}
      */

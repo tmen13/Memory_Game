@@ -49,4 +49,14 @@
         <item value = "pt">pt</item>
         <item value = "en">en</item>
     </string-array>
+    <string name="title_activity_escolhe_nivel_multiplayer">Escolha um nível</string>
+    <string name="server_ip">IP Servidor</string>
+    <string name="confirm">Confirmar</string>
+    <string name="error_receive_game">Erro ao receber info do jogo</string>
+    <string name="game_ended">O jogo acabou</string>
+    <string name="quit_game">Deseja mesmo desistir do jogo?</string>
+    <string name="end_game">Fim do Jogo</string>
+    <string name="winner">Vencedor</string>
+    <string name="player_2">Jogador 2</string>
+    <string name="player_2_name">Nome Jogador 2</string>
 </resources>

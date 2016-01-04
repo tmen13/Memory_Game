@@ -234,8 +234,7 @@ public class JogoActivity extends AppCompatActivity {
                     }
 
                     if (jogoActual.verificaFinal()) {
-                        finish();
-                        Toast.makeText(getApplicationContext(), "Fim do Jogo. Vencedor:" + jogoActual.getVencedor(), Toast.LENGTH_SHORT).show();
+                        showAlert(1);
                     }
                 } else {
                     Log.e("MemoryGameJogoActivity", "Erro");
@@ -318,7 +317,7 @@ public class JogoActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             // Respond to the action bar's Up/Home button
             case android.R.id.home:
-                doExit();
+                showAlert(0);
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -326,30 +325,47 @@ public class JogoActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        doExit();
-    }
+        showAlert(0);
+    } //desistir do jogo
 
-    private void doExit() {
-        android.support.v7.app.AlertDialog.Builder alertDialog = new android.support.v7.app.AlertDialog.Builder(
+    private void showAlert(int flag) {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(
                 JogoActivity.this);
+        if(flag == 0) {
+            alertDialog.setPositiveButton(R.string.sim, new DialogInterface.OnClickListener() {
 
-        alertDialog.setPositiveButton(R.string.sim, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    finish();
+                }
+            });
 
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                finish();
+            alertDialog.setNegativeButton(R.string.nao, null);
+            alertDialog.setMessage(R.string.quit_game);
+            alertDialog.setTitle(R.string.app_name);
+        } else if (flag == 1){ // jogo acabou
+            alertDialog.setPositiveButton(R.string.creditos_ok, new DialogInterface.OnClickListener() {
+
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    finish();
+                }
+            });
+            String vencedor;
+            if(jogoActual.getVencedor() == 0){
+                vencedor = nomeJogador1TextView.getText().toString();
+            } else {
+                vencedor = nomeJogador2TextView.getText().toString();
             }
-        });
-
-        alertDialog.setNegativeButton(R.string.nao, null);
-        alertDialog.setMessage(R.string.confima_sair);
-        alertDialog.setTitle(R.string.app_name);
+            alertDialog.setMessage(getString(R.string.winner) + ": " + vencedor);
+            alertDialog.setTitle(R.string.end_game);
+        }
         alertDialog.show();
     }
 
     void nomeJogador2Dialog() {
         final EditText nomeJogador2EditText = new EditText(this);
-        nomeJogador2EditText.setText("Jogador 2");
+        nomeJogador2EditText.setText(R.string.player_2);
 
         android.support.v7.app.AlertDialog.Builder alertDialog = new android.support.v7.app.AlertDialog.Builder(
                 JogoActivity.this);
@@ -369,7 +385,7 @@ public class JogoActivity extends AppCompatActivity {
             }
         });
 
-        alertDialog.setMessage("Nome Jogador 2");
+        alertDialog.setMessage(R.string.player_2_name);
         alertDialog.setTitle(R.string.app_name);
         alertDialog.setView(nomeJogador2EditText);
         alertDialog.show();
@@ -433,8 +449,8 @@ public class JogoActivity extends AppCompatActivity {
         final EditText edtIP = new EditText(this);
         edtIP.setText("192.168.1.0");
         AlertDialog ad = new AlertDialog.Builder(this).setTitle(R.string.clientdlg_title)
-                .setMessage("Server IP").setView(edtIP)
-                .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                .setMessage(R.string.server_ip).setView(edtIP)
+                .setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         client(edtIP.getText().toString(), PORT); // to test with emulators: PORTaux);
@@ -514,7 +530,7 @@ public class JogoActivity extends AppCompatActivity {
                 public void run() {
                     finish();
                     Toast.makeText(getApplicationContext(),
-                            "Error occurred during receiving game info", Toast.LENGTH_SHORT)
+                            R.string.error_receive_game, Toast.LENGTH_SHORT)
                             .show();
                 }
             });
@@ -545,7 +561,7 @@ public class JogoActivity extends AppCompatActivity {
                     public void run() {
                         finish();
                         Toast.makeText(getApplicationContext(),
-                                "The game was finished", Toast.LENGTH_SHORT)
+                                R.string.game_ended, Toast.LENGTH_SHORT)
                                 .show();
                     }
                 });
@@ -624,8 +640,7 @@ public class JogoActivity extends AppCompatActivity {
 
 
             if (jogoActual.verificaFinal()) {
-                finish();
-                Toast.makeText(getApplicationContext(), "Fim do Jogo. Vencedor:" + jogoActual.getVencedor(), Toast.LENGTH_SHORT).show();
+                showAlert(1);
             }
         }
     }
