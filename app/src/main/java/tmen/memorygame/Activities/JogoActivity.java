@@ -548,6 +548,7 @@ public class JogoActivity extends AppCompatActivity {
                     }
                 });
 
+            
         } catch (Exception e) {
             Log.d("MemoryGame", "Exception:" + e);
             handler.post(new Runnable() {
