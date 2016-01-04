@@ -78,6 +78,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        if(MySharedPreferences.getSharedPref(getApplicationContext(),MySharedPreferences.PREF_PLAYERNAME) == "") {
+            MySharedPreferences.addToSharedPref(getApplicationContext(),MySharedPreferences.PREF_PLAYERNAME,getResources().getString(R.string.pref_default_display_name));
+        }
+
     }
 
     @Override

@@ -144,16 +144,22 @@ public class JogoActivity extends AppCompatActivity {
         if (mode != CLIENT) {
             initializeGameAndGridView(null);
         }
+
+        if (type == MULTIPLAYER) {
+            nomeJogador2Dialog();
+        }
     }
 
     private void initializeGameAndGridView(Jogo jogoActualRecebido) {
         if (jogoActualRecebido == null) {
-            jogoActual = new Jogo(getApplicationContext(), type, tema, nivelEscolhido);
+            Log.d("MemoryGame","NomeJogador1:" + nomeJogador1TextView.getText().toString());
+            jogoActual = new Jogo(getApplicationContext(), type, tema, nivelEscolhido, nomeJogador1TextView.getText().toString());
         } else {
             jogoActual = jogoActualRecebido;
             jogoActualRecebido = null;
             jogoActual.setmContext(getApplicationContext());
             jogoActual.setJogadorActual(OTHER);
+            jogoActual.setNomeJogador2(nomeJogador1TextView.getText().toString());
         }
 
         gridview = (GridView) findViewById(R.id.tabuleiroGridView);
@@ -276,7 +282,6 @@ public class JogoActivity extends AppCompatActivity {
                 infoJogador2.setVisibility(LinearLayout.GONE);
                 break;
             case MULTIPLAYER:
-                nomeJogador2Dialog();
                 break;
             case MULTIPLAYERONLINE:
                 if (mode == SERVER)
@@ -493,12 +498,26 @@ public class JogoActivity extends AppCompatActivity {
         t.start();
     }
 
-    void sendGameInfo(final Jogo jogoActual) {
+    void sendGameInfo(final Jogo jogoActualX) {
         try {
             outputObjects = new ObjectOutputStream(socketGame.getOutputStream());
-            Log.d("MemoryGame", "Sending game info: " + jogoActual);
-            outputObjects.writeObject(jogoActual);
+            Log.d("MemoryGame", "Sending game info: " + jogoActualX);
+            outputObjects.writeObject(jogoActualX);
             outputObjects.flush();
+/*
+            inputObjects = new ObjectInputStream(socketGame.getInputStream());
+            final String nomeJogador2Recebido = (String) inputObjects.readObject();
+
+            jogoActual.setNomeJogador2(nomeJogador2Recebido);
+
+            handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    nomeJogador2TextView.setText(jogoActual.getNomeJogador2());
+                }
+            });
+
+*/
 
         } catch (Exception e) {
             Log.d("MemoryGame", "Error sending game info");
@@ -511,8 +530,13 @@ public class JogoActivity extends AppCompatActivity {
             inputObjects = new ObjectInputStream(socketGame.getInputStream());
 
             final Jogo jogoActualX = (Jogo) inputObjects.readObject();
+
             tema = jogoActualX.getTema();
             nivelEscolhido = jogoActualX.getNivelEscolhido();
+
+      /*      outputObjects = new ObjectOutputStream(socketGame.getOutputStream());
+            outputObjects.writeObject(nomeJogador1TextView.getText().toString());
+            output.flush();*/
 
             Log.d("MemoryGame", "Received: " + jogoActualX);
 
@@ -520,6 +544,7 @@ public class JogoActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         initializeGameAndGridView(jogoActualX);
+                        nomeJogador2TextView.setText(jogoActualX.getNomeJogador1());
                     }
                 });
 

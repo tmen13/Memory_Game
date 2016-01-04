@@ -16,16 +16,19 @@ public class Jogo implements Serializable{
     private Card primeiraCarta, segundaCarta;
 
     private int jogadorActual = JogoActivity.ME;
+    private String nomeJogador1, nomeJogador2;
+
     private int tentativas[] = { 0, 0 };
     private int acertadas[] = { 0, 0 };
     private int intrusosAcertados[] = { 0, 0 };
 
-    public Jogo (Context mContext, int tipo, Tema tema, int nivelEscolhido) {
+    public Jogo (Context mContext, int tipo, Tema tema, int nivelEscolhido, String nomeJogador1) {
         this.mContext = mContext;
         this.tipo = tipo;
         this.tema = tema;
         this.nivelEscolhido = nivelEscolhido;
         this.baralho = GeradorBaralhos.getBaralho(tema, nivelEscolhido);
+        this.nomeJogador1 = nomeJogador1;
     }
 
     public Context getmContext() {
@@ -70,6 +73,18 @@ public class Jogo implements Serializable{
 
     public void setJogadorActual(int jogadorActual) {
         this.jogadorActual = jogadorActual;
+    }
+
+    public String getNomeJogador1() {
+        return nomeJogador1;
+    }
+
+    public String getNomeJogador2() {
+        return nomeJogador2;
+    }
+
+    public void setNomeJogador2(String nomeJogador2) {
+        this.nomeJogador2 = nomeJogador2;
     }
 
     public Boolean verificaJogada() {
