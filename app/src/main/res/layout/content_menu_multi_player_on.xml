@@ -10,18 +10,39 @@
     tools:showIn="@layout/activity_menu_multi_player_on"
     tools:context="tmen.memorygame.Activities.MenuMultiPlayerOnActivity"
     android:orientation="vertical"
-    android:gravity="center_horizontal">
+    android:gravity="center_horizontal"
+    android:weightSum="3">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/menu_server"
-        android:id="@+id/serverModeBtn" />
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="278dp"
+        android:layout_height="131dp"
+        android:weightSum="2">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/menu_client"
-        android:id="@+id/clientModeBtn" />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:text="@string/menu_server"
+            android:id="@+id/serverModeBtn"
+            android:textStyle="bold"
+            android:background="@drawable/ic_button_bg"
+            android:width="220dp"
+            android:layout_weight="1"
+            android:textColor="#ffffff"
+            android:textSize="19dp" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:text="@string/menu_client"
+            android:id="@+id/clientModeBtn"
+            android:textStyle="bold"
+            android:background="@drawable/ic_button_bg"
+            android:width="220dp"
+            android:layout_weight="1"
+            android:textColor="#ffffff"
+            android:textSize="19dp" />
+    </LinearLayout>
+
 
 </LinearLayout>

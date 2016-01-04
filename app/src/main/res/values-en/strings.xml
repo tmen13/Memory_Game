@@ -58,4 +58,5 @@
     <string name="winner">Winner</string>
     <string name="player_2">Player 2</string>
     <string name="player_2_name">Player 2 Name</string>
+    <string name="no_network">No network connection</string>
 </resources>

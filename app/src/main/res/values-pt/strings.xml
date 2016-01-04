@@ -59,4 +59,5 @@
     <string name="winner">Vencedor</string>
     <string name="player_2">Jogador 2</string>
     <string name="player_2_name">Nome Jogador 2</string>
+    <string name="no_network">Sem ligação</string>
 </resources>

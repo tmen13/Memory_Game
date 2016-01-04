@@ -2,6 +2,7 @@ package tmen.memorygame.Activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -33,7 +34,7 @@ public class MenuMultiPlayerOnActivity extends AppCompatActivity {
         ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
         if (networkInfo == null || !networkInfo.isConnected()) {
-            Toast.makeText(this, "No network connection", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, R.string.no_network, Toast.LENGTH_LONG).show();
             finish();
             return;
         }
@@ -42,9 +43,13 @@ public class MenuMultiPlayerOnActivity extends AppCompatActivity {
         if (intentMain != null) {
             type = intentMain.getIntExtra("type",JogoActivity.MULTIPLAYERONLINE);
         }
+        String fontPath = "fonts/CarterOne.ttf";
+        Typeface tf = Typeface.createFromAsset(getAssets(), fontPath);
 
         serverBtn = (Button) findViewById(R.id.serverModeBtn);
         clientBtn = (Button) findViewById(R.id.clientModeBtn);
+        serverBtn.setTypeface(tf);
+        clientBtn.setTypeface(tf);
 
         serverBtn.setOnClickListener(new View.OnClickListener() {
             @Override
