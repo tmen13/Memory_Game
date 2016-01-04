@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import java.io.FileNotFoundException;
+import java.io.InputStream;
 
 import tmen.memorygame.Classes.Card;
 import tmen.memorygame.Classes.MySharedPreferences;
@@ -25,7 +27,6 @@ import tmen.memorygame.R;
 public class TesteActivity extends AppCompatActivity {
 
     public static final String PREF_PLAYERNAME = "pref_nome_jogador";
-    public static final String PREF_LANG = "pref_idioma";
 
     TextView tv;
     Button bt;
@@ -39,8 +40,20 @@ public class TesteActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         tv = (TextView)findViewById(R.id.tv1);
-
         bt = (Button)findViewById(R.id.imgBt);
+        Uri uri = Uri.parse("android.resource://" + getPackageName() + "/drawable/" + R.drawable.animals_bear);
+
+        try {
+            InputStream inputStream = getContentResolver().openInputStream(uri);
+            Drawable yourDrawable = Drawable.createFromStream(inputStream, uri.toString());
+            bt.setBackgroundDrawable(yourDrawable);
+        } catch (FileNotFoundException e) {
+
+        }
+
+
+        tv.setText(uri.toString());
+
 
         bt.setOnClickListener(new View.OnClickListener() {
             @Override
