@@ -500,24 +500,31 @@ public class JogoActivity extends AppCompatActivity {
 
     void sendGameInfo(final Jogo jogoActualX) {
         try {
-            outputObjects = new ObjectOutputStream(socketGame.getOutputStream());
+            if(outputObjects == null)
+                outputObjects = new ObjectOutputStream(socketGame.getOutputStream());
+            if (inputObjects == null)
+                inputObjects = new ObjectInputStream(socketGame.getInputStream());
+
             Log.d("MemoryGame", "Sending game info: " + jogoActualX);
+
             outputObjects.writeObject(jogoActualX);
             outputObjects.flush();
-/*
-            inputObjects = new ObjectInputStream(socketGame.getInputStream());
+
             final String nomeJogador2Recebido = (String) inputObjects.readObject();
 
-            jogoActual.setNomeJogador2(nomeJogador2Recebido);
+            Log.d("MemoryGame", "Received name: " + nomeJogador2Recebido);
+
+
 
             handler.post(new Runnable() {
                 @Override
                 public void run() {
+                    jogoActual.setNomeJogador2(nomeJogador2Recebido);
                     nomeJogador2TextView.setText(jogoActual.getNomeJogador2());
                 }
             });
 
-*/
+
 
         } catch (Exception e) {
             Log.d("MemoryGame", "Error sending game info");
@@ -527,18 +534,22 @@ public class JogoActivity extends AppCompatActivity {
 
     void receiveGameInfo() {
         try {
-            inputObjects = new ObjectInputStream(socketGame.getInputStream());
+            if (inputObjects == null)
+                inputObjects = new ObjectInputStream(socketGame.getInputStream());
+            if (outputObjects == null)
+                outputObjects = new ObjectOutputStream(socketGame.getOutputStream());
 
             final Jogo jogoActualX = (Jogo) inputObjects.readObject();
+
+            Log.d("MemoryGame", "Received: " + jogoActualX);
 
             tema = jogoActualX.getTema();
             nivelEscolhido = jogoActualX.getNivelEscolhido();
 
-      /*      outputObjects = new ObjectOutputStream(socketGame.getOutputStream());
-            outputObjects.writeObject(nomeJogador1TextView.getText().toString());
-            output.flush();*/
+            Log.d("MemoryGame", "Sending name: " + nomeJogador1TextView.getText().toString());
 
-            Log.d("MemoryGame", "Received: " + jogoActualX);
+            outputObjects.writeObject(nomeJogador1TextView.getText().toString());
+            //output.flush();
 
             handler.post(new Runnable() {
                     @Override
@@ -547,7 +558,7 @@ public class JogoActivity extends AppCompatActivity {
                         nomeJogador2TextView.setText(jogoActualX.getNomeJogador1());
                     }
                 });
-            
+
         } catch (Exception e) {
             Log.d("MemoryGame", "Exception:" + e);
             handler.post(new Runnable() {
