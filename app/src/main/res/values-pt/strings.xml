@@ -60,4 +60,15 @@
     <string name="player_2">Jogador 2</string>
     <string name="player_2_name">Nome Jogador 2</string>
     <string name="no_network">Sem ligação</string>
+    <string name="pref_type_mode">Tipo de toque</string>
+    <string-array name="type_mode_array">
+        <item>Simples</item>
+        <item>Longo</item>
+        <item>Duplo</item>
+    </string-array>
+    <string-array name="type_mode_values">
+        <item>type_mode_simple</item>
+        <item>type_mode_long</item>
+        <item>type_mode_double</item>
+    </string-array>
 </resources>

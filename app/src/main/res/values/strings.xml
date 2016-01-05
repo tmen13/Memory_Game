@@ -61,4 +61,15 @@
     <string name="player_2">Player 2</string>
     <string name="player_2_name">Player 2 Name</string>
     <string name="no_network">No network connection</string>
+    <string name="pref_type_mode">Touch mode</string>
+    <string-array name="type_mode_array">
+        <item>Simple</item>
+        <item>Long</item>
+        <item>Double</item>
+    </string-array>
+    <string-array name="type_mode_value">
+        <item>type_mode_simple</item>
+        <item>type_mode_long</item>
+        <item>type_mode_double</item>
+    </string-array>
 </resources>
