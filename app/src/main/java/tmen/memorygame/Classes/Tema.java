@@ -6,6 +6,7 @@ import java.io.Serializable;
  * Created by Ricardo on 02/01/2016.
  */
 public class Tema implements Serializable {
+    private static final long serialVersionUID = 1L;
     Boolean isDefault;
     String nome;
     int numNiveis;

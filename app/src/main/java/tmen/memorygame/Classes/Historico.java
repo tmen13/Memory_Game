@@ -1,9 +1,12 @@
 package tmen.memorygame.Classes;
 
+import java.io.Serializable;
+
 /**
  * Created by Ricardo on 04/01/2016.
  */
-public class Historico {
+public class Historico implements Serializable {
+    private static final long serialVersionUID = 2L;
     private int tipo;
     private String tema;
     private String nomeJogador1, nomeJogador2;
