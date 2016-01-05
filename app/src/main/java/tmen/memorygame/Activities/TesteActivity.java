@@ -52,7 +52,7 @@ public class TesteActivity extends AppCompatActivity {
         }
 
 
-        tv.setText(uri.toString());
+        tv.setText(MySharedPreferences.getSharedPref(getApplicationContext(), MySharedPreferences.PREF_TYPE_MODE));
 
 
         bt.setOnClickListener(new View.OnClickListener() {

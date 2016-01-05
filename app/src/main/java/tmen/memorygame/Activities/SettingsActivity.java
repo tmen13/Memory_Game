@@ -158,17 +158,14 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             // updated to reflect the new value, per the Android Design
             // guidelines.
             bindPreferenceSummaryToValue(findPreference(MySharedPreferences.PREF_PLAYERNAME));
-            //bindPreferenceSummaryToValue(findPreference(MySharedPreferences.PREF_LANG));
+            bindPreferenceSummaryToValue(findPreference(MySharedPreferences.PREF_TYPE_MODE));
         }
 
         @Override
         public boolean onOptionsItemSelected(MenuItem item) {
             int id = item.getItemId();
             if (id == android.R.id.home) {
-                if (SettingsActivity.isXLargeTablet(getActivity().getApplicationContext()))
-                    startActivity(new Intent(getActivity(), MainActivity.class));
-                else
-                    startActivity(new Intent(getActivity(), SettingsActivity.class));
+                startActivity(new Intent(getActivity(), SettingsActivity.class));
                 return true;
             }
             return super.onOptionsItemSelected(item);

@@ -21,6 +21,7 @@ public final class MySharedPreferences {
     public static final String PREF_PLAYERNAME = "pref_nome_jogador";
     public static final String PATH_HITORICO = "historico.dat";
     public static final String PATH_TEMA = "tema.dat";
+    public static final String PREF_TYPE_MODE = "pref_type_mode";
 
     public static void addToSharedPref(Context c, String key, String obj){
         PreferenceManager.getDefaultSharedPreferences(c).edit().putString(key, obj).apply();
@@ -95,7 +96,7 @@ public final class MySharedPreferences {
         return uri;
     }
 
-    public static Drawable getDrawableFromUri(Context c, Uri uri){ //devolve uri atravez do uri
+    public static Drawable getDrawableFromUri(Context c, Uri uri){ //devolve uri atraves do uri
         Drawable drawable = null;
         try {
             InputStream inputStream = c.getContentResolver().openInputStream(uri);
