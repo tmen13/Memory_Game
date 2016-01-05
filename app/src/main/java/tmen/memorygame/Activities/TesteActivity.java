@@ -58,13 +58,16 @@ public class TesteActivity extends AppCompatActivity {
         bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //on click abre galeria
                 Intent intent = new Intent(Intent.ACTION_PICK,
                         android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(intent, 0);
-                tv.setText(MySharedPreferences.getSharedPref(getApplicationContext(), PREF_PLAYERNAME));
+                //tv.setText(MySharedPreferences.getSharedPref(getApplicationContext(), PREF_PLAYERNAME));
             }
         });
     }
+
+
 
     //escolhe imagem da galeria e mete como fundo do butao. so para teste, usar image view
     @Override
@@ -77,12 +80,13 @@ public class TesteActivity extends AppCompatActivity {
             Bitmap bitmap;
             try {
                 bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), targetUri);
-                //bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(targetUri));
                 BitmapDrawable bdrawable = new BitmapDrawable(getResources(),bitmap);
                 if(android.os.Build.VERSION.SDK_INT < 16) {
-                    bt.setBackgroundDrawable(bdrawable);
-                } else
-                    bt.setBackground(bdrawable);
+                   // bt.setBackgroundDrawable(bdrawable);
+                } else {
+                    // bt.setBackground(bdrawable);
+                }
+
             } catch (Exception e) {
                 e.printStackTrace();
             }

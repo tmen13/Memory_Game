@@ -1,14 +1,20 @@
 package tmen.memorygame.Classes;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+
+import tmen.memorygame.R;
 
 public final class MySharedPreferences {
 
@@ -82,5 +88,21 @@ public final class MySharedPreferences {
             Log.d("tmen", "saveTemaToFile: " + e.toString());
         }
         return tema;
+    }
+
+    public static Uri getDrawableUri(Context c, int id){ //devolve o uri a partir do id
+        Uri uri = Uri.parse("android.resource://" + c.getPackageName() + "/drawable/" + id);
+        return uri;
+    }
+
+    public static Drawable getDrawableFromUri(Context c, Uri uri){ //devolve uri atravez do uri
+        Drawable drawable = null;
+        try {
+            InputStream inputStream = c.getContentResolver().openInputStream(uri);
+            drawable = Drawable.createFromStream(inputStream, uri.toString());
+        } catch (FileNotFoundException e) {
+            Log.d("tmen", "getDrawableFromUri");
+        }
+        return drawable;
     }
 }
