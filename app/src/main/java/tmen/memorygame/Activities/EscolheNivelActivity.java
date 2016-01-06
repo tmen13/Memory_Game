@@ -25,6 +25,8 @@ public class EscolheNivelActivity extends AppCompatActivity {
     private Tema tema;
     private int nivelEscolhido;
 
+    private GridView gridview;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,7 +42,7 @@ public class EscolheNivelActivity extends AppCompatActivity {
             tema = (Tema) intent.getSerializableExtra("tema");
         }
 
-        final GridView gridview = (GridView) findViewById(R.id.levelGridView);
+        gridview = (GridView) findViewById(R.id.levelGridView);
         final LevelAdapter levelAdapter = new LevelAdapter(getApplicationContext(), tema);
         gridview.setAdapter(levelAdapter);
 
@@ -53,11 +55,25 @@ public class EscolheNivelActivity extends AppCompatActivity {
                 intent.putExtra("type", type);
                 intent.putExtra("tema", tema);
                 intent.putExtra("nivelEscolhido", position + 1);
-                startActivity(intent);
+                startActivityForResult(intent,0);
 
             }
         });
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d("MemoryGame","onResume");
+        if (gridview == null) {
+
+        } else {
+            gridview.invalidateViews();
+        }
+    }
+
+    public void setTema(Tema tema) {
+        this.tema = tema;
+    }
 }

@@ -16,6 +16,7 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +24,7 @@ import tmen.memorygame.Adapters.LevelMultiplayerAdapter;
 import tmen.memorygame.Adapters.ThemeAdapter;
 import tmen.memorygame.Classes.GeradorBaralhos;
 import tmen.memorygame.Classes.GeradorTemas;
+import tmen.memorygame.Classes.MySharedPreferences;
 import tmen.memorygame.Classes.Tema;
 import tmen.memorygame.R;
 
@@ -51,8 +53,23 @@ public class EscolheTemaActivity extends AppCompatActivity {
 
         //load temas e niveis
 
+
+        /*
+            temas.addAll(GeradorTemas.getTemas()); //
+            MySharedPreferences.saveTemaToFile(getApplicationContext(), temas); //
+        */
+
         temas.clear();
-        temas.addAll(GeradorTemas.getTemas());
+        if (type == JogoActivity.MULTIPLAYERONLINE) {
+            temas.addAll(MySharedPreferences.getTemasDefault(getApplicationContext()));
+        }
+        else {
+            temas.addAll(MySharedPreferences.getTemasFromFile(getApplicationContext()));
+        }
+
+        for (int i = 0; i < temas.size(); i++) {
+            Log.d("MemoryGame", "Tema:" + temas.get(i).getNome() + " NumNiveis:" + temas.get(i).getNumNiveis() + " NivelActual:" + temas.get(i).getNivelActual() + " isDefault: " + temas.get(i).getIsDefault());
+        }
 
         final GridView gridview = (GridView) findViewById(R.id.escolheTemaGridView);
         final ThemeAdapter themeAdapter = new ThemeAdapter(getApplicationContext(), temas);

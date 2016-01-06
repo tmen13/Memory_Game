@@ -13,6 +13,7 @@ import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.List;
 
 import tmen.memorygame.R;
 
@@ -31,7 +32,7 @@ public final class MySharedPreferences {
         return PreferenceManager.getDefaultSharedPreferences(c).getString(key, "");
     }
 
-    public static void saveHisticoToFile(Context c,  ArrayList<Historico> obj){
+    public static void saveHisticoToFile(Context c, List<Historico> obj){
         FileOutputStream fos;
         ObjectOutputStream os;
         try {
@@ -41,11 +42,11 @@ public final class MySharedPreferences {
             os.close();
             fos.close();
         } catch (Exception e){
-            Log.d("tmen", "saveHisticoToFile: " + e.toString());
+            Log.d("MemoryGame", "saveHisticoToFile: " + e.toString());
         }
     }
 
-    public static void saveTemaToFile(Context c,  ArrayList<Historico> obj){
+    public static void saveTemaToFile(Context c, List<Tema> obj){
         FileOutputStream fos;
         ObjectOutputStream os;
         try {
@@ -55,40 +56,51 @@ public final class MySharedPreferences {
             os.close();
             fos.close();
         } catch (Exception e){
-            Log.d("tmen", "saveTemaToFile: " + e.toString());
+            Log.d("MemoryGame", "saveTemaToFile: " + e.toString());
         }
     }
 
-    public static ArrayList<Historico> getHistoricoFromFile(Context c){
+    public static List<Historico> getHistoricoFromFile(Context c){
         FileInputStream fis;
         ObjectInputStream is;
-        ArrayList<Historico> historico = null;
+        List<Historico> historico = null;
         try {
             fis = c.openFileInput(PATH_HITORICO);
             is = new ObjectInputStream(fis);
-            historico = (ArrayList<Historico>) is.readObject();
+            historico = (List<Historico>) is.readObject();
             is.close();
             fis.close();
         } catch (Exception e){
-            Log.d("tmen", "getHistricoFromFile: " + e.toString());
+            Log.d("MemoryGame", "getHistricoFromFile: " + e.toString());
         }
         return historico;
     }
 
-    public static ArrayList<Tema> getTemaFromFile(Context c){
+    public static List<Tema> getTemasFromFile(Context c){
         FileInputStream fis;
         ObjectInputStream is;
-        ArrayList<Tema> tema = null;
+        List<Tema> tema = null;
         try {
             fis = c.openFileInput(PATH_TEMA);
             is = new ObjectInputStream(fis);
-            tema = (ArrayList<Tema>) is.readObject();
+            tema = (List<Tema>) is.readObject();
             is.close();
             fis.close();
         } catch (Exception e){
-            Log.d("tmen", "saveTemaToFile: " + e.toString());
+            Log.d("MemoryGame", "saveTemaToFile: " + e.toString());
         }
         return tema;
+    }
+
+    public static List<Tema> getTemasDefault(Context c) {
+        List<Tema> temasDefault = new ArrayList<>();
+        List<Tema> temasList = getTemasFromFile(c);
+        for (int i = 0; i < temasList.size(); i++) {
+            if (temasList.get(i).getIsDefault()) {
+                temasDefault.add(temasList.get(i));
+            }
+        }
+        return temasDefault;
     }
 
     public static Uri getDrawableUri(Context c, int id){ //devolve o uri a partir do id
