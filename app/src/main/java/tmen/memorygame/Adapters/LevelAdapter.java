@@ -79,4 +79,8 @@ public class LevelAdapter extends BaseAdapter{
 
         return enabled;
     }
+
+    public void setTema(Tema tema) {
+        this.tema = tema;
+    }
 }

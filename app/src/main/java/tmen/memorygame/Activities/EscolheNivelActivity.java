@@ -26,15 +26,16 @@ public class EscolheNivelActivity extends AppCompatActivity {
     private int nivelEscolhido;
 
     private GridView gridview;
+    private LevelAdapter levelAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_escolhe_nivel);
-       // Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-       // setSupportActionBar(toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
-       // getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Intent intent = getIntent();
         if (intent != null) {
@@ -43,7 +44,7 @@ public class EscolheNivelActivity extends AppCompatActivity {
         }
 
         gridview = (GridView) findViewById(R.id.levelGridView);
-        final LevelAdapter levelAdapter = new LevelAdapter(getApplicationContext(), tema);
+        levelAdapter = new LevelAdapter(getApplicationContext(), tema);
         gridview.setAdapter(levelAdapter);
 
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -55,23 +56,36 @@ public class EscolheNivelActivity extends AppCompatActivity {
                 intent.putExtra("type", type);
                 intent.putExtra("tema", tema);
                 intent.putExtra("nivelEscolhido", position + 1);
-                startActivityForResult(intent,0);
+                if (type == JogoActivity.SINGLEPLAYER) {
+                    startActivityForResult(intent,0);
+                } else {
+                    startActivity(intent);
+                }
 
             }
         });
-
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 0) {
+            if(resultCode == 1){
+                Tema temaRecebido = (Tema) data.getSerializableExtra("tema");
+                tema = temaRecebido;
+                levelAdapter.setTema(tema);
+                gridview.invalidateViews();
+            }
+        }
+    }//onActivityResult
+
+   /* @Override
     protected void onResume() {
         super.onResume();
         Log.d("MemoryGame","onResume");
-        if (gridview == null) {
-
-        } else {
+        if (gridview != null) {
             gridview.invalidateViews();
         }
-    }
+    }*/
 
     public void setTema(Tema tema) {
         this.tema = tema;

@@ -38,10 +38,10 @@ public class EscolheTemaActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_escolhe_tema);
-        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        //setSupportActionBar(toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
-        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Intent intentMain = getIntent();
         if (intentMain != null) {
@@ -52,23 +52,18 @@ public class EscolheTemaActivity extends AppCompatActivity {
         }
 
         //load temas e niveis
-
-
-        /*
+        File file = getApplicationContext().getFileStreamPath(MySharedPreferences.PATH_TEMA);
+        if(!file.exists()) {
+            Log.d("MemoryGame","Ficheiro nao existe!");
             temas.addAll(GeradorTemas.getTemas()); //
             MySharedPreferences.saveTemaToFile(getApplicationContext(), temas); //
-        */
+        }
 
         temas.clear();
         if (type == JogoActivity.MULTIPLAYERONLINE) {
-            temas = GeradorTemas.getTemasDefault();
-            MySharedPreferences.saveTemaToFile(getApplicationContext(), temas);
-            //temas.addAll(MySharedPreferences.getTemasDefault(getApplicationContext()));
-        }
-        else {
-            temas = GeradorTemas.getTemasDefault();
-            MySharedPreferences.saveTemaToFile(getApplicationContext(), temas);
-           // temas.addAll(MySharedPreferences.getTemasFromFile(getApplicationContext()));
+            temas.addAll(MySharedPreferences.getTemasDefault(getApplicationContext()));
+        } else {
+            temas.addAll(MySharedPreferences.getTemasFromFile(getApplicationContext()));
         }
 
         for (int i = 0; i < temas.size(); i++) {

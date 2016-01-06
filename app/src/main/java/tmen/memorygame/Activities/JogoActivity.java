@@ -86,10 +86,10 @@ public class JogoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Log.i("MemoryGame", "onCreate");
         setContentView(R.layout.activity_jogo);
-        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        //setSupportActionBar(toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
-        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         infoJogador1 = (LinearLayout)findViewById(R.id.infoJogador1);
         infoJogadorActual = (LinearLayout)findViewById(R.id.infoJogadorActual);
@@ -248,7 +248,14 @@ public class JogoActivity extends AppCompatActivity {
                                     Log.d("MemoryGame","NivelActual:" + temas.get(i).getNivelActual() + " NivelEscolhido:" + nivelEscolhido);
                                     if (temas.get(i).getNivelActual() == nivelEscolhido && nivelEscolhido < tema.getNumNiveis()) {
                                         temas.get(i).setNivelActual(temas.get(i).getNivelActual()+1);
+                                        tema.setNivelActual(tema.getNivelActual()+1);
+
                                         MySharedPreferences.saveTemaToFile(getApplicationContext(), temas);
+
+                                        Intent returnIntent = new Intent();
+                                        returnIntent.putExtra("tema",tema);
+                                        setResult(1, returnIntent);
+                                        //finish();
                                     }
                                 }
                             }
@@ -289,7 +296,6 @@ public class JogoActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        Log.i("MemoryGame","onResume");
         switch (type) {
             case SINGLEPLAYER:
                 infoJogadorActual.setVisibility(LinearLayout.GONE);
@@ -529,8 +535,6 @@ public class JogoActivity extends AppCompatActivity {
 
             Log.d("MemoryGame", "Received name: " + nomeJogador2Recebido);
 
-
-
             handler.post(new Runnable() {
                 @Override
                 public void run() {
@@ -538,8 +542,6 @@ public class JogoActivity extends AppCompatActivity {
                     nomeJogador2TextView.setText(jogoActual.getNomeJogador2());
                 }
             });
-
-
 
         } catch (Exception e) {
             Log.d("MemoryGame", "Error sending game info");
