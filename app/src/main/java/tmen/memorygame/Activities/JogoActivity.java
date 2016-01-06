@@ -236,7 +236,7 @@ public class JogoActivity extends AppCompatActivity {
                                     }
                                 }
                             }
-                        }, 750);
+                        }, 1250);
                     }
 
                     if (jogoActual.verificaFinal()) {
