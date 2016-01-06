@@ -61,10 +61,14 @@ public class EscolheTemaActivity extends AppCompatActivity {
 
         temas.clear();
         if (type == JogoActivity.MULTIPLAYERONLINE) {
-            temas.addAll(MySharedPreferences.getTemasDefault(getApplicationContext()));
+            temas = GeradorTemas.getTemasDefault();
+            MySharedPreferences.saveTemaToFile(getApplicationContext(), temas);
+            //temas.addAll(MySharedPreferences.getTemasDefault(getApplicationContext()));
         }
         else {
-            temas.addAll(MySharedPreferences.getTemasFromFile(getApplicationContext()));
+            temas = GeradorTemas.getTemasDefault();
+            MySharedPreferences.saveTemaToFile(getApplicationContext(), temas);
+           // temas.addAll(MySharedPreferences.getTemasFromFile(getApplicationContext()));
         }
 
         for (int i = 0; i < temas.size(); i++) {
