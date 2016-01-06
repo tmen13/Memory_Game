@@ -240,6 +240,20 @@ public class JogoActivity extends AppCompatActivity {
                     }
 
                     if (jogoActual.verificaFinal()) {
+                        if (type == SINGLEPLAYER) {
+                            List<Tema> temas = MySharedPreferences.getTemasFromFile(getApplicationContext());
+                            for (int i = 0; i < temas.size(); i++) {
+                                Log.d("MemoryGame","TemaNome: " + temas.get(i).getNome());
+                                if (temas.get(i).getNome().equals(tema.getNome())) {
+                                    Log.d("MemoryGame","NivelActual:" + temas.get(i).getNivelActual() + " NivelEscolhido:" + nivelEscolhido);
+                                    if (temas.get(i).getNivelActual() == nivelEscolhido && nivelEscolhido < tema.getNumNiveis()) {
+                                        temas.get(i).setNivelActual(temas.get(i).getNivelActual()+1);
+                                        MySharedPreferences.saveTemaToFile(getApplicationContext(), temas);
+                                    }
+                                }
+                            }
+                        }
+
                         showAlert(1);
                     }
                 } else {
