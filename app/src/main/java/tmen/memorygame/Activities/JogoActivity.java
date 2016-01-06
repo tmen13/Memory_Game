@@ -86,10 +86,10 @@ public class JogoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Log.i("MemoryGame", "onCreate");
         setContentView(R.layout.activity_jogo);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        //setSupportActionBar(toolbar);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         infoJogador1 = (LinearLayout)findViewById(R.id.infoJogador1);
         infoJogadorActual = (LinearLayout)findViewById(R.id.infoJogadorActual);
@@ -309,13 +309,14 @@ public class JogoActivity extends AppCompatActivity {
             if (inputObjects != null)
                 inputObjects.close();
         } catch (Exception e) {
+            Log.i("MemoryGame", e.toString());
         }
         input = null;
         output = null;
         inputObjects = null;
         outputObjects = null;
         socketGame = null;
-    };
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

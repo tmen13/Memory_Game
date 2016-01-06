@@ -28,8 +28,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        //setSupportActionBar(toolbar);
 
         String fontPath = "fonts/CarterOne.ttf";
         Typeface tf = Typeface.createFromAsset(getAssets(), fontPath);
@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        if(MySharedPreferences.getSharedPref(getApplicationContext(),MySharedPreferences.PREF_PLAYERNAME) == "") {
+        if(MySharedPreferences.getSharedPref(getApplicationContext(),MySharedPreferences.PREF_PLAYERNAME).equals("")) {
             MySharedPreferences.addToSharedPref(getApplicationContext(),MySharedPreferences.PREF_PLAYERNAME,getResources().getString(R.string.pref_default_display_name));
         }
 

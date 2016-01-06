@@ -13,6 +13,7 @@ import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -35,9 +36,9 @@ public class TesteActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_teste);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        //setSupportActionBar(toolbar);
+       // getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         tv = (TextView)findViewById(R.id.tv1);
         bt = (Button)findViewById(R.id.imgBt);
@@ -48,7 +49,7 @@ public class TesteActivity extends AppCompatActivity {
             Drawable yourDrawable = Drawable.createFromStream(inputStream, uri.toString());
             bt.setBackgroundDrawable(yourDrawable);
         } catch (FileNotFoundException e) {
-
+            Log.i("tmen", e.toString());
         }
 
 
@@ -82,9 +83,9 @@ public class TesteActivity extends AppCompatActivity {
                 bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), targetUri);
                 BitmapDrawable bdrawable = new BitmapDrawable(getResources(),bitmap);
                 if(android.os.Build.VERSION.SDK_INT < 16) {
-                   // bt.setBackgroundDrawable(bdrawable);
+                    bt.setBackgroundDrawable(bdrawable);
                 } else {
-                    // bt.setBackground(bdrawable);
+                    bt.setBackground(bdrawable);
                 }
 
             } catch (Exception e) {
