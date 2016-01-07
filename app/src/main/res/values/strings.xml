@@ -1,6 +1,6 @@
-﻿﻿<resources>
+﻿﻿   <resources>
     <string name="app_name">Memory Game</string>
-    <string name="action_teste">Teste</string>
+    <string name="action_teste">Custom Deck</string>
     <string name="action_settings">Settings</string>
     <string name="action_creditos">Credits</string>
     <string name="menu_singleplayer">SinglePlayer</string>
@@ -13,7 +13,7 @@
     <string name="nivel">Level: </string>
     <string name="jogador">Player: </string>
     <string name="menu_config">Settings</string>
-    <string name="title_activity_teste">TesteActivity</string>
+    <string name="title_activity_teste">Custom Deck</string>
     <string name="title_activity_menu_multi_player_on">MultiPlayer</string>
     <string name="title_activity_escolhe_tema">Pick a theme:</string>
     <string name="title_activity_escolhe_nivel">Pick a level:</string>
@@ -72,4 +72,9 @@
         <item>type_mode_long</item>
         <item>type_mode_double</item>
     </string-array>
-</resources>
+    <string name="select_file">Select file</string>
+    <string name="save">Save</string>
+    <string name="custom_added">Added with success</string>
+    <string name="custom_add_fail">Image already saved</string>
+    <string name="custom_edit_deck">Edit Deck</string>
+    </resources>

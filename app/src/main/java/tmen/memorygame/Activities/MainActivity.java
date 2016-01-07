@@ -2,20 +2,15 @@ package tmen.memorygame.Activities;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
-
-import java.util.Locale;
 
 import tmen.memorygame.Classes.MySharedPreferences;
 import tmen.memorygame.R;
@@ -107,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
 
         switch (id) {
             case R.id.action_teste:
-                Intent intentTeste = new Intent(this, TesteActivity.class);
+                Intent intentTeste = new Intent(this, CustomDeckActivity.class);
                 startActivity(intentTeste);
                 break;
             case R.id.action_settings:

@@ -22,6 +22,7 @@ public final class MySharedPreferences {
     public static final String PREF_PLAYERNAME = "pref_nome_jogador";
     public static final String PATH_HITORICO = "historico.dat";
     public static final String PATH_TEMA = "tema.dat";
+    public static final String PATH_CUSTOM_DECK = "custom_deck.dat";
     public static final String PREF_TYPE_MODE = "pref_type_mode";
 
     public static void addToSharedPref(Context c, String key, String obj){
@@ -58,6 +59,36 @@ public final class MySharedPreferences {
         } catch (Exception e){
             Log.d("MemoryGame", "saveTemaToFile: " + e.toString());
         }
+    }
+
+    public static void saveDeckToFile(Context c, List<String> obj){
+        FileOutputStream fos;
+        ObjectOutputStream os;
+        try {
+            fos = c.openFileOutput(PATH_CUSTOM_DECK, Context.MODE_PRIVATE);
+            os = new ObjectOutputStream(fos);
+            os.writeObject(obj);
+            os.close();
+            fos.close();
+        } catch (Exception e){
+            Log.d("MemoryGame", "saveDeckToFile: " + e.toString());
+        }
+    }
+
+    public static List<String> getDeckFromFile(Context c){
+        FileInputStream fis;
+        ObjectInputStream is;
+        List<String> customDeck = null;
+        try {
+            fis = c.openFileInput(PATH_CUSTOM_DECK);
+            is = new ObjectInputStream(fis);
+            customDeck = (List<String>) is.readObject();
+            is.close();
+            fis.close();
+        } catch (Exception e){
+            Log.d("MemoryGame", "getDeckFromFile: " + e.toString());
+        }
+        return customDeck;
     }
 
     public static List<Historico> getHistoricoFromFile(Context c){

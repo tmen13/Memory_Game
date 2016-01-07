@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Memory Game</string>
-    <string name="action_teste">Teste</string>
+    <string name="action_teste">Baralho Personalizado</string>
     <string name="action_settings">Definições</string>
     <string name="action_creditos">Créditos</string>
     <string name="menu_singleplayer">Um jogador</string>
@@ -13,7 +13,7 @@
     <string name="nivel">Nível: </string>
     <string name="jogador">Jogador: </string>
     <string name="menu_config">Configurações</string>
-    <string name="title_activity_teste">TesteActivity</string>
+    <string name="title_activity_teste">Baralho personalizado</string>
     <string name="title_activity_menu_multi_player_on">Dois Jogadores</string>
     <string name="title_activity_escolhe_tema">Escolha um tema</string>
     <string name="title_activity_escolhe_nivel">Escolha um nível</string>
@@ -71,4 +71,9 @@
         <item>type_mode_long</item>
         <item>type_mode_double</item>
     </string-array>
+    <string name="select_file">Escolher ficheiro</string>
+    <string name="save">Salvar</string>
+    <string name="custom_added">Adicionado com sucesso</string>
+    <string name="custom_add_fail">Imagem já guardada</string>
+    <string name="custom_edit_deck">Editar Baralho</string>
 </resources>

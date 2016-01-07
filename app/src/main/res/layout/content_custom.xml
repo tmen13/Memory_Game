@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:orientation="vertical"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:showIn="@layout/activity_custom" tools:context=".Activities.CustomDeckActivity"
+    android:weightSum="4">
+
+    <ImageView
+        android:scaleType="centerInside"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/previewImageView"
+        android:background="@drawable/ic_preview"
+        android:layout_weight="0.6" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="@string/select_file"
+        android:id="@+id/imgBt"
+        android:layout_weight="1.2" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="@string/save"
+        android:id="@+id/saveImgBt"
+        android:layout_weight="1.2" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="@string/custom_edit_deck"
+        android:id="@+id/editDeckBt"
+        android:layout_weight="1.2" />
+
+</LinearLayout>
