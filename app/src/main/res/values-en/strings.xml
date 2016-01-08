@@ -82,4 +82,5 @@
     <string name="trys">Trys:</string>
     <string name="correct">Correct:</string>
     <string name="intruder">Intruder:</string>
+    <string name="click_time">Cick time (ms)</string>
 </resources>

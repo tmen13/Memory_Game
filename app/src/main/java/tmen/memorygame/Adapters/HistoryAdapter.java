@@ -152,41 +152,41 @@ public class HistoryAdapter extends BaseAdapter {
         } else {
             tipo = mContext.getString(R.string.menu_multiplayer_on);
         }
-        tipoTextView.setText(R.string.game_type + " " + tipo);
-        temaTextView.setText(R.string.theme + " " + getItem(position).getTema());
+        tipoTextView.setText(mContext.getString(R.string.game_type) + " " + tipo);
+        temaTextView.setText(mContext.getString(R.string.theme) + " " + getItem(position).getTema());
         nomeJogador1TextView.setText(getItem(position).getNomeJogador1());
         if (getItem(position).getTipo() != JogoActivity.SINGLEPLAYER) {
             nomeJogador2TextView.setText(getItem(position).getNomeJogador2());
             if (getItem(position).getMode() == JogoActivity.SERVER) {
-                tentativasJogador1TextView.setText(R.string.trys + " " + getItem(position).getTentativas(JogoActivity.ME));
-                tentativasJogador2TextView.setText(R.string.trys + " " + getItem(position).getTentativas(JogoActivity.OTHER));
-                acertadasJogador1TextView.setText(R.string.correct + " " + getItem(position).getAcertadas(JogoActivity.ME));
-                acertadasJogador2TextView.setText(R.string.correct + " " + getItem(position).getAcertadas(JogoActivity.OTHER));
-                intrusosAcertadosJogador1TextView.setText(R.string.intruder + " " + getItem(position).getIntrusosAcertados(JogoActivity.ME));
-                intrusosAcertadosJogador2TextView.setText(R.string.intruder + " " + getItem(position).getIntrusosAcertados(JogoActivity.OTHER));
+                tentativasJogador1TextView.setText(mContext.getString(R.string.trys) + " " + getItem(position).getTentativas(JogoActivity.ME));
+                tentativasJogador2TextView.setText(mContext.getString(R.string.trys) + " " + getItem(position).getTentativas(JogoActivity.OTHER));
+                acertadasJogador1TextView.setText(mContext.getString(R.string.correct) + " " + getItem(position).getAcertadas(JogoActivity.ME));
+                acertadasJogador2TextView.setText(mContext.getString(R.string.correct) + " " + getItem(position).getAcertadas(JogoActivity.OTHER));
+                intrusosAcertadosJogador1TextView.setText(mContext.getString(R.string.intruder) + " " + getItem(position).getIntrusosAcertados(JogoActivity.ME));
+                intrusosAcertadosJogador2TextView.setText(mContext.getString(R.string.intruder) + " " + getItem(position).getIntrusosAcertados(JogoActivity.OTHER));
                 if (getItem(position).getVencedor() == JogoActivity.ME) {
-                    nomeVencedorTextView.setText(R.string.winner + " " + getItem(position).getNomeJogador1());
+                    nomeVencedorTextView.setText(mContext.getString(R.string.winner) + " " + getItem(position).getNomeJogador1());
                 } else {
-                    nomeVencedorTextView.setText(R.string.winner + " " + getItem(position).getNomeJogador2());
+                    nomeVencedorTextView.setText(mContext.getString(R.string.winner) + " " + getItem(position).getNomeJogador2());
                 }
             } else {
-                tentativasJogador1TextView.setText(R.string.trys + " " + getItem(position).getTentativas(JogoActivity.OTHER));
-                tentativasJogador2TextView.setText(R.string.trys + " " + getItem(position).getTentativas(JogoActivity.ME));
-                acertadasJogador1TextView.setText(R.string.correct + " " + getItem(position).getAcertadas(JogoActivity.OTHER));
-                acertadasJogador2TextView.setText(R.string.correct + " " + getItem(position).getAcertadas(JogoActivity.ME));
-                intrusosAcertadosJogador1TextView.setText(R.string.intruder + " " + getItem(position).getIntrusosAcertados(JogoActivity.OTHER));
-                intrusosAcertadosJogador2TextView.setText(R.string.intruder + " " + getItem(position).getIntrusosAcertados(JogoActivity.ME));
+                tentativasJogador1TextView.setText(mContext.getString(R.string.trys) + " " + getItem(position).getTentativas(JogoActivity.OTHER));
+                tentativasJogador2TextView.setText(mContext.getString(R.string.trys) + " " + getItem(position).getTentativas(JogoActivity.ME));
+                acertadasJogador1TextView.setText(mContext.getString(R.string.correct) + " " + getItem(position).getAcertadas(JogoActivity.OTHER));
+                acertadasJogador2TextView.setText(mContext.getString(R.string.correct) + " " + getItem(position).getAcertadas(JogoActivity.ME));
+                intrusosAcertadosJogador1TextView.setText(mContext.getString(R.string.intruder) + " " + getItem(position).getIntrusosAcertados(JogoActivity.OTHER));
+                intrusosAcertadosJogador2TextView.setText(mContext.getString(R.string.intruder) + " " + getItem(position).getIntrusosAcertados(JogoActivity.ME));
                 if (getItem(position).getVencedor() == JogoActivity.OTHER) {
-                    nomeVencedorTextView.setText(R.string.winner + " " + getItem(position).getNomeJogador1());
+                    nomeVencedorTextView.setText(mContext.getString(R.string.winner) + " " + getItem(position).getNomeJogador1());
                 } else {
-                    nomeVencedorTextView.setText(R.string.winner + " " + getItem(position).getNomeJogador2());
+                    nomeVencedorTextView.setText(mContext.getString(R.string.winner) + " " + getItem(position).getNomeJogador2());
                 }
             }
         } else {
-            tentativasJogador1TextView.setText(R.string.trys + " " + getItem(position).getTentativas(JogoActivity.ME));
-            acertadasJogador1TextView.setText(R.string.trys + " " + getItem(position).getAcertadas(JogoActivity.ME));
-            intrusosAcertadosJogador1TextView.setText(R.string.intruder + " " + getItem(position).getIntrusosAcertados(JogoActivity.ME));
-            nomeVencedorTextView.setText(R.string.winner + " " + getItem(position).getNomeJogador1());
+            tentativasJogador1TextView.setText(mContext.getString(R.string.trys) + " " + getItem(position).getTentativas(JogoActivity.ME));
+            acertadasJogador1TextView.setText(mContext.getString(R.string.trys) + " " + getItem(position).getAcertadas(JogoActivity.ME));
+            intrusosAcertadosJogador1TextView.setText(mContext.getString(R.string.intruder) + " " + getItem(position).getIntrusosAcertados(JogoActivity.ME));
+            nomeVencedorTextView.setText(mContext.getString(R.string.winner) + " " + getItem(position).getNomeJogador1());
             infoJogador2LinearLayout.setVisibility(View.GONE);
         }
 

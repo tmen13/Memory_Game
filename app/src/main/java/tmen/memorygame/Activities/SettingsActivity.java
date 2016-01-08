@@ -157,6 +157,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             // guidelines.
             bindPreferenceSummaryToValue(findPreference(MySharedPreferences.PREF_PLAYERNAME));
             bindPreferenceSummaryToValue(findPreference(MySharedPreferences.PREF_TYPE_MODE));
+            bindPreferenceSummaryToValue(findPreference(MySharedPreferences.PREF_CLICK_TIME));
         }
 
         @Override

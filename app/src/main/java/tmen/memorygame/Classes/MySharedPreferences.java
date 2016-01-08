@@ -24,6 +24,7 @@ public final class MySharedPreferences {
     public static final String PATH_TEMA = "tema.dat";
     public static final String PATH_CUSTOM_DECK = "custom_deck.dat";
     public static final String PREF_TYPE_MODE = "pref_type_mode";
+    public static final String PREF_CLICK_TIME = "pref_click_time";
 
     public static void addToSharedPref(Context c, String key, String obj){
         PreferenceManager.getDefaultSharedPreferences(c).edit().putString(key, obj).apply();
