@@ -49,6 +49,10 @@ public class Jogo implements Serializable{
         return mode;
     }
 
+    public void setMode(int mode) {
+        this.mode = mode;
+    }
+
     public Tema getTema() {
         return tema;
     }

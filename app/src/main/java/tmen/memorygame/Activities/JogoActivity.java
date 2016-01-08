@@ -323,6 +323,7 @@ public class JogoActivity extends AppCompatActivity {
 
     protected void onPause() {
         super.onPause();
+        Log.d("MemoryGame","onPause");
         try {
             commThread.interrupt();
             if (socketGame != null)
@@ -385,14 +386,22 @@ public class JogoActivity extends AppCompatActivity {
                 }
             });
             String vencedor;
-            if(jogoActual.getVencedor() == 0){
+            if(jogoActual.getVencedor() == ME){
                 vencedor = nomeJogador1TextView.getText().toString();
             } else {
                 vencedor = nomeJogador2TextView.getText().toString();
             }
             alertDialog.setMessage(getString(R.string.winner) + ": " + vencedor);
             alertDialog.setTitle(R.string.end_game);
+
+            alertDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                @Override
+                public void onCancel(DialogInterface dialog) {
+                    finish();
+                }
+            });
         }
+
         alertDialog.show();
     }
 
@@ -569,6 +578,8 @@ public class JogoActivity extends AppCompatActivity {
 
             Log.d("MemoryGame", "Received: " + jogoActualX);
 
+            jogoActualX.setMode(JogoActivity.CLIENT);
+            jogoActualX.setJogadorActual(JogoActivity.OTHER);
             tema = jogoActualX.getTema();
             nivelEscolhido = jogoActualX.getNivelEscolhido();
 
@@ -582,6 +593,7 @@ public class JogoActivity extends AppCompatActivity {
                     public void run() {
                         initializeGameAndGridView(jogoActualX);
                         nomeJogador2TextView.setText(jogoActualX.getNomeJogador1());
+                        jogadorActualTextView.setText(jogoActualX.getNomeJogador1());
                     }
                 });
 
