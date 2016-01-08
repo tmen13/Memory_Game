@@ -104,7 +104,6 @@
             android:name=".Activities.EscolheNivelMultiplayerActivity"
             android:label="@string/title_activity_escolhe_nivel_multiplayer"
             android:parentActivityName=".Activities.EscolheTemaActivity"
-            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -114,7 +113,6 @@
             android:name=".Activities.EditDeckCustomActivity"
             android:label="@string/title_activity_edit_deck"
             android:parentActivityName=".Activities.CustomDeckActivity"
-            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
