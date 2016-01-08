@@ -47,11 +47,10 @@ public class CustomDeckActivity extends AppCompatActivity {
 
         File file = getApplicationContext().getFileStreamPath(MySharedPreferences.PATH_CUSTOM_DECK);
         if(!file.exists()) {
-            Log.i("aqui", "Ficheiro nao existe!");
+            Log.i("MemoryGame", "Ficheiro nao existe!");
             //customCards = MySharedPreferences.getDeckFromFile(getApplicationContext());
             MySharedPreferences.saveDeckToFile(getApplicationContext(), customCards); //
         }
-        Log.i("aqui", "Ficheiro existe!");
 
         customCards = MySharedPreferences.getDeckFromFile(getApplicationContext());
         if(customCards.size() == 0)

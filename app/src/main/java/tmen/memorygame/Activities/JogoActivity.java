@@ -7,8 +7,10 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.InputFilter;
@@ -25,6 +27,7 @@ import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -363,7 +366,15 @@ public class JogoActivity extends AppCompatActivity {
         if (jogoActual.getPrimeiraCarta() == null && jogoActual.getSegundaCarta() == null) { //1ªCarta
             cardAdapter.setPosPrimeiraImageView(position);
             //imageView.setImageResource(cardAdapter.getItem(position).getCardFront());
-            imageView.setImageBitmap(decodeSampledBitmapFromResource(getApplicationContext().getResources(), cardAdapter.getItem(position).getCardFront(), 50, 50));
+            if (jogoActual.getBaralho().getTema().getIsDefault()) {
+                imageView.setImageBitmap(decodeSampledBitmapFromResource(getApplicationContext().getResources(), cardAdapter.getItem(position).getCardFront(), 50, 50));
+            } else {
+                try {
+                    imageView.setImageBitmap(scaleDown(MediaStore.Images.Media.getBitmap(getApplicationContext().getContentResolver(), Uri.parse(cardAdapter.getItem(position).getCardFrontStr())), 100, true));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
             jogoActual.setPrimeiraCarta(cardAdapter.getItem(position));
             if (type == MULTIPLAYERONLINE) {
                 moveMyPlayer(position);
@@ -371,7 +382,15 @@ public class JogoActivity extends AppCompatActivity {
         } else if (jogoActual.getPrimeiraCarta() != null && jogoActual.getSegundaCarta() == null) { //2ªCarta
             cardAdapter.setPosSegundaImageView(position);
             //imageView.setImageResource(cardAdapter.getItem(position).getCardFront());
-            imageView.setImageBitmap(decodeSampledBitmapFromResource(getApplicationContext().getResources(), cardAdapter.getItem(position).getCardFront(), 50, 50));
+            if (jogoActual.getBaralho().getTema().getIsDefault()) {
+                imageView.setImageBitmap(decodeSampledBitmapFromResource(getApplicationContext().getResources(), cardAdapter.getItem(position).getCardFront(), 50, 50));
+            } else {
+                try {
+                    imageView.setImageBitmap(scaleDown(MediaStore.Images.Media.getBitmap(getApplicationContext().getContentResolver(), Uri.parse(cardAdapter.getItem(position).getCardFrontStr())), 100, true));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
             jogoActual.setSegundaCarta(cardAdapter.getItem(position));
 
             if (type == MULTIPLAYERONLINE) {
@@ -857,5 +876,18 @@ public class JogoActivity extends AppCompatActivity {
         // Decode bitmap with inSampleSize set
         options.inJustDecodeBounds = false;
         return BitmapFactory.decodeResource(res, resId, options);
+    }
+
+    public static Bitmap scaleDown(Bitmap realImage, float maxImageSize,
+                                   boolean filter) {
+        float ratio = Math.min(
+                (float) maxImageSize / realImage.getWidth(),
+                (float) maxImageSize / realImage.getHeight());
+        int width = Math.round((float) ratio * realImage.getWidth());
+        int height = Math.round((float) ratio * realImage.getHeight());
+
+        Bitmap newBitmap = Bitmap.createScaledBitmap(realImage, width,
+                height, filter);
+        return newBitmap;
     }
 }

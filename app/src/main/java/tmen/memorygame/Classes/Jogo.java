@@ -29,7 +29,7 @@ public class Jogo implements Serializable{
         this.mode = mode;
         this.tema = tema;
         this.nivelEscolhido = nivelEscolhido;
-        this.baralho = GeradorBaralhos.getBaralho(tema, nivelEscolhido);
+        this.baralho = GeradorBaralhos.getBaralho(mContext,tema, nivelEscolhido);
         this.nomeJogador1 = nomeJogador1;
     }
 

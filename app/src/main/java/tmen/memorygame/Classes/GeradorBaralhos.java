@@ -1,5 +1,8 @@
 package tmen.memorygame.Classes;
 
+        import android.content.Context;
+        import android.util.Log;
+
         import java.util.ArrayList;
         import java.util.List;
         import java.util.Collections;
@@ -31,7 +34,7 @@ public final class GeradorBaralhos {
             R.drawable.cor_cinza, R.drawable.cor_dourado, R.drawable.cor_laranja, R.drawable.cor_lilas, R.drawable.cor_lima,
             R.drawable.cor_preto, R.drawable.cor_rosa, R.drawable.cor_roxo, R.drawable.cor_turquesa, R.drawable.cor_verde, R.drawable.cor_vermelho};
 
-    public static Baralho getBaralho(Tema tema, int nivelEscolhido){ //baralhosdefault
+    public static Baralho getBaralho(Context mContext, Tema tema, int nivelEscolhido){ //baralhosdefault
         Baralho baralho =  new Baralho(tema);
         int numPares = 2;
 
@@ -176,6 +179,35 @@ public final class GeradorBaralhos {
                         }
                     }
                 }
+                break;
+            case "Diversos":
+                List<String> customDeck = new ArrayList<>();
+                customDeck.addAll(MySharedPreferences.getDeckFromFile(mContext));
+
+                if (nivelEscolhido != 6) {
+                    if (numPares <= customDeck.size()) {
+                        for (int i = 0; i < customDeck.size(); i++) {
+                            baralho.addCarta(new Card(i, customDeck.get(i), baralho.getTema().getNome()));
+                            baralho.addCarta(new Card(i, customDeck.get(i), baralho.getTema().getNome()));
+                        }
+                    }
+                    Log.d("MemoryGame","CrieiBaralho: " + baralho.getTema().getNome() + "NumCartas: " + baralho.getCartas().size() + "customDeckSize: " + customDeck.size());
+                } else {
+                    if (numPares - 2 <= customDeck.size()) {
+                        for (int i = 0; i < numPares - 2; i++) {
+                            baralho.addCarta(new Card(i, customDeck.get(i), baralho.getTema().getNome()));
+                            baralho.addCarta(new Card(i, customDeck.get(i), baralho.getTema().getNome()));
+                        }
+
+                        if (flagIdsArray.length >= 15) {
+                            for (int i = numPares - 2; i < flagIdsArray.length; i++) {
+                                baralho.addCarta(new Card(i, flagIdsArray[i], "Bandeiras"));
+                                baralho.addCarta(new Card(i, flagIdsArray[i], "Bandeiras"));
+                            }
+                        }
+                    }
+                }
+                Log.d("MemoryGame","Baralho: " + baralho + "CardFrontStrPos1: " + baralho.getCartas().get(0).cardFrontStr);
                 break;
         }
 

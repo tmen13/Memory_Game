@@ -53,7 +53,6 @@ public class EditDeckAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         ImageView imageView;
         Uri uri;
-        Bitmap bitmap = null;
         Bitmap scaledBitmap = null;
         if (convertView == null) {
             // if it's not recycled, initialize some attributes
@@ -67,8 +66,7 @@ public class EditDeckAdapter extends BaseAdapter {
 
         uri = Uri.parse(customDeck.get(position));
         try {
-            bitmap = MediaStore.Images.Media.getBitmap(mContext.getContentResolver(),uri);
-            scaledBitmap = scaleDown(bitmap, 100, true);
+            scaledBitmap = scaleDown(MediaStore.Images.Media.getBitmap(mContext.getContentResolver(),uri), 100, true);
         } catch (IOException e) {
             e.printStackTrace();
         }

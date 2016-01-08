@@ -5,6 +5,8 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +14,7 @@ import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -63,24 +66,50 @@ public class CardAdapter extends BaseAdapter {
         }
 
         if (posImageViewsBloqueadas.contains(position)) {
-            imageView.setImageBitmap(decodeSampledBitmapFromResource(mContext.getResources(), getItem(position).getCardFront(), 50, 50));
-            //imageView.setImageResource(getItem(position).getCardFront());
+            if (jogoActual.getBaralho().getTema().getIsDefault()) {
+                imageView.setImageBitmap(decodeSampledBitmapFromResource(mContext.getResources(), getItem(position).getCardFront(), 50, 50));
+                //imageView.setImageResource(getItem(position).getCardFront());
+            } else {
+                try {
+                    imageView.setImageBitmap(scaleDown(MediaStore.Images.Media.getBitmap(mContext.getContentResolver(), Uri.parse(getItem(position).getCardFrontStr())), 100, true));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         } else {
-            imageView.setImageBitmap(decodeSampledBitmapFromResource(mContext.getResources(),getItem(position).getCardCover(), 50, 50));
-            //imageView.setImageResource(getItem(position).getCardCover());
+            //if (jogoActual.getBaralho().getTema().getIsDefault()) {
+                imageView.setImageBitmap(decodeSampledBitmapFromResource(mContext.getResources(), getItem(position).getCardCover(), 50, 50));
+                //imageView.setImageResource(getItem(position).getCardCover());
+            //}
         }
 
         if (posPrimeiraImageView != null) {
             if (posPrimeiraImageView == position) {
-                imageView.setImageBitmap(decodeSampledBitmapFromResource(mContext.getResources(), getItem(position).getCardFront(), 50, 50));
-                //imageView.setImageResource(getItem(position).getCardFront());
+                if (jogoActual.getBaralho().getTema().getIsDefault()) {
+                    imageView.setImageBitmap(decodeSampledBitmapFromResource(mContext.getResources(), getItem(position).getCardFront(), 50, 50));
+                    //imageView.setImageResource(getItem(position).getCardFront());
+                } else {
+                    try {
+                        imageView.setImageBitmap(scaleDown(MediaStore.Images.Media.getBitmap(mContext.getContentResolver(), Uri.parse(getItem(position).getCardFrontStr())), 100, true));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
         }
 
         if (posSegundaImageView != null) {
             if (posSegundaImageView == position) {
-                imageView.setImageBitmap(decodeSampledBitmapFromResource(mContext.getResources(), getItem(position).getCardFront(), 50, 50));
-                //imageView.setImageResource(getItem(position).getCardFront());
+                if (jogoActual.getBaralho().getTema().getIsDefault()) {
+                    imageView.setImageBitmap(decodeSampledBitmapFromResource(mContext.getResources(), getItem(position).getCardFront(), 50, 50));
+                    //imageView.setImageResource(getItem(position).getCardFront());
+                } else {
+                    try {
+                        imageView.setImageBitmap(scaleDown(MediaStore.Images.Media.getBitmap(mContext.getContentResolver(), Uri.parse(getItem(position).getCardFrontStr())), 100, true));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
         }
 
@@ -189,6 +218,19 @@ public class CardAdapter extends BaseAdapter {
         // Decode bitmap with inSampleSize set
         options.inJustDecodeBounds = false;
         return BitmapFactory.decodeResource(res, resId, options);
+    }
+
+    public static Bitmap scaleDown(Bitmap realImage, float maxImageSize,
+                                   boolean filter) {
+        float ratio = Math.min(
+                (float) maxImageSize / realImage.getWidth(),
+                (float) maxImageSize / realImage.getHeight());
+        int width = Math.round((float) ratio * realImage.getWidth());
+        int height = Math.round((float) ratio * realImage.getHeight());
+
+        Bitmap newBitmap = Bitmap.createScaledBitmap(realImage, width,
+                height, filter);
+        return newBitmap;
     }
 
 

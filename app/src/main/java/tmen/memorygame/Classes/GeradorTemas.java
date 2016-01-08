@@ -17,6 +17,7 @@ public final class GeradorTemas {
 
     public static List<Tema> getTemasPersonalizados() {
         List<Tema> temasPersonalizados = new ArrayList<>();
+        temasPersonalizados.add(new Tema(false,"Diversos",1,1));
         //preencher do ficheiro, flag isDefault a false..
         return  temasPersonalizados;
     }

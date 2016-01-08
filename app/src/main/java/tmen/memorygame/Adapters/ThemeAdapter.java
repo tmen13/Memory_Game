@@ -4,14 +4,18 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 
+import java.io.File;
 import java.util.List;
 
+import tmen.memorygame.Classes.GeradorTemas;
+import tmen.memorygame.Classes.MySharedPreferences;
 import tmen.memorygame.Classes.Tema;
 import tmen.memorygame.R;
 
@@ -20,7 +24,7 @@ import tmen.memorygame.R;
  */
 public class ThemeAdapter extends BaseAdapter {
 
-    static Integer[] defaultThemesImgsIds = {R.drawable.ic_tema_bandeiras, R.drawable.ic_tema_carros, R.drawable.ic_tema_animais, R.drawable.ic_tema_cores, R.drawable.ic_tema_clubes};
+    static Integer[] defaultThemesImgsIds = {R.drawable.ic_tema_bandeiras, R.drawable.ic_tema_carros, R.drawable.ic_tema_animais, R.drawable.ic_tema_cores, R.drawable.ic_tema_clubes, R.drawable.ic_tema_custom};
 
     private Context mContext;
     private List<Tema> temas;
@@ -63,6 +67,22 @@ public class ThemeAdapter extends BaseAdapter {
         return imageView;
     }
 
+    @Override
+    public boolean isEnabled(int position) {
+        if (position == 5) {
+            File file = mContext.getFileStreamPath(MySharedPreferences.PATH_CUSTOM_DECK);
+            if(file.exists()) {
+                Log.d("MemoryGame", "Ficheiro existe!");
+                if (MySharedPreferences.getDeckFromFile(mContext).size() < 2) {
+                    return false;
+                }
+            } else {
+                return false;
+            }
+
+        }
+        return super.isEnabled(position);
+    }
 
     public static int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {
         // Raw height and width of image
