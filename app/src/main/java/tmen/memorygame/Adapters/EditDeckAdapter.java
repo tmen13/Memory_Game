@@ -53,6 +53,8 @@ public class EditDeckAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         ImageView imageView;
         Uri uri;
+        Bitmap bitmap = null;
+        Bitmap scaledBitmap = null;
         if (convertView == null) {
             // if it's not recycled, initialize some attributes
             imageView = new ImageView(mContext);
@@ -64,7 +66,14 @@ public class EditDeckAdapter extends BaseAdapter {
         }
 
         uri = Uri.parse(customDeck.get(position));
-       /* try {
+        try {
+            bitmap = MediaStore.Images.Media.getBitmap(mContext.getContentResolver(),uri);
+            scaledBitmap = scaleDown(bitmap, 100, true);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+      /* try {
             URL url = new URL(uri.toString());
 
             BitmapRegionDecoder decoder = BitmapRegionDecoder.newInstance(url.openStream(), false);
@@ -74,7 +83,19 @@ public class EditDeckAdapter extends BaseAdapter {
         } catch (IOException e) {
             e.printStackTrace();
         }*/
-        imageView.setImageURI(uri);
+        imageView.setImageBitmap(scaledBitmap);
         return imageView;
+    }
+    public static Bitmap scaleDown(Bitmap realImage, float maxImageSize,
+                                   boolean filter) {
+        float ratio = Math.min(
+                (float) maxImageSize / realImage.getWidth(),
+                (float) maxImageSize / realImage.getHeight());
+        int width = Math.round((float) ratio * realImage.getWidth());
+        int height = Math.round((float) ratio * realImage.getHeight());
+
+        Bitmap newBitmap = Bitmap.createScaledBitmap(realImage, width,
+                height, filter);
+        return newBitmap;
     }
 }
