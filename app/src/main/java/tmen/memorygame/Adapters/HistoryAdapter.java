@@ -128,7 +128,7 @@ public class HistoryAdapter extends BaseAdapter {
             infoJogadoresLinearLayout.addView(infoJogador1LinearLayout);
             infoJogadoresLinearLayout.addView(infoJogador2LinearLayout);
             mainLinearLayout.addView(infoJogadoresLinearLayout);
-        
+
             //view = new View(mContext);
             //imageView.setLayoutParams(new GridView.LayoutParams(85, 85));
             //imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
@@ -143,17 +143,6 @@ public class HistoryAdapter extends BaseAdapter {
         nomeJogador1TextView.setText(getItem(position).getNomeJogador1());
         if (getItem(position).getTipo() != JogoActivity.SINGLEPLAYER) {
             nomeJogador2TextView.setText(getItem(position).getNomeJogador2());
-            /*tentativasJogador1TextView.setText("Tentativas: " + getItem(position).getTentativas(0));
-            tentativasJogador2TextView.setText("Tentativas: " + getItem(position).getTentativas(1));
-            acertadasJogador1TextView.setText("Acertadas: " + getItem(position).getAcertadas(0));
-            acertadasJogador2TextView.setText("Acertadas: " + getItem(position).getAcertadas(1));
-            intrusosAcertadosJogador1TextView.setText("Intrusos Acertados: " + getItem(position).getIntrusosAcertados(0));
-            intrusosAcertadosJogador2TextView.setText("Intrusos Acertados: " + getItem(position).getIntrusosAcertados(1));
-            if (getItem(position).getVencedor() == 0) {
-                nomeVencedorTextView.setText("Vencedor: " + getItem(position).getNomeJogador1());
-            } else {
-                nomeVencedorTextView.setText("Vencedor: " + getItem(position).getNomeJogador2());
-            }*/
             if (getItem(position).getMode() == JogoActivity.SERVER) {
                 tentativasJogador1TextView.setText("Tentativas: " + getItem(position).getTentativas(JogoActivity.ME));
                 tentativasJogador2TextView.setText("Tentativas: " + getItem(position).getTentativas(JogoActivity.OTHER));
