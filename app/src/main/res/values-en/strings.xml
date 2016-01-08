@@ -77,4 +77,9 @@
     <string name="custom_add_fail">Image already saved</string>
     <string name="custom_edit_deck">Edit Deck</string>
     <string name="title_activity_edit_deck">Edit Deck</string>
+    <string name="game_type">Game Type:</string>
+    <string name="theme">Theme:</string>
+    <string name="trys">Trys:</string>
+    <string name="correct">Correct:</string>
+    <string name="intruder">Intruder:</string>
 </resources>

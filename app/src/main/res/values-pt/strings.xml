@@ -78,4 +78,9 @@
     <string name="custom_add_fail">Imagem já guardada</string>
     <string name="custom_edit_deck">Editar Baralho</string>
     <string name="title_activity_edit_deck">Editar Baralho</string>
+    <string name="game_type">Tipo de jogo:</string>
+    <string name="theme">Tema:</string>
+    <string name="trys">Tentativas:</string>
+    <string name="correct">Acertadas</string>
+    <string name="intruder">Intrusos:</string>
 </resources>
