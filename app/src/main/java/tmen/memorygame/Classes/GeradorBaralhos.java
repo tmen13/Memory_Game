@@ -185,12 +185,19 @@ public final class GeradorBaralhos {
                 customDeck.addAll(MySharedPreferences.getDeckFromFile(mContext));
 
                 if (nivelEscolhido != 6) {
-                    if (numPares <= customDeck.size()) {
-                        for (int i = 0; i < numPares; i++) {
-                            baralho.addCarta(new Card(i, customDeck.get(i), baralho.getTema().getNome()));
-                            baralho.addCarta(new Card(i, customDeck.get(i), baralho.getTema().getNome()));
-                        }
+                    //if (numPares <= customDeck.size()) {
+                    int numParesPossiveis = 0;
+                    if (customDeck.size() > 5) {
+                        numParesPossiveis = 5;
+                    } else  {
+                        numParesPossiveis = customDeck.size();
                     }
+                    for (int i = 0; i < numParesPossiveis; i++) {
+                        baralho.addCarta(new Card(i, customDeck.get(i), baralho.getTema().getNome()));
+                        baralho.addCarta(new Card(i, customDeck.get(i), baralho.getTema().getNome()));
+                    }
+
+                    //}
                     Log.d("MemoryGame","CrieiBaralho: " + baralho.getTema().getNome() + "NumCartas: " + baralho.getCartas().size() + "customDeckSize: " + customDeck.size());
                 } else {
                     if (numPares - 2 <= customDeck.size()) {
@@ -207,7 +214,7 @@ public final class GeradorBaralhos {
                         }
                     }
                 }
-                Log.d("MemoryGame","Baralho: " + baralho + "CardFrontStrPos1: " + baralho.getCartas().get(0).cardFrontStr);
+                Log.d("MemoryGame", "Baralho: " + baralho + "CardFrontStrPos1: " + baralho.getCartas().get(0).cardFrontStr);
                 break;
         }
 
