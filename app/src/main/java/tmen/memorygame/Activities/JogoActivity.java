@@ -195,24 +195,34 @@ public class JogoActivity extends AppCompatActivity {
                     }
 
                     if (jogoActual.verificaJogada()) {
-                        cardAdapter.getImageViewsBloqueadas().add(cardAdapter.getPosPrimeiraImageView());
-                        cardAdapter.getImageViewsBloqueadas().add(cardAdapter.getPosSegundaImageView());
-                        jogoActual.resetJogada();
-                        cardAdapter.resetPosImageViews();
                         if (type == SINGLEPLAYER) {
                             jogoActual.incrementaAcertadas(ME);
                             jogoActual.incrementaTentativas(ME);
+                            if (jogoActual.getPrimeiraCarta().getTema() != jogoActual.getBaralho().getTema().getNome() && jogoActual.getSegundaCarta().getTema() != jogoActual.getBaralho().getTema().getNome()) {
+                                jogoActual.incrementaIntrusosAcertados(ME);
+                                intrusosJogador1TextView.setText(String.valueOf(jogoActual.getIntrusosAcertados(ME)));
+                            }
                             tentativasJogador1TextView.setText(String.valueOf(jogoActual.getTentativas(ME)));
                             acertadasJogador1TextView.setText(String.valueOf(jogoActual.getAcertadas(ME)));
                         }
                         if (type == MULTIPLAYER || type == MULTIPLAYERONLINE) {
                             jogoActual.incrementaAcertadas(jogoActual.getJogadorActual());
                             jogoActual.incrementaTentativas(jogoActual.getJogadorActual());
+                            if (jogoActual.getPrimeiraCarta().getTema() != jogoActual.getBaralho().getTema().getNome() && jogoActual.getSegundaCarta().getTema() != jogoActual.getBaralho().getTema().getNome()) {
+                                jogoActual.incrementaIntrusosAcertados(jogoActual.getJogadorActual());
+                                intrusosJogador1TextView.setText(String.valueOf(jogoActual.getIntrusosAcertados(ME)));
+                                intrusosJogador2TextView.setText(String.valueOf(jogoActual.getIntrusosAcertados(OTHER)));
+                            }
                             tentativasJogador1TextView.setText(String.valueOf(jogoActual.getTentativas(ME)));
                             acertadasJogador1TextView.setText(String.valueOf(jogoActual.getAcertadas(ME)));
                             tentativasJogador2TextView.setText(String.valueOf(jogoActual.getTentativas(OTHER)));
                             acertadasJogador2TextView.setText(String.valueOf(jogoActual.getAcertadas(OTHER)));
                         }
+
+                        cardAdapter.getImageViewsBloqueadas().add(cardAdapter.getPosPrimeiraImageView());
+                        cardAdapter.getImageViewsBloqueadas().add(cardAdapter.getPosSegundaImageView());
+                        jogoActual.resetJogada();
+                        cardAdapter.resetPosImageViews();
                     } else {
                         if (type == SINGLEPLAYER) {
                             jogoActual.incrementaTentativas(ME);
@@ -674,19 +684,24 @@ public class JogoActivity extends AppCompatActivity {
             gridview.invalidateViews();
 
             if (jogoActual.verificaJogada()) {
-                cardAdapter.getImageViewsBloqueadas().add(cardAdapter.getPosPrimeiraImageView());
-                cardAdapter.getImageViewsBloqueadas().add(cardAdapter.getPosSegundaImageView());
-                jogoActual.resetJogada();
-                cardAdapter.resetPosImageViews();
-
                 jogoActual.incrementaAcertadas(jogoActual.getJogadorActual());
                 jogoActual.incrementaTentativas(jogoActual.getJogadorActual());
+
+                if (jogoActual.getPrimeiraCarta().getTema() != jogoActual.getBaralho().getTema().getNome() && jogoActual.getSegundaCarta().getTema() != jogoActual.getBaralho().getTema().getNome()) {
+                    jogoActual.incrementaIntrusosAcertados(jogoActual.getJogadorActual());
+                    intrusosJogador1TextView.setText(String.valueOf(jogoActual.getIntrusosAcertados(ME)));
+                    intrusosJogador2TextView.setText(String.valueOf(jogoActual.getIntrusosAcertados(OTHER)));
+                }
 
                 tentativasJogador1TextView.setText(String.valueOf(jogoActual.getTentativas(ME)));
                 acertadasJogador1TextView.setText(String.valueOf(jogoActual.getAcertadas(ME)));
                 tentativasJogador2TextView.setText(String.valueOf(jogoActual.getTentativas(OTHER)));
                 acertadasJogador2TextView.setText(String.valueOf(jogoActual.getAcertadas(OTHER)));
 
+                cardAdapter.getImageViewsBloqueadas().add(cardAdapter.getPosPrimeiraImageView());
+                cardAdapter.getImageViewsBloqueadas().add(cardAdapter.getPosSegundaImageView());
+                jogoActual.resetJogada();
+                cardAdapter.resetPosImageViews();
             } else {
                 jogoActual.incrementaTentativas(jogoActual.getJogadorActual());
                 jogoActual.setJogadorActual(jogoActual.getProximoJogador());

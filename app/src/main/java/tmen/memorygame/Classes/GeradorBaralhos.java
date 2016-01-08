@@ -58,42 +58,122 @@ public final class GeradorBaralhos {
 
         switch (tema.getNome()) {
             case "Bandeiras":
-                if (numPares <= flagIdsArray.length) {
-                    for (int i = 0; i < numPares; i++) {
-                        baralho.addCarta(new Card(i, flagIdsArray[i], baralho.getTema().getNome()));
-                        baralho.addCarta(new Card(i, flagIdsArray[i], baralho.getTema().getNome()));
+                if (nivelEscolhido != 6) {
+                    if (numPares <= flagIdsArray.length) {
+                        for (int i = 0; i < numPares; i++) {
+                            baralho.addCarta(new Card(i, flagIdsArray[i], baralho.getTema().getNome()));
+                            baralho.addCarta(new Card(i, flagIdsArray[i], baralho.getTema().getNome()));
+                        }
+                    }
+                } else {
+                    if (numPares - 2 <= flagIdsArray.length) {
+                        for (int i = 0; i < numPares - 2; i++) {
+                            baralho.addCarta(new Card(i, flagIdsArray[i], baralho.getTema().getNome()));
+                            baralho.addCarta(new Card(i, flagIdsArray[i], baralho.getTema().getNome()));
+                        }
+
+                        if (animaisIdsArrray.length >= 15) {
+                            for (int i = numPares - 2; i < animaisIdsArrray.length; i++) {
+                                baralho.addCarta(new Card(i, animaisIdsArrray[i], "Animais"));
+                                baralho.addCarta(new Card(i, animaisIdsArrray[i], "Animais"));
+                            }
+                        }
                     }
                 }
                 break;
             case "Animais":
-                if (numPares <= animaisIdsArrray.length) {
-                    for (int i = 0; i < numPares; i++) {
-                        baralho.addCarta(new Card(i, animaisIdsArrray[i], baralho.getTema().getNome()));
-                        baralho.addCarta(new Card(i, animaisIdsArrray[i], baralho.getTema().getNome()));
+                if (nivelEscolhido != 6) {
+                    if (numPares <= animaisIdsArrray.length) {
+                        for (int i = 0; i < numPares; i++) {
+                            baralho.addCarta(new Card(i, animaisIdsArrray[i], baralho.getTema().getNome()));
+                            baralho.addCarta(new Card(i, animaisIdsArrray[i], baralho.getTema().getNome()));
+                        }
+                    }
+                } else {
+                    if (numPares - 2 <= animaisIdsArrray.length) {
+                        for (int i = 0; i < numPares - 2; i++) {
+                            baralho.addCarta(new Card(i, animaisIdsArrray[i], baralho.getTema().getNome()));
+                            baralho.addCarta(new Card(i, animaisIdsArrray[i], baralho.getTema().getNome()));
+                        }
+
+                        if (carsIdsArray.length >= 15) {
+                            for (int i = numPares - 2; i < carsIdsArray.length; i++) {
+                                baralho.addCarta(new Card(i, carsIdsArray[i], "Carros"));
+                                baralho.addCarta(new Card(i, carsIdsArray[i], "Carros"));
+                            }
+                        }
                     }
                 }
                 break;
             case "Carros":
-                if (numPares <= carsIdsArray.length) {
-                    for (int i = 0; i < numPares; i++) {
-                        baralho.addCarta(new Card(i, carsIdsArray[i], baralho.getTema().getNome()));
-                        baralho.addCarta(new Card(i, carsIdsArray[i], baralho.getTema().getNome()));
+                if (nivelEscolhido != 6) {
+                    if (numPares <= carsIdsArray.length) {
+                        for (int i = 0; i < numPares; i++) {
+                            baralho.addCarta(new Card(i, carsIdsArray[i], baralho.getTema().getNome()));
+                            baralho.addCarta(new Card(i, carsIdsArray[i], baralho.getTema().getNome()));
+                        }
+                    }
+                } else {
+                    if (numPares - 2 <= carsIdsArray.length) {
+                        for (int i = 0; i < numPares - 2; i++) {
+                            baralho.addCarta(new Card(i, carsIdsArray[i], baralho.getTema().getNome()));
+                            baralho.addCarta(new Card(i, carsIdsArray[i], baralho.getTema().getNome()));
+                        }
+
+                        if (coresIdsArray.length >= 15) {
+                            for (int i = numPares - 2; i < coresIdsArray.length; i++) {
+                                baralho.addCarta(new Card(i, coresIdsArray[i], "Cores"));
+                                baralho.addCarta(new Card(i, coresIdsArray[i], "Cores"));
+                            }
+                        }
                     }
                 }
                 break;
             case "Cores":
-                if (numPares <= coresIdsArray.length) {
-                    for (int i = 0; i < numPares; i++) {
-                        baralho.addCarta(new Card(i, coresIdsArray[i], baralho.getTema().getNome()));
-                        baralho.addCarta(new Card(i, coresIdsArray[i], baralho.getTema().getNome()));
+                if (nivelEscolhido != 6) {
+                    if (numPares <= coresIdsArray.length) {
+                        for (int i = 0; i < numPares; i++) {
+                            baralho.addCarta(new Card(i, coresIdsArray[i], baralho.getTema().getNome()));
+                            baralho.addCarta(new Card(i, coresIdsArray[i], baralho.getTema().getNome()));
+                        }
+                    }
+                } else {
+                    if (numPares - 2 <= coresIdsArray.length) {
+                        for (int i = 0; i < numPares - 2; i++) {
+                            baralho.addCarta(new Card(i, coresIdsArray[i], baralho.getTema().getNome()));
+                            baralho.addCarta(new Card(i, coresIdsArray[i], baralho.getTema().getNome()));
+                        }
+
+                        if (clubesIdsArrays.length >= 15) {
+                            for (int i = numPares - 2; i < clubesIdsArrays.length; i++) {
+                                baralho.addCarta(new Card(i, clubesIdsArrays[i], "Clubes"));
+                                baralho.addCarta(new Card(i, clubesIdsArrays[i], "Clubes"));
+                            }
+                        }
                     }
                 }
                 break;
             case "Clubes":
-                if (numPares <= clubesIdsArrays.length) {
-                    for (int i = 0; i < numPares; i++) {
-                        baralho.addCarta(new Card(i, clubesIdsArrays[i], baralho.getTema().getNome()));
-                        baralho.addCarta(new Card(i, clubesIdsArrays[i], baralho.getTema().getNome()));
+                if (nivelEscolhido != 6) {
+                    if (numPares <= clubesIdsArrays.length) {
+                        for (int i = 0; i < numPares; i++) {
+                            baralho.addCarta(new Card(i, clubesIdsArrays[i], baralho.getTema().getNome()));
+                            baralho.addCarta(new Card(i, clubesIdsArrays[i], baralho.getTema().getNome()));
+                        }
+                    }
+                }  else {
+                    if (numPares - 2 <= clubesIdsArrays.length) {
+                        for (int i = 0; i < numPares - 2; i++) {
+                            baralho.addCarta(new Card(i, clubesIdsArrays[i], baralho.getTema().getNome()));
+                            baralho.addCarta(new Card(i, clubesIdsArrays[i], baralho.getTema().getNome()));
+                        }
+
+                        if (flagIdsArray.length >= 15) {
+                            for (int i = numPares - 2; i < flagIdsArray.length; i++) {
+                                baralho.addCarta(new Card(i, flagIdsArray[i], "Bandeiras"));
+                                baralho.addCarta(new Card(i, flagIdsArray[i], "Bandeiras"));
+                            }
+                        }
                     }
                 }
                 break;

@@ -156,11 +156,11 @@ public class Jogo implements Serializable{
     }
 
     public Boolean verificaFinal() {
-        return (((acertadas[JogoActivity.ME] + intrusosAcertados[JogoActivity.ME]) + (acertadas[JogoActivity.OTHER] + intrusosAcertados[JogoActivity.OTHER])) == (baralho.getCartas().size() / 2));
+        return ((acertadas[JogoActivity.ME] + acertadas[JogoActivity.OTHER]) == (baralho.getCartas().size() / 2));
     }
 
     public int getVencedor() {
-        return ((acertadas[JogoActivity.ME] > acertadas[JogoActivity.OTHER]) ? JogoActivity.ME : JogoActivity.OTHER);
+        return (((acertadas[JogoActivity.ME] - intrusosAcertados[JogoActivity.ME]) > (acertadas[JogoActivity.OTHER] - intrusosAcertados[JogoActivity.OTHER])) ? JogoActivity.ME : JogoActivity.OTHER);
     }
 
 }

@@ -147,9 +147,9 @@ public class HistoryAdapter extends BaseAdapter {
                 tentativasJogador1TextView.setText("Tentativas: " + getItem(position).getTentativas(JogoActivity.ME));
                 tentativasJogador2TextView.setText("Tentativas: " + getItem(position).getTentativas(JogoActivity.OTHER));
                 acertadasJogador1TextView.setText("Acertadas: " + getItem(position).getAcertadas(JogoActivity.ME));
-                acertadasJogador2TextView.setText("Acertadas" + getItem(position).getAcertadas(JogoActivity.OTHER));
+                acertadasJogador2TextView.setText("Acertadas: " + getItem(position).getAcertadas(JogoActivity.OTHER));
                 intrusosAcertadosJogador1TextView.setText("Intrusos Acertados: " + getItem(position).getIntrusosAcertados(JogoActivity.ME));
-                intrusosAcertadosJogador2TextView.setText("Intrusos Acertados" + getItem(position).getIntrusosAcertados(JogoActivity.OTHER));
+                intrusosAcertadosJogador2TextView.setText("Intrusos Acertados: " + getItem(position).getIntrusosAcertados(JogoActivity.OTHER));
                 if (getItem(position).getVencedor() == JogoActivity.ME) {
                     nomeVencedorTextView.setText("Vencedor: " + getItem(position).getNomeJogador1());
                 } else {
