@@ -1,13 +1,25 @@
 package tmen.memorygame.Adapters;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapRegionDecoder;
+import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import android.provider.MediaStore;
+import android.support.v7.graphics.drawable.DrawerArrowDrawable;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.List;
+
+import tmen.memorygame.Classes.MySharedPreferences;
 
 /**
  * Created by Tony on 08/01/2016.
@@ -40,6 +52,9 @@ public class EditDeckAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ImageView imageView;
+        Uri uri;
+        Bitmap bitmap = null;
+        Bitmap scaledBitmap = null;
         if (convertView == null) {
             // if it's not recycled, initialize some attributes
             imageView = new ImageView(mContext);
@@ -50,9 +65,37 @@ public class EditDeckAdapter extends BaseAdapter {
             imageView = (ImageView) convertView;
         }
 
-        //imageView.setImageDrawable();
-        //imageView.setImageBitmap(decodeSampledBitmapFromResource(mContext.getResources(), defaultThemesImgsIds[position], 50, 50));
+        uri = Uri.parse(customDeck.get(position));
+        try {
+            bitmap = MediaStore.Images.Media.getBitmap(mContext.getContentResolver(),uri);
+            scaledBitmap = scaleDown(bitmap, 100, true);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
+      /* try {
+            URL url = new URL(uri.toString());
+
+            BitmapRegionDecoder decoder = BitmapRegionDecoder.newInstance(url.openStream(), false);
+            Bitmap region = decoder.decodeRegion(new Rect(10, 10, 50, 50), null);
+
+            imageView.setImageBitmap(region);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }*/
+        imageView.setImageBitmap(scaledBitmap);
         return imageView;
+    }
+    public static Bitmap scaleDown(Bitmap realImage, float maxImageSize,
+                                   boolean filter) {
+        float ratio = Math.min(
+                (float) maxImageSize / realImage.getWidth(),
+                (float) maxImageSize / realImage.getHeight());
+        int width = Math.round((float) ratio * realImage.getWidth());
+        int height = Math.round((float) ratio * realImage.getHeight());
+
+        Bitmap newBitmap = Bitmap.createScaledBitmap(realImage, width,
+                height, filter);
+        return newBitmap;
     }
 }
