@@ -1,9 +1,11 @@
 package tmen.memorygame.Activities;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -41,8 +43,25 @@ public class EditDeckCustomActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View v,
                                     final int position, long id) {
                 ImageView imageView = (ImageView) v;
-                //TODO dialog para apagar imagem
-                Toast.makeText(getApplicationContext(),customCards.get(position), Toast.LENGTH_LONG).show();
+
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(
+                        EditDeckCustomActivity.this);
+
+                alertDialog.setPositiveButton(R.string.sim, new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        customCards.remove(position);
+                        MySharedPreferences.saveDeckToFile(getApplicationContext(),customCards);
+                        recreate();
+                    }
+                });
+
+                alertDialog.setNegativeButton(R.string.nao, null);
+                alertDialog.setMessage(R.string.remove_custom_card);
+                alertDialog.setTitle(R.string.app_name);
+                alertDialog.show();
+
             }
         });
     }

@@ -83,5 +83,6 @@
     <string name="trys">Tentativas:</string>
     <string name="correct">Acertadas</string>
     <string name="intruder">Intrusos:</string>
-    <string name="click_time">Tempo de Click (ms)</string>
+    <string name="click_time">Tempo de Clique (ms)</string>
+    <string name="remove_custom_card">Deseja remover a carta?</string>
 </resources>
