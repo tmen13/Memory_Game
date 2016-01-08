@@ -186,7 +186,7 @@ public final class GeradorBaralhos {
 
                 if (nivelEscolhido != 6) {
                     if (numPares <= customDeck.size()) {
-                        for (int i = 0; i < customDeck.size(); i++) {
+                        for (int i = 0; i < numPares; i++) {
                             baralho.addCarta(new Card(i, customDeck.get(i), baralho.getTema().getNome()));
                             baralho.addCarta(new Card(i, customDeck.get(i), baralho.getTema().getNome()));
                         }
