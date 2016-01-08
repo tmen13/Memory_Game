@@ -1,4 +1,5 @@
-﻿﻿   <resources>
+﻿﻿
+<resources>
     <string name="app_name">Memory Game</string>
     <string name="action_teste">Custom Deck</string>
     <string name="action_settings">Settings</string>
@@ -38,12 +39,12 @@
 
     <string name="pref_escolhe_idioma">Language</string>
     <string-array name="pref_lista_idiomas">
-        <item value = "pt">Portuguese</item>
-        <item value = "en">English</item>
+        <item value="pt">Portuguese</item>
+        <item value="en">English</item>
     </string-array>
     <string-array name="pref_lista_idiomas_val">
-        <item value = "pt">pt</item>
-        <item value = "en">en</item>
+        <item value="pt">pt</item>
+        <item value="en">en</item>
     </string-array>
     <string name="title_activity_escolhe_nivel_multiplayer">Pick a level:</string>
     <string name="creditos_ok">Close</string>
@@ -77,4 +78,5 @@
     <string name="custom_added">Added with success</string>
     <string name="custom_add_fail">Image already saved</string>
     <string name="custom_edit_deck">Edit Deck</string>
-    </resources>
+    <string name="title_activity_edit_deck">Edit Deck</string>
+</resources>

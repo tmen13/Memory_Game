@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="tmen.memorygame" >
+    package="tmen.memorygame">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -14,13 +14,13 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme">
         <activity
             android:name=".Activities.MainActivity"
             android:configChanges="locale|layoutDirection"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" >
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -32,7 +32,7 @@
             android:configChanges="locale|layoutDirection"
             android:label="@string/title_activity_teste"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" >
+            android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="tmen.memorygame.Activities.MainActivity" />
@@ -42,7 +42,7 @@
             android:configChanges="locale|layoutDirection"
             android:label="@string/title_activity_menu_multi_player_on"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" >
+            android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="tmen.memorygame.Activities.MainActivity" />
@@ -53,7 +53,7 @@
             android:label="@string/title_activity_escolhe_tema"
             android:parentActivityName=".Activities.MainActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" >
+            android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="tmen.memorygame.Activities.MainActivity" />
@@ -64,7 +64,7 @@
             android:label="@string/title_activity_escolhe_nivel"
             android:parentActivityName=".Activities.EscolheTemaActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" >
+            android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="tmen.memorygame.Activities.EscolheTemaActivity" />
@@ -75,7 +75,7 @@
             android:label="@string/title_activity_historico"
             android:parentActivityName=".Activities.MainActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" >
+            android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="tmen.memorygame.Activities.MainActivity" />
@@ -85,7 +85,7 @@
             android:configChanges="locale|layoutDirection"
             android:label="@string/title_activity_jogo"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" >
+            android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="tmen.memorygame.Activities.EscolheNivelActivity" />
@@ -95,7 +95,7 @@
             android:configChanges="locale|layoutDirection"
             android:label="@string/title_activity_settings"
             android:parentActivityName=".Activities.MainActivity"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="tmen.memorygame.Activities.MainActivity" />
@@ -104,10 +104,19 @@
             android:name=".Activities.EscolheNivelMultiplayerActivity"
             android:label="@string/title_activity_escolhe_nivel_multiplayer"
             android:parentActivityName=".Activities.EscolheTemaActivity"
-            android:theme="@style/AppTheme.NoActionBar" >
+            android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="tmen.memorygame.Activities.EscolheTemaActivity" />
+        </activity>
+        <activity
+            android:name=".Activities.EditDeckCustomActivity"
+            android:label="@string/title_activity_edit_deck"
+            android:parentActivityName=".Activities.CustomDeckActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="tmen.memorygame.Activities.CustomDeckActivity" />
         </activity>
     </application>
 

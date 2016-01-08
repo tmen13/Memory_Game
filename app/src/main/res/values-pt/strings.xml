@@ -76,4 +76,5 @@
     <string name="custom_added">Adicionado com sucesso</string>
     <string name="custom_add_fail">Imagem já guardada</string>
     <string name="custom_edit_deck">Editar Baralho</string>
+    <string name="title_activity_edit_deck">Editar Baralho</string>
 </resources>

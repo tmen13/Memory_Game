@@ -12,10 +12,13 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import tmen.memorygame.Classes.MySharedPreferences;
@@ -26,7 +29,7 @@ public class CustomDeckActivity extends AppCompatActivity {
     Button selectImgBt, saveImgBt, editDeckBt;
     ImageView placeholderImageView;
     Uri targetUri = null;
-    List<String> customCards;
+    List<String> customCards = new ArrayList<>();
     Boolean found = false;
 
     @Override
@@ -37,12 +40,20 @@ public class CustomDeckActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        customCards= MySharedPreferences.getDeckFromFile(getApplicationContext());
         selectImgBt = (Button)findViewById(R.id.imgBt);
         saveImgBt = (Button)findViewById(R.id.saveImgBt);
         editDeckBt = (Button)findViewById(R.id.editDeckBt);
         placeholderImageView = (ImageView)findViewById(R.id.previewImageView);
 
+        File file = getApplicationContext().getFileStreamPath(MySharedPreferences.PATH_CUSTOM_DECK);
+        if(!file.exists()) {
+            Log.i("aqui", "Ficheiro nao existe!");
+            //customCards = MySharedPreferences.getDeckFromFile(getApplicationContext());
+            MySharedPreferences.saveDeckToFile(getApplicationContext(), customCards); //
+        }
+        Log.i("aqui", "Ficheiro existe!");
+
+        customCards = MySharedPreferences.getDeckFromFile(getApplicationContext());
         if(customCards.size() == 0)
             editDeckBt.setEnabled(false);
 
@@ -89,6 +100,14 @@ public class CustomDeckActivity extends AppCompatActivity {
                 }
                 alertDialog.setTitle(R.string.app_name);
                 alertDialog.show();
+            }
+        });
+
+        editDeckBt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), EditDeckCustomActivity.class);
+                startActivity(intent);
             }
         });
     }
