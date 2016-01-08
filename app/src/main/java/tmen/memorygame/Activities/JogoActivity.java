@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.InputFilter;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
@@ -34,11 +36,14 @@ import java.net.NetworkInterface;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 
 
 import tmen.memorygame.Adapters.CardAdapter;
+import tmen.memorygame.Classes.GeradorTemas;
+import tmen.memorygame.Classes.Historico;
 import tmen.memorygame.Classes.Jogo;
 import tmen.memorygame.Classes.GeradorBaralhos;
 import tmen.memorygame.Classes.MySharedPreferences;
@@ -153,7 +158,7 @@ public class JogoActivity extends AppCompatActivity {
     private void initializeGameAndGridView(Jogo jogoActualRecebido) {
         if (jogoActualRecebido == null) {
             Log.d("MemoryGame","NomeJogador1:" + nomeJogador1TextView.getText().toString());
-            jogoActual = new Jogo(getApplicationContext(), type, tema, nivelEscolhido, nomeJogador1TextView.getText().toString());
+            jogoActual = new Jogo(getApplicationContext(), type, mode, tema, nivelEscolhido, nomeJogador1TextView.getText().toString());
         } else {
             jogoActual = jogoActualRecebido;
             jogoActualRecebido = null;
@@ -243,23 +248,25 @@ public class JogoActivity extends AppCompatActivity {
                         if (type == SINGLEPLAYER) {
                             List<Tema> temas = MySharedPreferences.getTemasFromFile(getApplicationContext());
                             for (int i = 0; i < temas.size(); i++) {
-                                Log.d("MemoryGame","TemaNome: " + temas.get(i).getNome());
+                                Log.d("MemoryGame", "TemaNome: " + temas.get(i).getNome());
                                 if (temas.get(i).getNome().equals(tema.getNome())) {
-                                    Log.d("MemoryGame","NivelActual:" + temas.get(i).getNivelActual() + " NivelEscolhido:" + nivelEscolhido);
+                                    Log.d("MemoryGame", "NivelActual:" + temas.get(i).getNivelActual() + " NivelEscolhido:" + nivelEscolhido);
                                     if (temas.get(i).getNivelActual() == nivelEscolhido && nivelEscolhido < tema.getNumNiveis()) {
-                                        temas.get(i).setNivelActual(temas.get(i).getNivelActual()+1);
-                                        tema.setNivelActual(tema.getNivelActual()+1);
+                                        temas.get(i).setNivelActual(temas.get(i).getNivelActual() + 1);
+                                        tema.setNivelActual(tema.getNivelActual() + 1);
 
                                         MySharedPreferences.saveTemaToFile(getApplicationContext(), temas);
 
                                         Intent returnIntent = new Intent();
-                                        returnIntent.putExtra("tema",tema);
+                                        returnIntent.putExtra("tema", tema);
                                         setResult(1, returnIntent);
                                         //finish();
                                     }
                                 }
                             }
                         }
+
+                        saveToHistory();
 
                         showAlert(1);
                     }
@@ -392,6 +399,7 @@ public class JogoActivity extends AppCompatActivity {
     void nomeJogador2Dialog() {
         final EditText nomeJogador2EditText = new EditText(this);
         nomeJogador2EditText.setText(R.string.player_2);
+        nomeJogador2EditText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(10)});
 
         android.support.v7.app.AlertDialog.Builder alertDialog = new android.support.v7.app.AlertDialog.Builder(
                 JogoActivity.this);
@@ -400,7 +408,8 @@ public class JogoActivity extends AppCompatActivity {
 
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                nomeJogador2TextView.setText(nomeJogador2EditText.getText().toString());
+                jogoActual.setNomeJogador2(nomeJogador2EditText.getText().toString());
+                nomeJogador2TextView.setText(jogoActual.getNomeJogador2());
             }
         });
 
@@ -693,6 +702,7 @@ public class JogoActivity extends AppCompatActivity {
 
 
             if (jogoActual.verificaFinal()) {
+                saveToHistory();
                 showAlert(1);
             }
         }
@@ -714,6 +724,17 @@ public class JogoActivity extends AppCompatActivity {
         t.start();
     }
 
+    void saveToHistory() {
+        Historico historico = new Historico(jogoActual.getTipo(), jogoActual.getMode(), jogoActual.getTema().getNome(), jogoActual.getNomeJogador1(), jogoActual.getNomeJogador2(), jogoActual.getTentativas(), jogoActual.getAcertadas(), jogoActual.getIntrusosAcertados(), jogoActual.getVencedor());
+        List<Historico> historicoArrayList = new ArrayList<>();
+        File file = getApplicationContext().getFileStreamPath(MySharedPreferences.PATH_HITORICO);
+        if(file.exists()) {
+            Log.d("MemoryGame", "Ficheiro existe!");
+            historicoArrayList.addAll(MySharedPreferences.getHistoricoFromFile(getApplicationContext()));
+        }
+        historicoArrayList.add(historico);
+        MySharedPreferences.saveHisticoToFile(getApplicationContext(), historicoArrayList);
+    }
 
     public static int calculateInSampleSize(BitmapFactory.Options options,
                                             int reqWidth, int reqHeight) {

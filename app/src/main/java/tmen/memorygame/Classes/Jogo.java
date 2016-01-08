@@ -10,6 +10,7 @@ import tmen.memorygame.Activities.JogoActivity;
 public class Jogo implements Serializable{
     private transient Context mContext;
     private int tipo;
+    private int mode;
     private Tema tema;
     private int nivelEscolhido;
     private Baralho baralho;
@@ -22,9 +23,10 @@ public class Jogo implements Serializable{
     private int acertadas[] = { 0, 0 };
     private int intrusosAcertados[] = { 0, 0 };
 
-    public Jogo (Context mContext, int tipo, Tema tema, int nivelEscolhido, String nomeJogador1) {
+    public Jogo (Context mContext, int tipo, int mode, Tema tema, int nivelEscolhido, String nomeJogador1) {
         this.mContext = mContext;
         this.tipo = tipo;
+        this.mode = mode;
         this.tema = tema;
         this.nivelEscolhido = nivelEscolhido;
         this.baralho = GeradorBaralhos.getBaralho(tema, nivelEscolhido);
@@ -37,6 +39,14 @@ public class Jogo implements Serializable{
 
     public void setmContext(Context mContext) {
         this.mContext = mContext;
+    }
+
+    public int getTipo() {
+        return tipo;
+    }
+
+    public int getMode() {
+        return mode;
     }
 
     public Tema getTema() {
@@ -96,6 +106,10 @@ public class Jogo implements Serializable{
         tentativas[position]++;
     }
 
+    public int[] getTentativas() {
+        return tentativas;
+    }
+
     public int getTentativas(int position) {
         return tentativas[position];
     }
@@ -104,12 +118,20 @@ public class Jogo implements Serializable{
         acertadas[position]++;
     }
 
+    public int[] getAcertadas() {
+        return acertadas;
+    }
+
     public int getAcertadas(int position) {
         return acertadas[position];
     }
 
     public void incrementaIntrusosAcertados(int position) {
         intrusosAcertados[position]++;
+    }
+
+    public int[] getIntrusosAcertados() {
+        return intrusosAcertados;
     }
 
     public int getIntrusosAcertados(int position){
