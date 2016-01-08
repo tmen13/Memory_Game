@@ -25,7 +25,6 @@ import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -42,7 +41,6 @@ import java.util.List;
 
 
 import tmen.memorygame.Adapters.CardAdapter;
-import tmen.memorygame.Classes.GeradorTemas;
 import tmen.memorygame.Classes.Historico;
 import tmen.memorygame.Classes.Jogo;
 import tmen.memorygame.Classes.GeradorBaralhos;
@@ -171,120 +169,64 @@ public class JogoActivity extends AppCompatActivity {
         cardAdapter = new CardAdapter(getApplicationContext(), jogoActual, type);
         gridview.setAdapter(cardAdapter);
 
-        gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View v,
-                                    final int position, long id) {
-                ImageView imageView = (ImageView) v;
+        if (MySharedPreferences.getSharedPref(getApplicationContext(), MySharedPreferences.PREF_TYPE_MODE).equals("type_mode_simple") || MySharedPreferences.getSharedPref(getApplicationContext(), MySharedPreferences.PREF_TYPE_MODE).equals("type_mode_double")) {
+            gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                Boolean waitSecondTouch = false;
+                int positionSelected = -1;
+                int positionPost = -1;
 
-                if (jogoActual.getPrimeiraCarta() == null && jogoActual.getSegundaCarta() == null) { //1ªCarta
-                    cardAdapter.setPosPrimeiraImageView(position);
-                    //imageView.setImageResource(cardAdapter.getItem(position).getCardFront());
-                    imageView.setImageBitmap(decodeSampledBitmapFromResource(getApplicationContext().getResources(), cardAdapter.getItem(position).getCardFront(), 50, 50));
-                    jogoActual.setPrimeiraCarta(cardAdapter.getItem(position));
-                    if (type == MULTIPLAYERONLINE) {
-                        moveMyPlayer(position);
-                    }
-                } else if (jogoActual.getPrimeiraCarta() != null && jogoActual.getSegundaCarta() == null) { //2ªCarta
-                    cardAdapter.setPosSegundaImageView(position);
-                    //imageView.setImageResource(cardAdapter.getItem(position).getCardFront());
-                    imageView.setImageBitmap(decodeSampledBitmapFromResource(getApplicationContext().getResources(), cardAdapter.getItem(position).getCardFront(), 50, 50));
-                    jogoActual.setSegundaCarta(cardAdapter.getItem(position));
+                @Override
+                public void onItemClick(AdapterView<?> parent, View v, final int position, long id) {
 
-                    if (type == MULTIPLAYERONLINE) {
-                        moveMyPlayer(position);
-                    }
+                    long DOUBLE_CLICK_TIME_DELTA = Long.parseLong(MySharedPreferences.getSharedPref(parent.getContext(),MySharedPreferences.PREF_CLICK_TIME));//milliseconds
 
-                    if (jogoActual.verificaJogada()) {
-                        if (type == SINGLEPLAYER) {
-                            jogoActual.incrementaAcertadas(ME);
-                            jogoActual.incrementaTentativas(ME);
-                            if (jogoActual.getPrimeiraCarta().getTema() != jogoActual.getBaralho().getTema().getNome() && jogoActual.getSegundaCarta().getTema() != jogoActual.getBaralho().getTema().getNome()) {
-                                jogoActual.incrementaIntrusosAcertados(ME);
-                                intrusosJogador1TextView.setText(String.valueOf(jogoActual.getIntrusosAcertados(ME)));
+                    if (MySharedPreferences.getSharedPref(getApplicationContext(), MySharedPreferences.PREF_TYPE_MODE).equals("type_mode_double")) {
+                        Log.d("MemoryGame","WaitSecondTouch: " + waitSecondTouch + "positionSelected: " + positionSelected);
+
+                        if (waitSecondTouch == false) {
+                            positionSelected = position;
+                            waitSecondTouch = true;
+                        } else {
+                            if (positionSelected == position) {
+                                action(v, position);
                             }
-                            tentativasJogador1TextView.setText(String.valueOf(jogoActual.getTentativas(ME)));
-                            acertadasJogador1TextView.setText(String.valueOf(jogoActual.getAcertadas(ME)));
-                        }
-                        if (type == MULTIPLAYER || type == MULTIPLAYERONLINE) {
-                            jogoActual.incrementaAcertadas(jogoActual.getJogadorActual());
-                            jogoActual.incrementaTentativas(jogoActual.getJogadorActual());
-                            if (jogoActual.getPrimeiraCarta().getTema() != jogoActual.getBaralho().getTema().getNome() && jogoActual.getSegundaCarta().getTema() != jogoActual.getBaralho().getTema().getNome()) {
-                                jogoActual.incrementaIntrusosAcertados(jogoActual.getJogadorActual());
-                                intrusosJogador1TextView.setText(String.valueOf(jogoActual.getIntrusosAcertados(ME)));
-                                intrusosJogador2TextView.setText(String.valueOf(jogoActual.getIntrusosAcertados(OTHER)));
-                            }
-                            tentativasJogador1TextView.setText(String.valueOf(jogoActual.getTentativas(ME)));
-                            acertadasJogador1TextView.setText(String.valueOf(jogoActual.getAcertadas(ME)));
-                            tentativasJogador2TextView.setText(String.valueOf(jogoActual.getTentativas(OTHER)));
-                            acertadasJogador2TextView.setText(String.valueOf(jogoActual.getAcertadas(OTHER)));
+                            positionSelected = -1;
+                            waitSecondTouch = false;
                         }
 
-                        cardAdapter.getImageViewsBloqueadas().add(cardAdapter.getPosPrimeiraImageView());
-                        cardAdapter.getImageViewsBloqueadas().add(cardAdapter.getPosSegundaImageView());
-                        jogoActual.resetJogada();
-                        cardAdapter.resetPosImageViews();
-                    } else {
-                        if (type == SINGLEPLAYER) {
-                            jogoActual.incrementaTentativas(ME);
-                            tentativasJogador1TextView.setText(String.valueOf(jogoActual.getTentativas(ME)));
-                        }
 
-                        if (type == MULTIPLAYER || type == MULTIPLAYERONLINE) {
-                            jogoActual.incrementaTentativas(jogoActual.getJogadorActual());
-                            jogoActual.setJogadorActual(jogoActual.getProximoJogador());
-                            tentativasJogador1TextView.setText(String.valueOf(jogoActual.getTentativas(ME)));
-                            tentativasJogador2TextView.setText(String.valueOf(jogoActual.getTentativas(OTHER)));
-                        }
-
-                        handler.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                jogoActual.resetJogada();
-                                cardAdapter.resetPosImageViews();
-                                gridview.invalidateViews();
-
-                                if (type == MULTIPLAYER || type == MULTIPLAYERONLINE) {
-                                    if (jogoActual.getJogadorActual() == ME) {
-                                        jogadorActualTextView.setText(nomeJogador1TextView.getText());
-                                    } else {
-                                        jogadorActualTextView.setText(nomeJogador2TextView.getText());
+                        if (waitSecondTouch == true && DOUBLE_CLICK_TIME_DELTA != 0) {
+                            positionPost = position;
+                            handler.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    if (positionPost == positionSelected) {
+                                        waitSecondTouch = false;
+                                        positionSelected = -1;
+                                        Log.d("MemoryGame", "WaitSecondTouch: " + waitSecondTouch + "positionSelected: " + positionSelected);
                                     }
                                 }
-                            }
-                        }, 1250);
-                    }
-
-                    if (jogoActual.verificaFinal()) {
-                        if (type == SINGLEPLAYER) {
-                            List<Tema> temas = MySharedPreferences.getTemasFromFile(getApplicationContext());
-                            for (int i = 0; i < temas.size(); i++) {
-                                Log.d("MemoryGame", "TemaNome: " + temas.get(i).getNome());
-                                if (temas.get(i).getNome().equals(tema.getNome())) {
-                                    Log.d("MemoryGame", "NivelActual:" + temas.get(i).getNivelActual() + " NivelEscolhido:" + nivelEscolhido);
-                                    if (temas.get(i).getNivelActual() == nivelEscolhido && nivelEscolhido < tema.getNumNiveis()) {
-                                        temas.get(i).setNivelActual(temas.get(i).getNivelActual() + 1);
-                                        tema.setNivelActual(tema.getNivelActual() + 1);
-
-                                        MySharedPreferences.saveTemaToFile(getApplicationContext(), temas);
-
-                                        Intent returnIntent = new Intent();
-                                        returnIntent.putExtra("tema", tema);
-                                        setResult(1, returnIntent);
-                                        //finish();
-                                    }
-                                }
-                            }
+                            }, DOUBLE_CLICK_TIME_DELTA);
                         }
-
-                        saveToHistory();
-
-                        showAlert(1);
                     }
-                } else {
-                    Log.e("MemoryGameJogoActivity", "Erro");
+
+                    if (MySharedPreferences.getSharedPref(getApplicationContext(), MySharedPreferences.PREF_TYPE_MODE).equals("type_mode_simple"))
+                    {
+                        action(v, position);
+                    }
                 }
-            }
-        });
+            });
+
+        } else if (MySharedPreferences.getSharedPref(getApplicationContext(), MySharedPreferences.PREF_TYPE_MODE).equals("type_mode_long")) {
+            gridview.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                @Override
+                public boolean onItemLongClick(AdapterView<?> parent, View v, int position, long id) {
+                    action(v, position);
+                    return false;
+                }
+            });
+        }
+
 
         switch (nivelEscolhido) {
             case 1:
@@ -413,6 +355,118 @@ public class JogoActivity extends AppCompatActivity {
         }
 
         alertDialog.show();
+    }
+
+    void action (View v, final int position) {
+        ImageView imageView = (ImageView) v;
+
+        if (jogoActual.getPrimeiraCarta() == null && jogoActual.getSegundaCarta() == null) { //1ªCarta
+            cardAdapter.setPosPrimeiraImageView(position);
+            //imageView.setImageResource(cardAdapter.getItem(position).getCardFront());
+            imageView.setImageBitmap(decodeSampledBitmapFromResource(getApplicationContext().getResources(), cardAdapter.getItem(position).getCardFront(), 50, 50));
+            jogoActual.setPrimeiraCarta(cardAdapter.getItem(position));
+            if (type == MULTIPLAYERONLINE) {
+                moveMyPlayer(position);
+            }
+        } else if (jogoActual.getPrimeiraCarta() != null && jogoActual.getSegundaCarta() == null) { //2ªCarta
+            cardAdapter.setPosSegundaImageView(position);
+            //imageView.setImageResource(cardAdapter.getItem(position).getCardFront());
+            imageView.setImageBitmap(decodeSampledBitmapFromResource(getApplicationContext().getResources(), cardAdapter.getItem(position).getCardFront(), 50, 50));
+            jogoActual.setSegundaCarta(cardAdapter.getItem(position));
+
+            if (type == MULTIPLAYERONLINE) {
+                moveMyPlayer(position);
+            }
+
+            if (jogoActual.verificaJogada()) {
+                if (type == SINGLEPLAYER) {
+                    jogoActual.incrementaAcertadas(ME);
+                    jogoActual.incrementaTentativas(ME);
+                    if (jogoActual.getPrimeiraCarta().getTema() != jogoActual.getBaralho().getTema().getNome() && jogoActual.getSegundaCarta().getTema() != jogoActual.getBaralho().getTema().getNome()) {
+                        jogoActual.incrementaIntrusosAcertados(ME);
+                        intrusosJogador1TextView.setText(String.valueOf(jogoActual.getIntrusosAcertados(ME)));
+                    }
+                    tentativasJogador1TextView.setText(String.valueOf(jogoActual.getTentativas(ME)));
+                    acertadasJogador1TextView.setText(String.valueOf(jogoActual.getAcertadas(ME)));
+                }
+                if (type == MULTIPLAYER || type == MULTIPLAYERONLINE) {
+                    jogoActual.incrementaAcertadas(jogoActual.getJogadorActual());
+                    jogoActual.incrementaTentativas(jogoActual.getJogadorActual());
+                    if (jogoActual.getPrimeiraCarta().getTema() != jogoActual.getBaralho().getTema().getNome() && jogoActual.getSegundaCarta().getTema() != jogoActual.getBaralho().getTema().getNome()) {
+                        jogoActual.incrementaIntrusosAcertados(jogoActual.getJogadorActual());
+                        intrusosJogador1TextView.setText(String.valueOf(jogoActual.getIntrusosAcertados(ME)));
+                        intrusosJogador2TextView.setText(String.valueOf(jogoActual.getIntrusosAcertados(OTHER)));
+                    }
+                    tentativasJogador1TextView.setText(String.valueOf(jogoActual.getTentativas(ME)));
+                    acertadasJogador1TextView.setText(String.valueOf(jogoActual.getAcertadas(ME)));
+                    tentativasJogador2TextView.setText(String.valueOf(jogoActual.getTentativas(OTHER)));
+                    acertadasJogador2TextView.setText(String.valueOf(jogoActual.getAcertadas(OTHER)));
+                }
+
+                cardAdapter.getImageViewsBloqueadas().add(cardAdapter.getPosPrimeiraImageView());
+                cardAdapter.getImageViewsBloqueadas().add(cardAdapter.getPosSegundaImageView());
+                jogoActual.resetJogada();
+                cardAdapter.resetPosImageViews();
+            } else {
+                if (type == SINGLEPLAYER) {
+                    jogoActual.incrementaTentativas(ME);
+                    tentativasJogador1TextView.setText(String.valueOf(jogoActual.getTentativas(ME)));
+                }
+
+                if (type == MULTIPLAYER || type == MULTIPLAYERONLINE) {
+                    jogoActual.incrementaTentativas(jogoActual.getJogadorActual());
+                    jogoActual.setJogadorActual(jogoActual.getProximoJogador());
+                    tentativasJogador1TextView.setText(String.valueOf(jogoActual.getTentativas(ME)));
+                    tentativasJogador2TextView.setText(String.valueOf(jogoActual.getTentativas(OTHER)));
+                }
+
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        jogoActual.resetJogada();
+                        cardAdapter.resetPosImageViews();
+                        gridview.invalidateViews();
+
+                        if (type == MULTIPLAYER || type == MULTIPLAYERONLINE) {
+                            if (jogoActual.getJogadorActual() == ME) {
+                                jogadorActualTextView.setText(nomeJogador1TextView.getText());
+                            } else {
+                                jogadorActualTextView.setText(nomeJogador2TextView.getText());
+                            }
+                        }
+                    }
+                }, 1250);
+            }
+
+            if (jogoActual.verificaFinal()) {
+                if (type == SINGLEPLAYER) {
+                    List<Tema> temas = MySharedPreferences.getTemasFromFile(getApplicationContext());
+                    for (int i = 0; i < temas.size(); i++) {
+                        Log.d("MemoryGame", "TemaNome: " + temas.get(i).getNome());
+                        if (temas.get(i).getNome().equals(tema.getNome())) {
+                            Log.d("MemoryGame", "NivelActual:" + temas.get(i).getNivelActual() + " NivelEscolhido:" + nivelEscolhido);
+                            if (temas.get(i).getNivelActual() == nivelEscolhido && nivelEscolhido < tema.getNumNiveis()) {
+                                temas.get(i).setNivelActual(temas.get(i).getNivelActual() + 1);
+                                tema.setNivelActual(tema.getNivelActual() + 1);
+
+                                MySharedPreferences.saveTemaToFile(getApplicationContext(), temas);
+
+                                Intent returnIntent = new Intent();
+                                returnIntent.putExtra("tema", tema);
+                                setResult(1, returnIntent);
+                                //finish();
+                            }
+                        }
+                    }
+                }
+
+                saveToHistory();
+
+                showAlert(1);
+            }
+        } else {
+            Log.e("MemoryGameJogoActivity", "Erro");
+        }
     }
 
     void nomeJogador2Dialog() {
