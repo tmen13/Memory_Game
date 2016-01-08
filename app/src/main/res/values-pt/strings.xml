@@ -2,6 +2,7 @@
     <string name="app_name">Memory Game</string>
     <string name="action_teste">Baralho Personalizado</string>
     <string name="action_settings">Definições</string>
+    <string name="action_clear">Limpar</string>
     <string name="action_creditos">Créditos</string>
     <string name="menu_singleplayer">Um jogador</string>
     <string name="menu_multiplayer">Dois jogadores</string>

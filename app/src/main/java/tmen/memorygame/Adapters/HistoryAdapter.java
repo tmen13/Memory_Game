@@ -19,6 +19,7 @@ import java.util.List;
 import tmen.memorygame.Activities.JogoActivity;
 import tmen.memorygame.Classes.Historico;
 import tmen.memorygame.Classes.Tema;
+import tmen.memorygame.R;
 
 /**
  * Created by Ricardo on 07/01/2016.
@@ -129,6 +130,11 @@ public class HistoryAdapter extends BaseAdapter {
             infoJogadoresLinearLayout.addView(infoJogador2LinearLayout);
             mainLinearLayout.addView(infoJogadoresLinearLayout);
 
+            mainLinearLayout.setEnabled(false);
+        infoJogoLinearLayout.setEnabled(false);
+        infoJogadoresLinearLayout.setEnabled(false);
+        infoJogador1LinearLayout.setEnabled(false);
+        infoJogador2LinearLayout.setEnabled(false);
             //view = new View(mContext);
             //imageView.setLayoutParams(new GridView.LayoutParams(85, 85));
             //imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
@@ -138,8 +144,16 @@ public class HistoryAdapter extends BaseAdapter {
         //    mainLinearLayout = (LinearLayout) convertView;
         //}
 
-        tipoTextView.setText("Tipo de jogo: " + getItem(position).getTipo());
-        temaTextView.setText(getItem(position).getTema());
+        String tipo;
+        if (getItem(position).getTipo() == JogoActivity.SINGLEPLAYER) {
+            tipo = mContext.getString(R.string.menu_singleplayer);
+        } else if (getItem(position).getTipo() == JogoActivity.MULTIPLAYER) {
+            tipo = mContext.getString(R.string.menu_multiplayer);
+        } else {
+            tipo = mContext.getString(R.string.menu_multiplayer_on);
+        }
+        tipoTextView.setText("Tipo de jogo: " + tipo);
+        temaTextView.setText("Tema: " + getItem(position).getTema());
         nomeJogador1TextView.setText(getItem(position).getNomeJogador1());
         if (getItem(position).getTipo() != JogoActivity.SINGLEPLAYER) {
             nomeJogador2TextView.setText(getItem(position).getNomeJogador2());
@@ -171,10 +185,11 @@ public class HistoryAdapter extends BaseAdapter {
         } else {
             tentativasJogador1TextView.setText("Tentativas: " + getItem(position).getTentativas(JogoActivity.ME));
             acertadasJogador1TextView.setText("Acertadas: " + getItem(position).getAcertadas(JogoActivity.ME));
-            intrusosAcertadosJogador1TextView.setText("Acertadas: " + getItem(position).getIntrusosAcertados(JogoActivity.ME));
+            intrusosAcertadosJogador1TextView.setText("Intrusos Acertados: " + getItem(position).getIntrusosAcertados(JogoActivity.ME));
             nomeVencedorTextView.setText("Vencedor: " + getItem(position).getNomeJogador1());
             infoJogador2LinearLayout.setVisibility(View.GONE);
         }
+
         return mainLinearLayout;
     }
 }
