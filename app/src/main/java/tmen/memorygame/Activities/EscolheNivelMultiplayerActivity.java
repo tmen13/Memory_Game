@@ -58,7 +58,7 @@ public class EscolheNivelMultiplayerActivity extends AppCompatActivity {
                     if (position == 1) {
                         intent.putExtra("nivelEscolhido", 6); //com intrusos
                     } else {
-                        intent.putExtra("nivelEscolhido", 5); //sem intrusos
+                        intent.putExtra("nivelEscolhido", 1); //sem intrusos
                     }
                     startActivity(intent);
                 } else if (type == JogoActivity.MULTIPLAYERONLINE) {
@@ -69,7 +69,7 @@ public class EscolheNivelMultiplayerActivity extends AppCompatActivity {
                     if (position == 1) {
                         intent.putExtra("nivelEscolhido", 6); //com intrusos
                     } else {
-                        intent.putExtra("nivelEscolhido", 5); //sem intrusos
+                        intent.putExtra("nivelEscolhido", 1); //sem intrusos
                     }
                     startActivity(intent);
                 }
